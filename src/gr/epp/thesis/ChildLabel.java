@@ -15,18 +15,4 @@ public class ChildLabel extends JLabel implements ViewItem {
         setHorizontalAlignment(CENTER);
         setIcon(decorImage);
     }
-
-    @Override
-    public void itemIcon() {
-    }
-
-    @Override
-    public boolean isWarship() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public String checker() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

@@ -15,18 +15,4 @@ public class AdultLabel extends JLabel implements ViewItem {
         setHorizontalAlignment(CENTER);
         setIcon(decorImage);
     }
-
-    @Override
-    public void itemIcon() {
-    }
-
-    @Override
-    public boolean isWarship() {
-        return false;
-    }
-
-    @Override
-    public String checker() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

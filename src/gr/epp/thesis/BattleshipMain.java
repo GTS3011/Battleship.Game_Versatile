@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
@@ -41,7 +42,6 @@ public class BattleshipMain implements MouseListener, ActionListener {
     private static Object tempObject = null;
     private static Class tempClass;
     private AttackListener customListener;
-    private Object x;
 
     /*
      * Player Selection
@@ -84,22 +84,19 @@ public class BattleshipMain implements MouseListener, ActionListener {
         downPanel.add(myShips, BorderLayout.EAST);
 
         try {
+            tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             for (int i = 0; i < rows * columns; i++) {
-                tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
                 JButton temp1 = (JButton) tempClass.newInstance();
                 enemyBoard.add(temp1);
                 JButton temp2 = (JButton) tempClass.newInstance();
                 myBoard.add(temp2);
             }
+            tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
+            Constructor tempConstr = tempClass.getConstructor(int.class, boolean.class);
             for (int i = 0; i < 6; i++) {
-                tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
-                JButton temp1 = (JButton) tempClass.newInstance();
-                Method method = tempClass.getMethod("setWarship", boolean.class);
-                method.invoke(temp1, true);
+                JButton temp1 = (JButton) tempConstr.newInstance(i, false);
                 enemyShips.add(temp1);
-                JButton temp2 = (JButton) tempClass.newInstance();
-                Method method2 = tempClass.getMethod("setWarship", boolean.class);
-                method2.invoke(temp2, true);
+                JButton temp2 = (JButton) tempConstr.newInstance(i, true);
                 myShips.add(temp2);
             }
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
@@ -125,32 +122,6 @@ public class BattleshipMain implements MouseListener, ActionListener {
     //System.out.print(",  Result: " + algo.doIt(10, 5));
     //}
     // } 
-
-    public void methodInvoke(Class tempClass1) {
-        Object f = null;
-        try {
-            Method[] d = tempClass1.getDeclaredMethods();
-            for (int i = 0; i < d.length; i++) {
-                if (d[i].getName() == "checker") {
-                    System.out.println("oke!");
-                    f = d[i].invoke(x, (Object[]) null);
-                }
-            }
-            System.out.println("" + f);
-        } catch (IllegalAccessException ex) {
-            System.err.println("Not able to access method ");
-            ex.printStackTrace();
-        } catch (SecurityException ex) {
-            System.err.println("Security Exception raised");
-            ex.printStackTrace();
-        } catch (IllegalArgumentException ex) {
-            System.err.println("Incorrect supplied arguments");
-            ex.printStackTrace();
-        } catch (InvocationTargetException ex) {
-            System.err.println("Not able to invoke method by String in Java");
-            ex.printStackTrace();
-        }
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {

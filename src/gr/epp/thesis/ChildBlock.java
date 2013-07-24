@@ -10,24 +10,71 @@ import javax.swing.JButton;
  */
 public class ChildBlock extends JButton implements ViewItem {
 
+    /*
+     * Grid's seaBlocks:
+     */
     public ChildBlock() {
         setBackground(Color.CYAN);
     }
 
-    @Override
-    public void itemIcon() {
-        setIcon(new ImageIcon("graphics/airCraftCarrierChild.gif"));
-    }
-
-    @Override
-    public void setWarship(boolean warship) {
-        if (warship) {
-            setBackground(Color.red);
+    /*
+     * My Ship's List:
+     */
+    public ChildBlock(int temp, boolean own) {
+        if (own) {
+            switch (temp) {
+                case (0):
+                    setBackground(Color.YELLOW);
+                    setText("MY FLEET");
+                    break;
+                case (1):
+                    setBackground(Color.LIGHT_GRAY);
+                    setIcon(new ImageIcon("graphics/fire.gif"));
+                    break;
+                case (2):
+                    setBackground(Color.LIGHT_GRAY);
+                    setIcon(new ImageIcon("graphics/fire.gif"));
+                    break;
+                case (3):
+                    setBackground(Color.LIGHT_GRAY);
+                    setIcon(new ImageIcon("graphics/fire.gif"));
+                    break;
+                case (4):
+                    setBackground(Color.LIGHT_GRAY);
+                    setIcon(new ImageIcon("graphics/fire.gif"));
+                    break;
+                case (5):
+                    setBackground(Color.LIGHT_GRAY);
+                    setIcon(new ImageIcon("graphics/fire.gif"));
+                    break;
+            }
+        } else {
+            switch (temp) {
+                case (0):
+                    setBackground(Color.ORANGE);
+                    setText("ENEMY FLEET");
+                    break;
+                case (1):
+                    setBackground(Color.DARK_GRAY);
+                    setIcon(new ImageIcon("graphics/fire.gif"));
+                    break;
+                case (2):
+                    setBackground(Color.DARK_GRAY);
+                    setIcon(new ImageIcon("graphics/fire.gif"));
+                    break;
+                case (3):
+                    setBackground(Color.DARK_GRAY);
+                    setIcon(new ImageIcon("graphics/fire.gif"));
+                    break;
+                case (4):
+                    setBackground(Color.DARK_GRAY);
+                    setIcon(new ImageIcon("graphics/fire.gif"));
+                    break;
+                case (5):
+                    setBackground(Color.DARK_GRAY);
+                    setIcon(new ImageIcon("graphics/fire.gif"));
+                    break;
+            }
         }
-    }
-
-    @Override
-    public String checker() {
-        return "paidaros!";
     }
 }
