@@ -1,7 +1,5 @@
 package gr.epp.thesis.api;
 
-
-
 /**
  *
  * @author vigos.ioannis

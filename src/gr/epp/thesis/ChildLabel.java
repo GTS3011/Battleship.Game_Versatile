@@ -3,7 +3,6 @@ package gr.epp.thesis;
 import gr.epp.thesis.api.GenericLabel;
 import javax.swing.ImageIcon;
 
-
 /**
  *
  * @author vigos.ioannis

@@ -2,7 +2,6 @@ package gr.epp.thesis.api;
 
 import javax.swing.JButton;
 
-
 public abstract class GenerickBlock extends JButton implements ViewItem {
 
     protected int shipIndex;
