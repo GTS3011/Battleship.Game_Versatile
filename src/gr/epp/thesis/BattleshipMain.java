@@ -87,8 +87,6 @@ public class BattleshipMain implements MouseListener, ActionListener {
             for (int i = 0; i < rows * columns; i++) {
                 tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
                 JButton temp1 = (JButton) tempClass.newInstance();
-                Method method = tempClass.getMethod("setWarship", boolean.class);
-                method.invoke(temp1, true);
                 enemyBoard.add(temp1);
                 JButton temp2 = (JButton) tempClass.newInstance();
                 myBoard.add(temp2);
@@ -96,8 +94,12 @@ public class BattleshipMain implements MouseListener, ActionListener {
             for (int i = 0; i < 6; i++) {
                 tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
                 JButton temp1 = (JButton) tempClass.newInstance();
+                Method method = tempClass.getMethod("setWarship", boolean.class);
+                method.invoke(temp1, true);
                 enemyShips.add(temp1);
                 JButton temp2 = (JButton) tempClass.newInstance();
+                Method method2 = tempClass.getMethod("setWarship", boolean.class);
+                method2.invoke(temp2, true);
                 myShips.add(temp2);
             }
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
