@@ -4,6 +4,7 @@ import gr.epp.thesis.api.GenerickBlock;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 
+
 /**
  *
  * @author vigos.ioannis
@@ -23,6 +24,7 @@ public class AdultBlock extends GenerickBlock {
      */
     @Override
     public void initializeGridBlocks() {
+        
         setBackground(Color.BLUE);
     }
 
