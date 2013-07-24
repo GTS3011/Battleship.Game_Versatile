@@ -27,6 +27,7 @@ public class BattleshipMain implements MouseListener, ActionListener {
 
     private int rows = 10;
     private int columns = 10;
+    private int shipListCount = 0;
     private JFrame compoFrame = new JFrame("Type of Player: ");
     private String[] playerType = {"Adult", "Child", "Admiral"};
     private JComboBox playerTypeList = new JComboBox(playerType);
@@ -37,8 +38,8 @@ public class BattleshipMain implements MouseListener, ActionListener {
     private JPanel downPanel = new JPanel(new BorderLayout(10, 0));
     private JPanel myBoard = new JPanel(new GridLayout(rows, columns));
     private JPanel enemyBoard = new JPanel(new GridLayout(rows, columns));
-    private JPanel myShips = new JPanel(new GridLayout(6, 1));
-    private JPanel enemyShips = new JPanel(new GridLayout(6, 1));
+    private JPanel myShips = new JPanel();
+    private JPanel enemyShips = new JPanel();
     private ViewItem view = null;
     private static Object tempObject = null;
     private static Class tempClass;
@@ -80,11 +81,10 @@ public class BattleshipMain implements MouseListener, ActionListener {
         masterFrame.add(downPanel);
         downPanel.setBackground(Color.WHITE);
         upPanel.add(enemyBoard, BorderLayout.CENTER);
-        upPanel.add(enemyShips, BorderLayout.WEST);
         downPanel.add(myBoard, BorderLayout.CENTER);
-        downPanel.add(myShips, BorderLayout.EAST);
 
         try {
+
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             for (int i = 0; i < rows * columns; i++) {
                 JButton temp1 = (JButton) tempClass.newInstance();
@@ -92,14 +92,24 @@ public class BattleshipMain implements MouseListener, ActionListener {
                 JButton temp2 = (JButton) tempClass.newInstance();
                 myBoard.add(temp2);
             }
+
+            tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
+            JPanel shipPanel1 = (JPanel) tempClass.newInstance();
+            JPanel shipPanel2 = (JPanel) tempClass.newInstance();
+            Method tempMethod = tempClass.getMethod("totalItems", null);
+            Object tempObj = tempMethod.invoke(shipPanel1, null);
+            upPanel.add(shipPanel1, BorderLayout.WEST);
+            downPanel.add(shipPanel2, BorderLayout.EAST);
+
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             Constructor tempConstr = tempClass.getConstructor(int.class, boolean.class);
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < (int) tempObj; i++) {
                 JButton temp1 = (JButton) tempConstr.newInstance(i, false);
-                enemyShips.add(temp1);
+                shipPanel1.add(temp1);
                 JButton temp2 = (JButton) tempConstr.newInstance(i, true);
-                myShips.add(temp2);
+                shipPanel2.add(temp2);
             }
+
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
             JLabel tempLabel = (JLabel) tempClass.newInstance();
             decorPanel.add(tempLabel);
@@ -122,7 +132,7 @@ public class BattleshipMain implements MouseListener, ActionListener {
     }
     //System.out.print(",  Result: " + algo.doIt(10, 5));
     //}
-    // } 
+    // }    
 
     @Override
     public void mouseClicked(MouseEvent e) {

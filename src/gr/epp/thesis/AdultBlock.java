@@ -14,8 +14,8 @@ public class AdultBlock extends GenerickBlock {
         super();
     }
 
-    public AdultBlock(int shipIndex, boolean ownership) {
-        super(shipIndex, ownership);
+    public AdultBlock(int index, boolean ownership) {
+        super(index, ownership);
     }
 
     /*
@@ -23,7 +23,7 @@ public class AdultBlock extends GenerickBlock {
      */
     @Override
     public void initializeGridBlocks() {
-        
+
         setBackground(Color.BLUE);
     }
 
@@ -31,9 +31,9 @@ public class AdultBlock extends GenerickBlock {
      * My Ship's List:
      */
     @Override
-    public void initializeShipBlocks() {
+    public void initializeShipList() {
         if (this.ownership) {
-            switch (this.shipIndex) {
+            switch (this.index) {
                 case (0):
                     setBackground(Color.GREEN);
                     setText("MY FLEET");
@@ -60,7 +60,7 @@ public class AdultBlock extends GenerickBlock {
                     break;
             }
         } else {
-            switch (shipIndex) {
+            switch (index) {
                 case (0):
                     setBackground(Color.red);
                     setText("ENEMY FLEET");

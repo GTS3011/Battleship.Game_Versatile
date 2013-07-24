@@ -14,8 +14,8 @@ public class ChildBlock extends GenerickBlock {
         super();
     }
 
-    public ChildBlock(int shipIndex, boolean ownership) {
-        super(shipIndex, ownership);
+    public ChildBlock(int index, boolean ownership) {
+        super(index, ownership);
     }
 
     /*
@@ -30,60 +30,16 @@ public class ChildBlock extends GenerickBlock {
      * My Ship's List:
      */
     @Override
-    public void initializeShipBlocks() {
+    public void initializeShipList() {
         if (this.ownership) {
-            switch (this.shipIndex) {
-                case (0):
-                    setBackground(Color.YELLOW);
-                    setText("MY FLEET");
-                    break;
-                case (1):
-                    setBackground(Color.LIGHT_GRAY);
-                    setIcon(new ImageIcon("graphics/fire.gif"));
-                    break;
-                case (2):
-                    setBackground(Color.LIGHT_GRAY);
-                    setIcon(new ImageIcon("graphics/fire.gif"));
-                    break;
-                case (3):
-                    setBackground(Color.LIGHT_GRAY);
-                    setIcon(new ImageIcon("graphics/fire.gif"));
-                    break;
-                case (4):
-                    setBackground(Color.LIGHT_GRAY);
-                    setIcon(new ImageIcon("graphics/fire.gif"));
-                    break;
-                case (5):
-                    setBackground(Color.LIGHT_GRAY);
-                    setIcon(new ImageIcon("graphics/fire.gif"));
-                    break;
+            if (this.index > -1) {
+                setBackground(Color.LIGHT_GRAY);
+                setIcon(new ImageIcon("graphics/childGridShip.gif"));
             }
         } else {
-            switch (this.shipIndex) {
-                case (0):
-                    setBackground(Color.ORANGE);
-                    setText("ENEMY FLEET");
-                    break;
-                case (1):
-                    setBackground(Color.DARK_GRAY);
-                    setIcon(new ImageIcon("graphics/fire.gif"));
-                    break;
-                case (2):
-                    setBackground(Color.DARK_GRAY);
-                    setIcon(new ImageIcon("graphics/fire.gif"));
-                    break;
-                case (3):
-                    setBackground(Color.DARK_GRAY);
-                    setIcon(new ImageIcon("graphics/fire.gif"));
-                    break;
-                case (4):
-                    setBackground(Color.DARK_GRAY);
-                    setIcon(new ImageIcon("graphics/fire.gif"));
-                    break;
-                case (5):
-                    setBackground(Color.DARK_GRAY);
-                    setIcon(new ImageIcon("graphics/fire.gif"));
-                    break;
+            if (this.index > -1) {
+                setBackground(Color.DARK_GRAY);
+                setIcon(new ImageIcon("graphics/childGridShip.gif"));
             }
         }
     }

@@ -4,30 +4,29 @@ import javax.swing.JButton;
 
 public abstract class GenerickBlock extends JButton implements ViewItem {
 
-    protected int shipIndex;
+    protected int index;
     protected boolean ownership;
 
     public GenerickBlock() {
         initializeGridBlocks();
-
     }
 
-    public GenerickBlock(int shipIndex, boolean ownership) {
-        this.shipIndex = shipIndex;
+    public GenerickBlock(int index, boolean ownership) {
+        this.index = index;
         this.ownership = ownership;
-        initializeShipBlocks();
+        initializeShipList();
     }
 
     public abstract void initializeGridBlocks();
 
-    public abstract void initializeShipBlocks();
+    public abstract void initializeShipList();
 
-    public int getShipIndex() {
-        return shipIndex;
+    public int getIndex() {
+        return index;
     }
 
-    public void setShipIndex(int shipIndex) {
-        this.shipIndex = shipIndex;
+    public void setIndex(int shipIndex) {
+        this.index = index;
     }
 
     public boolean isOwnership() {
