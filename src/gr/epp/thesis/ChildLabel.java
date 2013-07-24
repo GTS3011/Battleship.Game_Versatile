@@ -1,17 +1,17 @@
 package gr.epp.thesis;
 
+import gr.epp.thesis.api.GenericLabel;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 /**
  *
  * @author vigos.ioannis
  */
-public class ChildLabel extends JLabel implements ViewItem {
+public class ChildLabel extends GenericLabel {
 
-    ImageIcon decorImage = new ImageIcon("graphics/pirateShip.png");
-
-    public ChildLabel() {
+    @Override
+    public void setLabel() {
+        decorImage = new ImageIcon("graphics/pirateShip.png");
         setHorizontalAlignment(CENTER);
         setIcon(decorImage);
     }

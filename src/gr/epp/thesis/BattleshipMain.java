@@ -1,5 +1,6 @@
 package gr.epp.thesis;
 
+import gr.epp.thesis.api.ViewItem;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;

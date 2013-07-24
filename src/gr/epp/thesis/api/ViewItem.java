@@ -1,4 +1,4 @@
-package gr.epp.thesis;
+package gr.epp.thesis.api;
 
 import javax.swing.Icon;
 

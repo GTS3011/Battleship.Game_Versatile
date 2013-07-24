@@ -1,28 +1,38 @@
 package gr.epp.thesis;
 
+import gr.epp.thesis.api.GenerickBlock;
 import java.awt.Color;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 /**
  *
  * @author vigos.ioannis
  */
-public class ChildBlock extends JButton implements ViewItem {
+public class ChildBlock extends GenerickBlock {
+
+    public ChildBlock() {
+        super();
+    }
+
+    public ChildBlock(int shipIndex, boolean ownership) {
+        super(shipIndex, ownership);
+    }
 
     /*
      * Grid's seaBlocks:
      */
-    public ChildBlock() {
+    @Override
+    public void initializeGridBlocks() {
         setBackground(Color.CYAN);
     }
 
     /*
      * My Ship's List:
      */
-    public ChildBlock(int temp, boolean own) {
-        if (own) {
-            switch (temp) {
+    @Override
+    public void initializeShipBlocks() {
+        if (this.ownership) {
+            switch (this.shipIndex) {
                 case (0):
                     setBackground(Color.YELLOW);
                     setText("MY FLEET");
@@ -49,7 +59,7 @@ public class ChildBlock extends JButton implements ViewItem {
                     break;
             }
         } else {
-            switch (temp) {
+            switch (this.shipIndex) {
                 case (0):
                     setBackground(Color.ORANGE);
                     setText("ENEMY FLEET");
