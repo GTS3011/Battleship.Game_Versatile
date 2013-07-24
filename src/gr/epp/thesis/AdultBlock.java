@@ -20,8 +20,10 @@ public class AdultBlock extends JButton implements ViewItem {
     }
 
     @Override
-    public boolean isWarship() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void setWarship(boolean warship) {
+        if (warship) {
+            setBackground(Color.red);
+        }
     }
 
     @Override

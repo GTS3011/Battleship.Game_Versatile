@@ -8,7 +8,7 @@ import javax.swing.Icon;
  */
 public interface ViewItem {
 
-    public boolean isWarship();
+    public void setWarship(boolean warship);
 
     public void itemIcon();
 

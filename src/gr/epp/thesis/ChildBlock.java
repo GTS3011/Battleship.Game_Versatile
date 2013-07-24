@@ -20,8 +20,10 @@ public class ChildBlock extends JButton implements ViewItem {
     }
 
     @Override
-    public boolean isWarship() {
-        return false;
+    public void setWarship(boolean warship) {
+        if (warship) {
+            setBackground(Color.red);
+        }
     }
 
     @Override

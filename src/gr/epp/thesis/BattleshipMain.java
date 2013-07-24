@@ -86,23 +86,30 @@ public class BattleshipMain implements MouseListener, ActionListener {
         try {
             for (int i = 0; i < rows * columns; i++) {
                 tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
-                JButton temp1 = (JButton) createObjects(tempClass);
+                JButton temp1 = (JButton) tempClass.newInstance();
+                Method method = tempClass.getMethod("setWarship", boolean.class);
+                method.invoke(temp1, true);
                 enemyBoard.add(temp1);
-                JButton temp2 = (JButton) createObjects(tempClass);
+                JButton temp2 = (JButton) tempClass.newInstance();
                 myBoard.add(temp2);
             }
             for (int i = 0; i < 6; i++) {
                 tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
-                JButton temp1 = (JButton) createObjects(tempClass);
+                JButton temp1 = (JButton) tempClass.newInstance();
                 enemyShips.add(temp1);
-                JButton temp2 = (JButton) createObjects(tempClass);
+                JButton temp2 = (JButton) tempClass.newInstance();
                 myShips.add(temp2);
             }
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
-            JLabel tempLabel = (JLabel) createObjects(tempClass);
+            JLabel tempLabel = (JLabel) tempClass.newInstance();
             decorPanel.add(tempLabel);
-
+        } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ChildBlock.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ChildBlock.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(ChildBlock.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -116,21 +123,6 @@ public class BattleshipMain implements MouseListener, ActionListener {
     //System.out.print(",  Result: " + algo.doIt(10, 5));
     //}
     // } 
-
-    public Object createObjects(Class tempClass) {
-        try {
-            //methodInvoke(tempClass);
-            view = (ViewItem) tempClass.newInstance();
-            tempObject = (Object) view;
-            return tempObject;
-        } catch (InstantiationException ex) {
-            Logger.getLogger(ChildBlock.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(ChildBlock.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
 
     public void methodInvoke(Class tempClass1) {
         Object f = null;
