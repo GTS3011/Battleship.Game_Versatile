@@ -2,6 +2,7 @@ package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenerickBlock;
 import java.awt.Color;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
@@ -9,11 +10,11 @@ import javax.swing.ImageIcon;
  * @author vigos.ioannis
  */
 public class ChildBlock extends GenerickBlock {
-
+    
     public ChildBlock() {
         super();
     }
-
+    
     public ChildBlock(int index, boolean ownership) {
         super(index, ownership);
     }
@@ -27,20 +28,15 @@ public class ChildBlock extends GenerickBlock {
     }
 
     /*
-     * My Ship's List:
+     * Enemy's and My Ship List.
      */
     @Override
     public void initializeShipList() {
         if (this.ownership) {
-            if (this.index > -1) {
-                setBackground(Color.LIGHT_GRAY);
-                setIcon(new ImageIcon("graphics/childGridShip.gif"));
-            }
+            setBackground(Color.LIGHT_GRAY);
         } else {
-            if (this.index > -1) {
-                setBackground(Color.DARK_GRAY);
-                setIcon(new ImageIcon("graphics/childListShip.gif"));
-            }
+            setBackground(Color.DARK_GRAY);
         }
+        setIcon(new ImageIcon("graphics/childListShip.gif"));
     }
 }

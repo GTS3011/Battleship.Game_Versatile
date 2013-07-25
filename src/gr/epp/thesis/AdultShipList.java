@@ -15,7 +15,6 @@ public class AdultShipList extends GenericPanel {
     @Override
     public void initializeList() {
         setLayout(new GridLayout(6, 1));
-
     }
 
     @Override

@@ -23,12 +23,11 @@ public class AdultBlock extends GenerickBlock {
      */
     @Override
     public void initializeGridBlocks() {
-
         setBackground(Color.BLUE);
     }
 
     /*
-     * My Ship's List:
+     * Enemy's and My Ship List.
      */
     @Override
     public void initializeShipList() {

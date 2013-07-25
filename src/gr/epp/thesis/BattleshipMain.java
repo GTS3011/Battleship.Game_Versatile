@@ -96,11 +96,10 @@ public class BattleshipMain implements MouseListener, ActionListener {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
             JPanel shipPanel1 = (JPanel) tempClass.newInstance();
             JPanel shipPanel2 = (JPanel) tempClass.newInstance();
-            Method tempMethod = tempClass.getMethod("totalItems", null);
-            Object tempObj = tempMethod.invoke(shipPanel1, null);
+            Method tempMethod = tempClass.getMethod("totalItems", (Class) null);
+            Object tempObj = tempMethod.invoke(shipPanel1, (Object) null);
             upPanel.add(shipPanel1, BorderLayout.WEST);
             downPanel.add(shipPanel2, BorderLayout.EAST);
-
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             Constructor tempConstr = tempClass.getConstructor(int.class, boolean.class);
             for (int i = 0; i < (int) tempObj; i++) {
@@ -113,6 +112,7 @@ public class BattleshipMain implements MouseListener, ActionListener {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
             JLabel tempLabel = (JLabel) tempClass.newInstance();
             decorPanel.add(tempLabel);
+
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -124,15 +124,7 @@ public class BattleshipMain implements MouseListener, ActionListener {
         }
 
         masterFrame.validate();
-
-        //for (int i = 0; i < panel.getComponentCount(); i++) {
-        //  Method m[] = c[i].getDeclaredMethods();
-        //for (int j = 0; j < m.length; j++) {
-        //  System.out.print("Method: " + m[j].getName());
     }
-    //System.out.print(",  Result: " + algo.doIt(10, 5));
-    //}
-    // }    
 
     @Override
     public void mouseClicked(MouseEvent e) {
