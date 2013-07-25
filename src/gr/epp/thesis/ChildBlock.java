@@ -39,7 +39,7 @@ public class ChildBlock extends GenerickBlock {
         } else {
             if (this.index > -1) {
                 setBackground(Color.DARK_GRAY);
-                setIcon(new ImageIcon("graphics/childGridShip.gif"));
+                setIcon(new ImageIcon("graphics/childListShip.gif"));
             }
         }
     }
