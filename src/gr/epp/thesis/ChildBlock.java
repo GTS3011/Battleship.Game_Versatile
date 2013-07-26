@@ -38,4 +38,9 @@ public class ChildBlock extends GenerickBlock {
         }
         setIcon(new ImageIcon("graphics/childListShip.gif"));
     }
+
+    @Override
+    public void stateChanged(Object obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

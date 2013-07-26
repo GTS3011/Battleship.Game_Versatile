@@ -93,4 +93,9 @@ public class AdultBlock extends GenerickBlock {
         }
         System.out.println("DONE!");
     }    
+
+    @Override
+    public void stateChanged(Object obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -15,4 +15,9 @@ public class ChildLabel extends GenericLabel {
         setHorizontalAlignment(CENTER);
         setIcon(decorImage);
     }
+
+    @Override
+    public void stateChanged(Object obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

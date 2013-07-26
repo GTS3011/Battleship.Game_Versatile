@@ -1,9 +1,10 @@
 package gr.epp.thesis.api;
 
+import gr.epp.thesis.mvc.View;
 import gr.epp.thesis.BoardListener;
 import javax.swing.JButton;
 
-public abstract class GenerickBlock extends JButton implements ViewItem {
+public abstract class GenerickBlock extends JButton implements View {
 
     protected int index;
     protected boolean ownership;
