@@ -8,8 +8,6 @@ import javax.swing.JPanel;
  */
 public abstract class GenericPanel extends JPanel implements ViewItem {
 
-    protected int rows;
-    protected int columns;
     protected int totalItems;
 
     public GenericPanel() {

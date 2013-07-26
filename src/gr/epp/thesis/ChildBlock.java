@@ -2,7 +2,6 @@ package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenerickBlock;
 import java.awt.Color;
-import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**

@@ -27,7 +27,6 @@ public class BattleshipMain implements MouseListener, ActionListener {
 
     private int rows = 10;
     private int columns = 10;
-    private int shipListCount = 0;
     private JFrame compoFrame = new JFrame("Type of Player: ");
     private String[] playerType = {"Adult", "Child", "Admiral"};
     private JComboBox playerTypeList = new JComboBox(playerType);
@@ -38,12 +37,7 @@ public class BattleshipMain implements MouseListener, ActionListener {
     private JPanel downPanel = new JPanel(new BorderLayout(10, 0));
     private JPanel myBoard = new JPanel(new GridLayout(rows, columns));
     private JPanel enemyBoard = new JPanel(new GridLayout(rows, columns));
-    private JPanel myShips = new JPanel();
-    private JPanel enemyShips = new JPanel();
-    private ViewItem view = null;
-    private static Object tempObject = null;
     private static Class tempClass;
-    private AttackListener customListener;
 
     /*
      * Player Selection
@@ -96,8 +90,8 @@ public class BattleshipMain implements MouseListener, ActionListener {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
             JPanel shipPanel1 = (JPanel) tempClass.newInstance();
             JPanel shipPanel2 = (JPanel) tempClass.newInstance();
-            Method tempMethod = tempClass.getMethod("totalItems", (Class) null);
-            Object tempObj = tempMethod.invoke(shipPanel1, (Object) null);
+            Method tempMethod = tempClass.getMethod("totalItems", (Class[]) null);
+            Object tempObj = tempMethod.invoke(shipPanel1, (Object[]) null);
             upPanel.add(shipPanel1, BorderLayout.WEST);
             downPanel.add(shipPanel2, BorderLayout.EAST);
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
