@@ -9,11 +9,11 @@ import javax.swing.ImageIcon;
  * @author vigos.ioannis
  */
 public class ChildBlock extends GenerickBlock {
-    
+
     public ChildBlock() {
         super();
     }
-    
+
     public ChildBlock(int index, boolean ownership) {
         super(index, ownership);
     }

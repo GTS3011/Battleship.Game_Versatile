@@ -1,6 +1,6 @@
 package gr.epp.thesis.api;
 
-import gr.epp.thesis.GameControl;
+import gr.epp.thesis.BoardListener;
 import javax.swing.JButton;
 
 public abstract class GenerickBlock extends JButton implements ViewItem {
@@ -8,29 +8,31 @@ public abstract class GenerickBlock extends JButton implements ViewItem {
     protected int index;
     protected boolean ownership;
     protected int temp;
+    protected int totalBlocks;
 
     public GenerickBlock() {
-        addMouseListener(new GameControl());
+        addMouseListener(new BoardListener(false));
         initializeGridBlocks();
     }
 
     public GenerickBlock(int index, boolean ownership) {
-        addMouseListener(new GameControl());
         this.index = index;
         this.ownership = ownership;
         initializeShipList();
+        addMouseListener(new BoardListener(true, getTotalBlocks()));
     }
 
     public abstract void initializeGridBlocks();
 
     public abstract void initializeShipList();
 
-    public void setTotalBlocks(int temp) {
-        this.temp = temp;
+    public void setTotalBlocks(int totalBlocks) {
+        System.out.println("" + totalBlocks);
+        this.totalBlocks = totalBlocks;
     }
 
     public int getTotalBlocks() {
-        return temp;
+        return totalBlocks;
     }
 
     public int getIndex() {

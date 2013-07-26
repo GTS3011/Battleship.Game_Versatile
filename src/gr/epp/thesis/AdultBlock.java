@@ -91,5 +91,6 @@ public class AdultBlock extends GenerickBlock {
                     break;
             }
         }
-    }
+        System.out.println("DONE!");
+    }    
 }
