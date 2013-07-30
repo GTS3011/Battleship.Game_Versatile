@@ -14,6 +14,7 @@ public abstract class GenerickBlock extends JButton implements View {
     protected BoardListener boardListener;
 
     public GenerickBlock() {
+        this.boardListener = boardListener;
         addMouseListener(boardListener);
         initializeGridBlocks();
     }
@@ -22,6 +23,7 @@ public abstract class GenerickBlock extends JButton implements View {
         this.index = index;
         this.ownership = ownership;
         initializeShipList();
+        this.boardListener = boardListener;
         addMouseListener(boardListener);
     }
 

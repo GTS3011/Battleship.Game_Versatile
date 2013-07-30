@@ -26,11 +26,7 @@ public class BoardListener implements MouseListener {
     private boolean horizontal = true;
     private boolean shipOnGrid = false;
 
-    public BoardListener(boolean listShip) {
-        this.listShip = listShip;
-    }
-
-    public BoardListener(boolean listShip, int shipBlocks) {
+    public BoardListener() {
         this.listShip = listShip;
         //setShipBlocks(shipBlocks);
     }
