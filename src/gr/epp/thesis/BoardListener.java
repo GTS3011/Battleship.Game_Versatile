@@ -32,7 +32,15 @@ public class BoardListener implements MouseListener {
 
     public BoardListener(boolean listShip, int shipBlocks) {
         this.listShip = listShip;
+        //setShipBlocks(shipBlocks);
+    }
+
+    public void setShipBlocks(int shipBlocks) {
         this.shipBlocks = shipBlocks;
+    }
+
+    public int getShipBlocks() {
+        return shipBlocks;
     }
 
     @Override
@@ -40,7 +48,9 @@ public class BoardListener implements MouseListener {
         GenerickBlock pressedButton = (GenerickBlock) e.getSource();
         parentPanel = (JPanel) pressedButton.getParent();
         if (listShip) {
-            System.out.println("" + shipBlocks);
+            System.out.println("" + pressedButton.getTotalBlocks());
+            setShipBlocks(pressedButton.getTotalBlocks());
+            System.out.println("nai-> " + getShipBlocks());
         } else {
             if (e.getButton() == MouseEvent.BUTTON3) {
                 mouseExited(e);
@@ -98,6 +108,7 @@ public class BoardListener implements MouseListener {
             getBlockPosition((GenerickBlock) e.getSource());
             switch (orientation) {
                 case (3):
+                    System.out.println("" + columns + " " + getShipBlocks() + " " + tempHold);
                     if (coords[1] < (columns - (shipBlocks - 1)) && tempHold != shipBlocks) {
                         if (checkCollision(3)) {
                             battleFormations(3, true, false);

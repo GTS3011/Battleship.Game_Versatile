@@ -11,9 +11,10 @@ public abstract class GenerickBlock extends JButton implements View {
     protected int temp;
     protected int totalBlocks;
     protected boolean warship = false;
+    protected BoardListener boardListener;
 
     public GenerickBlock() {
-        addMouseListener(new BoardListener(false));
+        addMouseListener(boardListener);
         initializeGridBlocks();
     }
 
