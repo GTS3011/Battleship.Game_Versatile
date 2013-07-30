@@ -22,7 +22,7 @@ public abstract class GenerickBlock extends JButton implements View {
         this.index = index;
         this.ownership = ownership;
         initializeShipList();
-        addMouseListener(new BoardListener(true, getTotalBlocks()));
+        addMouseListener(boardListener);
     }
 
     public abstract void initializeGridBlocks();
