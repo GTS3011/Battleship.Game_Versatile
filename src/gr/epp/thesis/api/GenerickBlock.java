@@ -28,11 +28,16 @@ public abstract class GenerickBlock extends JButton implements View {
 
     public abstract void initializeShipList();
 
-    public void isWarshipOn(boolean warship) {
+    public void setWarshipOn(boolean warship) {
         this.warship = warship;
     }
 
+    public boolean isWarshipOn() {
+        return warship;
+    }
+
     public void setTotalBlocks(int totalBlocks) {
+        System.out.println("ola kala ree...");
         this.totalBlocks = totalBlocks;
     }
 

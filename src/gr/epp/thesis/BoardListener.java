@@ -22,6 +22,7 @@ public class BoardListener implements MouseListener {
     private int orientation = 3;
     private int shipBlocks = 0;
     private JPanel parentPanel = null;
+    private int tempHold = 0;
 
     public BoardListener(boolean listShip) {
         this.listShip = listShip;
@@ -34,7 +35,7 @@ public class BoardListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        JButton pressedButton = (JButton) e.getSource();
+        GenerickBlock pressedButton = (GenerickBlock) e.getSource();
         if (listShip) {
             System.out.println("" + shipBlocks);
         } else {
@@ -75,7 +76,7 @@ public class BoardListener implements MouseListener {
                 }
                 break;
         }
-        validate();
+        parentPanel.validate();
     }
 
     @Override
@@ -101,10 +102,9 @@ public class BoardListener implements MouseListener {
      * A method to create shipBlocks of MyBoard Panel. This method also adds
      * MouseListener to each ShipBlock.
      */
-    private ShipBlock createShipBlock(int shipBlocks, int orientation, int currBlock) {
-        ShipBlock shipBlock = new ShipBlock(shipBlocks, orientation, currBlock, true);
-        shipBlock.addMouseListener(this);
-        return shipBlock;
+    public void setWarshipBlock(GenerickBlock block) {
+        block.setBackground(Color.DARK_GRAY);
+        block.setWarshipOn(true);
     }
 
     /**
@@ -117,7 +117,8 @@ public class BoardListener implements MouseListener {
         switch (orientation) {
             case (3):
                 for (int i = coords[2]; i < (coords[2] + shipBlocks); i++) {
-                    if (parentPanel.getComponent(i) instanceof ShipBlock) {
+                    GenerickBlock temp = (GenerickBlock) parentPanel.getComponent(i);
+                    if (temp.isWarshipOn()) {
                         freeArea = false;
                         break;
                     }
@@ -125,7 +126,8 @@ public class BoardListener implements MouseListener {
                 return freeArea;
             case (6):
                 for (int i = coords[2]; i < (coords[2] + (rows * shipBlocks)); i = i + rows) {
-                    if (parentPanel.getComponent(i) instanceof ShipBlock) {
+                    GenerickBlock temp = (GenerickBlock) parentPanel.getComponent(i);
+                    if (temp.isWarshipOn()) {
                         freeArea = false;
                         break;
                     }
@@ -154,8 +156,7 @@ public class BoardListener implements MouseListener {
                     } else if (exiting) {
                         parentPanel.getComponent(coords[2] + i).setBackground(Color.CYAN);
                     } else {
-                        parentPanel.remove(parentPanel.getComponent(coords[2] + i));
-                        add(createShipBlock(shipBlocks, orientation, currBlock), coords[2] + i);
+                        setWarshipBlock((GenerickBlock) parentPanel.getComponent(coords[2] + i));
                     }
                     currBlock++;
                 }
@@ -167,8 +168,7 @@ public class BoardListener implements MouseListener {
                     } else if (exiting) {
                         parentPanel.getComponent(coords[2] + (i * rows)).setBackground(Color.CYAN);
                     } else {
-                        parentPanel.remove(parentPanel.getComponent(coords[2] + (i * rows)));
-                        add(createShipBlock(shipBlocks, orientation, currBlock), coords[2] + (i * rows));
+                        setWarshipBlock((GenerickBlock) parentPanel.getComponent(coords[2] + i));
                     }
                     currBlock++;
                 }
