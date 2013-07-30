@@ -37,7 +37,6 @@ public abstract class GenerickBlock extends JButton implements View {
     }
 
     public void setTotalBlocks(int totalBlocks) {
-        System.out.println("ola kala ree...");
         this.totalBlocks = totalBlocks;
     }
 

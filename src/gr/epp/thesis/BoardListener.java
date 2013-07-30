@@ -23,6 +23,8 @@ public class BoardListener implements MouseListener {
     private int shipBlocks = 0;
     private JPanel parentPanel = null;
     private int tempHold = 0;
+    private boolean horizontal = true;
+    private boolean shipOnGrid = false;
 
     public BoardListener(boolean listShip) {
         this.listShip = listShip;
@@ -36,12 +38,45 @@ public class BoardListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         GenerickBlock pressedButton = (GenerickBlock) e.getSource();
+        parentPanel = (JPanel) pressedButton.getParent();
         if (listShip) {
             System.out.println("" + shipBlocks);
         } else {
-            parentPanel = (JPanel) pressedButton.getParent();
-            pressedButton.setBackground(Color.YELLOW);
-            getBlockPosition(pressedButton);
+            if (e.getButton() == MouseEvent.BUTTON3) {
+                mouseExited(e);
+                horizontal ^= true;
+                if (horizontal) {
+                    orientation = 3;
+                    mouseEntered(e);
+                } else {
+                    orientation = 6;
+                    mouseEntered(e);
+                }
+                parentPanel.validate();
+            } else {
+                getBlockPosition((GenerickBlock) e.getSource());
+                switch (orientation) {
+                    case (3):
+                        if (coords[1] < (columns - (shipBlocks - 1)) && tempHold != shipBlocks) {
+                            if (checkCollision(3)) {
+                                battleFormations(3, false, false);
+                                tempHold = shipBlocks;
+                                shipOnGrid = true;
+                            }
+                        }
+                        break;
+                    case (6):
+                        if (coords[0] < rows - (shipBlocks - 1) && tempHold != shipBlocks) {
+                            if (checkCollision(6)) {
+                                battleFormations(6, false, false);
+                                tempHold = shipBlocks;
+                                shipOnGrid = true;
+                            }
+                        }
+                        break;
+                }
+                parentPanel.validate();
+            }
         }
 
     }
@@ -59,35 +94,61 @@ public class BoardListener implements MouseListener {
      */
     @Override
     public void mouseEntered(MouseEvent e) {
-        getBlockPosition((JButton) e.getSource());
-        switch (orientation) {
-            case (3):
-                if (coords[1] < (columns - (shipBlocks - 1)) && tempHold != shipBlocks) {
-                    if (checkCollision(3)) {
-                        battleFormations(3, true, false);
+        if (!listShip) {
+            getBlockPosition((GenerickBlock) e.getSource());
+            switch (orientation) {
+                case (3):
+                    if (coords[1] < (columns - (shipBlocks - 1)) && tempHold != shipBlocks) {
+                        if (checkCollision(3)) {
+                            battleFormations(3, true, false);
+                        }
                     }
-                }
-                break;
-            case (6):
-                if (coords[0] < rows - (shipBlocks - 1) && tempHold != shipBlocks) {
-                    if (checkCollision(6)) {
-                        battleFormations(6, true, false);
+                    break;
+                case (6):
+                    if (coords[0] < rows - (shipBlocks - 1) && tempHold != shipBlocks) {
+                        if (checkCollision(6)) {
+                            battleFormations(6, true, false);
+                        }
                     }
-                }
-                break;
+                    break;
+            }
+            parentPanel.validate();
         }
-        parentPanel.validate();
     }
 
+    /* 
+     * Code about the Exit Hover effect. On Mouse Exited, and with the proper orientation, the grid has to paint each SeaBlock again.
+     */
     @Override
     public void mouseExited(MouseEvent e) {
+        if (!listShip) {
+            getBlockPosition((GenerickBlock) e.getSource());
+            switch (orientation) {
+                case (3):
+                    if (coords[1] < (columns - (shipBlocks - 1))) {
+                        if (checkCollision(3)) {
+                            battleFormations(3, false, true);
+                        }
+                    }
+                    break;
+                case (6):
+                    if (coords[0] < rows - (shipBlocks - 1)) {
+                        if (checkCollision(6)) {
+                            battleFormations(6, false, true);
+                        }
+                    }
+                    break;
+            }
+            parentPanel.validate();
+        }
     }
 
     /**
      * A method that instantly, gives each SeaBlock unique coordinates, on the
      * grid.
      */
-    public void getBlockPosition(JButton pressedBlock) {
+    public void getBlockPosition(GenerickBlock pressedBlock) {
+        parentPanel = (JPanel) pressedBlock.getParent();
         for (int i = 0; i < parentPanel.getComponentCount(); i++) {
             if (parentPanel.getComponent(i) == pressedBlock) {
                 coords[0] = i / rows;
