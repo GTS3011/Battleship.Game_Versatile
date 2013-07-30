@@ -91,8 +91,7 @@ public class AdultBlock extends GenerickBlock {
                     break;
             }
         }
-        System.out.println("DONE!");
-    }    
+    }
 
     @Override
     public void stateChanged(Object obj) {

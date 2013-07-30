@@ -10,6 +10,7 @@ public abstract class GenerickBlock extends JButton implements View {
     protected boolean ownership;
     protected int temp;
     protected int totalBlocks;
+    protected boolean warship = false;
 
     public GenerickBlock() {
         addMouseListener(new BoardListener(false));
@@ -27,8 +28,11 @@ public abstract class GenerickBlock extends JButton implements View {
 
     public abstract void initializeShipList();
 
+    public void isWarshipOn(boolean warship) {
+        this.warship = warship;
+    }
+
     public void setTotalBlocks(int totalBlocks) {
-        System.out.println("" + totalBlocks);
         this.totalBlocks = totalBlocks;
     }
 
