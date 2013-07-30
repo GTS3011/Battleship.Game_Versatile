@@ -25,6 +25,7 @@ import javax.swing.JPanel;
  */
 public class BattleshipMain implements MouseListener, ActionListener {
 
+    private GameControl gameControl = new GameControl();
     private int rows = 10;
     private int columns = 10;
     private JFrame compoFrame = new JFrame("Type of Player: ");

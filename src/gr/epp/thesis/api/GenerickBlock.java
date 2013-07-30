@@ -1,7 +1,7 @@
 package gr.epp.thesis.api;
 
 import gr.epp.thesis.mvc.View;
-import gr.epp.thesis.BoardListener;
+import gr.epp.thesis.GameControl;
 import javax.swing.JButton;
 
 public abstract class GenerickBlock extends JButton implements View {
@@ -11,7 +11,8 @@ public abstract class GenerickBlock extends JButton implements View {
     protected int temp;
     protected int totalBlocks;
     protected boolean warship = false;
-    protected BoardListener boardListener;
+    protected boolean listShips = false;
+    protected GameControl boardListener = new GameControl();
 
     public GenerickBlock() {
         this.boardListener = boardListener;
@@ -30,6 +31,14 @@ public abstract class GenerickBlock extends JButton implements View {
     public abstract void initializeGridBlocks();
 
     public abstract void initializeShipList();
+
+    public void setListShips(boolean listShips) {
+        this.listShips = listShips;
+    }
+
+    public boolean isLisShips() {
+        return listShips;
+    }
 
     public void setWarshipOn(boolean warship) {
         this.warship = warship;
