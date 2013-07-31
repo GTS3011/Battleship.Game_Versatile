@@ -51,14 +51,6 @@ public abstract class GenerickBlock extends JButton implements View {
         return totalBlocks;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int shipIndex) {
-        this.index = index;
-    }
-
     public boolean isOwnership() {
         return ownership;
     }

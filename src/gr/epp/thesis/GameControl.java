@@ -1,12 +1,9 @@
 package gr.epp.thesis;
 
-import com.sun.xml.internal.ws.api.FeatureConstructor;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.lang.reflect.Method;
 import gr.epp.thesis.api.GenerickBlock;
 import java.awt.Color;
-import javax.swing.JButton;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
 /**

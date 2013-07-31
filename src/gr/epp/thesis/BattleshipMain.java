@@ -87,6 +87,10 @@ public class BattleshipMain implements ActionListener {
                 myBoard.add(temp2);
             }
 
+            tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
+            GenericLabel tempLabel = (GenericLabel) tempClass.newInstance();
+            decorPanel.add(tempLabel);
+
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
             JPanel shipPanel1 = (JPanel) tempClass.newInstance();
             JPanel shipPanel2 = (JPanel) tempClass.newInstance();
@@ -104,10 +108,6 @@ public class BattleshipMain implements ActionListener {
                 temp2.addMouseListener(gameControl);
                 shipPanel2.add(temp2);
             }
-
-            tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
-            GenericLabel tempLabel = (GenericLabel) tempClass.newInstance();
-            decorPanel.add(tempLabel);
 
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
