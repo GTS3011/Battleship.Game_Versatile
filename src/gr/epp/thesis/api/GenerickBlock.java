@@ -12,11 +12,8 @@ public abstract class GenerickBlock extends JButton implements View {
     protected int totalBlocks;
     protected boolean warship = false;
     protected boolean listShips = false;
-    protected GameControl boardListener = new GameControl();
 
     public GenerickBlock() {
-        this.boardListener = boardListener;
-        addMouseListener(boardListener);
         initializeGridBlocks();
     }
 
@@ -24,8 +21,6 @@ public abstract class GenerickBlock extends JButton implements View {
         this.index = index;
         this.ownership = ownership;
         initializeShipList();
-        this.boardListener = boardListener;
-        addMouseListener(boardListener);
     }
 
     public abstract void initializeGridBlocks();
