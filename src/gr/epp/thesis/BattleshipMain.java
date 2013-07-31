@@ -1,31 +1,27 @@
 package gr.epp.thesis;
 
-import gr.epp.thesis.mvc.View;
+import gr.epp.thesis.api.GenericLabel;
+import gr.epp.thesis.api.GenerickBlock;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
  *
  * @author vigos.ioannis
  */
-public class BattleshipMain implements MouseListener, ActionListener {
+public class BattleshipMain implements ActionListener {
 
-    private GameControl gameControl = new GameControl();
     private int rows = 10;
     private int columns = 10;
     private JFrame compoFrame = new JFrame("Type of Player: ");
@@ -39,6 +35,7 @@ public class BattleshipMain implements MouseListener, ActionListener {
     private JPanel myBoard = new JPanel(new GridLayout(rows, columns));
     private JPanel enemyBoard = new JPanel(new GridLayout(rows, columns));
     private static Class tempClass;
+    private GameControl gameControl = new GameControl(myBoard);
 
     /*
      * Player Selection
@@ -79,16 +76,19 @@ public class BattleshipMain implements MouseListener, ActionListener {
         downPanel.add(myBoard, BorderLayout.CENTER);
 
         try {
-
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             for (int i = 0; i < rows * columns; i++) {
-                JButton temp1 = (JButton) tempClass.newInstance();
+                GenerickBlock temp1 = (GenerickBlock) tempClass.newInstance();
                 temp1.addMouseListener(gameControl);
                 enemyBoard.add(temp1);
-                JButton temp2 = (JButton) tempClass.newInstance();
+                GenerickBlock temp2 = (GenerickBlock) tempClass.newInstance();
                 temp2.addMouseListener(gameControl);
                 myBoard.add(temp2);
             }
+
+            tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
+            GenericLabel tempLabel = (GenericLabel) tempClass.newInstance();
+            decorPanel.add(tempLabel);
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
             JPanel shipPanel1 = (JPanel) tempClass.newInstance();
@@ -100,17 +100,13 @@ public class BattleshipMain implements MouseListener, ActionListener {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             Constructor tempConstr = tempClass.getConstructor(int.class, boolean.class);
             for (int i = 0; i < (int) tempObj; i++) {
-                JButton temp1 = (JButton) tempConstr.newInstance(i, false);
+                GenerickBlock temp1 = (GenerickBlock) tempConstr.newInstance(i, false);
                 temp1.addMouseListener(gameControl);
                 shipPanel1.add(temp1);
-                JButton temp2 = (JButton) tempConstr.newInstance(i, true);
+                GenerickBlock temp2 = (GenerickBlock) tempConstr.newInstance(i, true);
                 temp2.addMouseListener(gameControl);
                 shipPanel2.add(temp2);
             }
-
-            tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
-            JLabel tempLabel = (JLabel) tempClass.newInstance();
-            decorPanel.add(tempLabel);
 
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -123,26 +119,6 @@ public class BattleshipMain implements MouseListener, ActionListener {
         }
 
         masterFrame.validate();
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
     }
 
     @Override

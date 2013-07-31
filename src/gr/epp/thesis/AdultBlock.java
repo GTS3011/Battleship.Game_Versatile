@@ -23,7 +23,7 @@ public class AdultBlock extends GenerickBlock {
      */
     @Override
     public void initializeGridBlocks() {
-        setBackground(Color.BLUE);
+        setBackground(Color.CYAN);
     }
 
     /*
@@ -41,31 +41,31 @@ public class AdultBlock extends GenerickBlock {
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/aircraftCarrier.gif"));
                     setTotalBlocks(5);
-                    setListShips(true);
+                    setOnShipsList(true);
                     break;
                 case (2):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/battleship.gif"));
                     setTotalBlocks(4);
-                    setListShips(true);
+                    setOnShipsList(true);
                     break;
                 case (3):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/submarine.gif"));
                     setTotalBlocks(3);
-                    setListShips(true);
+                    setOnShipsList(true);
                     break;
                 case (4):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/destroyer.gif"));
                     setTotalBlocks(2);
-                    setListShips(true);
+                    setOnShipsList(true);
                     break;
                 case (5):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/patrolShip.gif"));
                     setTotalBlocks(1);
-                    setListShips(true);
+                    setOnShipsList(true);
                     break;
             }
         } else {

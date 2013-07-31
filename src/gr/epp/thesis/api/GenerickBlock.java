@@ -11,7 +11,7 @@ public abstract class GenerickBlock extends JButton implements View {
     protected int temp;
     protected int totalBlocks;
     protected boolean warship = false;
-    protected boolean listShips = false;
+    protected boolean onShipsList = false;
 
     public GenerickBlock() {
         initializeGridBlocks();
@@ -27,12 +27,12 @@ public abstract class GenerickBlock extends JButton implements View {
 
     public abstract void initializeShipList();
 
-    public void setListShips(boolean listShips) {
-        this.listShips = listShips;
+    public void setOnShipsList(boolean onShipsList) {
+        this.onShipsList = onShipsList;
     }
 
-    public boolean isLisShips() {
-        return listShips;
+    public boolean isOnShipsList() {
+        return onShipsList;
     }
 
     public void setWarshipOn(boolean warship) {
@@ -49,14 +49,6 @@ public abstract class GenerickBlock extends JButton implements View {
 
     public int getTotalBlocks() {
         return totalBlocks;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int shipIndex) {
-        this.index = index;
     }
 
     public boolean isOwnership() {
