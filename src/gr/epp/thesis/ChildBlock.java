@@ -33,6 +33,8 @@ public class ChildBlock extends GenerickBlock {
     public void initializeShipList() {
         if (this.ownership) {
             setBackground(Color.LIGHT_GRAY);
+            setTotalBlocks(1);
+            setOnShipsList(true);
         } else {
             setBackground(Color.DARK_GRAY);
         }
