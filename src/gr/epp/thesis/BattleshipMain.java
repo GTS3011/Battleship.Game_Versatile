@@ -22,8 +22,10 @@ import javax.swing.JPanel;
  */
 public class BattleshipMain implements ActionListener {
 
-    private int rows = 10;
-    private int columns = 10;
+    private int rows = 0;
+    private int columns = 0;
+    private int frameWidth = 0;
+    private int frameHeight = 0;
     private JFrame compoFrame = new JFrame("Type of Player: ");
     private String[] playerType = {"Adult", "Child", "Admiral"};
     private JComboBox playerTypeList = new JComboBox(playerType);
@@ -32,8 +34,8 @@ public class BattleshipMain implements ActionListener {
     private JPanel upPanel = new JPanel(new BorderLayout(10, 0));
     private JPanel decorPanel = new JPanel();
     private JPanel downPanel = new JPanel(new BorderLayout(10, 0));
-    private JPanel myBoard = new JPanel(new GridLayout(rows, columns));
-    private JPanel enemyBoard = new JPanel(new GridLayout(rows, columns));
+    private JPanel myBoard = new JPanel();
+    private JPanel enemyBoard = new JPanel();
     private static Class tempClass;
     private GameControl gameControl = new GameControl(myBoard);
 
@@ -53,13 +55,13 @@ public class BattleshipMain implements ActionListener {
     /*
      * Main Game
      */
-    public BattleshipMain(String currentPlayer) {
+    public BattleshipMain(String currentPlayer, int rows, int columns, int frameWidth, int frameHeight) {
 
         /* All graphic contents of the game.
          * 
          */
-        masterFrame.setSize(450, 900);
-        masterFrame.setResizable(false);
+        masterFrame.setSize(frameWidth, frameHeight);
+        masterFrame.setResizable(true);
         masterFrame.setVisible(true);
         masterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         masterFrame.setLocationRelativeTo(null);
@@ -73,9 +75,13 @@ public class BattleshipMain implements ActionListener {
         masterFrame.add(downPanel);
         downPanel.setBackground(Color.WHITE);
         upPanel.add(enemyBoard, BorderLayout.CENTER);
+        enemyBoard.setLayout(new GridLayout(rows, columns));
         downPanel.add(myBoard, BorderLayout.CENTER);
+        myBoard.setLayout(new GridLayout(rows, columns));
+        upPanel.setSize(600, 500);
 
         try {
+
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             for (int i = 0; i < rows * columns; i++) {
                 GenerickBlock temp1 = (GenerickBlock) tempClass.newInstance();
@@ -128,7 +134,18 @@ public class BattleshipMain implements ActionListener {
         currentPlayer = playerType;
         compoFrame.setEnabled(false);
         compoFrame.dispose();
-        new BattleshipMain(currentPlayer);
+        if (currentPlayer.equals("Child") || currentPlayer.equals("Adult")) {
+            rows = 10;
+            columns = 10;
+            frameWidth = 450;
+            frameHeight = 900;
+        } else {
+            rows = 20;
+            columns = 20;
+            frameWidth = 525;
+            frameHeight = 1050;
+        }
+        new BattleshipMain(currentPlayer, rows, columns, frameWidth, frameHeight);
     }
 
     public static void main(String[] args) {

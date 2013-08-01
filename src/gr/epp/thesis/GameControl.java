@@ -34,8 +34,8 @@ public class GameControl implements MouseListener {
         onShipsList = pressedButton.isOnShipsList();
         if (onShipsList) {
             currentShip = pressedButton;
-            setShipBlocks(pressedButton.getID() - 100);
-            System.out.println("pirame: " + getShipBlocks());
+            setShipBlocks(pressedButton.getTotalBlocks());
+            System.out.println("" + pressedButton.getTotalBlocks());
         } else {
             if (e.getButton() == MouseEvent.BUTTON3) {
                 mouseExited(e);

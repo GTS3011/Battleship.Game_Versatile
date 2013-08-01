@@ -40,31 +40,31 @@ public class AdultBlock extends GenerickBlock {
                 case (1):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/aircraftCarrier.gif"));
-                    setID(105);
+                    setTotalBlocks(5);
                     setOnShipsList(true);
                     break;
                 case (2):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/battleship.gif"));
-                    setID(104);
+                    setTotalBlocks(4);
                     setOnShipsList(true);
                     break;
                 case (3):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/submarine.gif"));
-                    setID(103);
+                    setTotalBlocks(3);
                     setOnShipsList(true);
                     break;
                 case (4):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/destroyer.gif"));
-                    setID(102);
+                    setTotalBlocks(2);
                     setOnShipsList(true);
                     break;
                 case (5):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/patrolShip.gif"));
-                    setID(101);
+                    setTotalBlocks(1);
                     setOnShipsList(true);
                     break;
             }
