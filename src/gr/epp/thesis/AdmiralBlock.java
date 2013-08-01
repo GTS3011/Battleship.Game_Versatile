@@ -1,6 +1,6 @@
 package gr.epp.thesis;
 
-import gr.epp.thesis.api.GenerickBlock;
+import gr.epp.thesis.api.GenericBlock;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 
@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
  *
  * @author USER1
  */
-public class AdmiralBlock extends GenerickBlock {
+public class AdmiralBlock extends GenericBlock {
 
     public AdmiralBlock() {
     }
@@ -19,7 +19,8 @@ public class AdmiralBlock extends GenerickBlock {
 
     @Override
     public void initializeGridBlocks() {
-        setBackground(Color.CYAN.darker());
+        setSeaColor(Color.CYAN.darker());
+        setBackground(getSeaColor());
     }
 
     @Override

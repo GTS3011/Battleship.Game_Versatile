@@ -1,7 +1,7 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericLabel;
-import gr.epp.thesis.api.GenerickBlock;
+import gr.epp.thesis.api.GenericBlock;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -81,13 +81,13 @@ public class BattleshipMain implements ActionListener {
         upPanel.setSize(600, 500);
 
         try {
-
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
+            GenericBlock tempSeaColor = (GenericBlock) tempClass.newInstance();
             for (int i = 0; i < rows * columns; i++) {
-                GenerickBlock temp1 = (GenerickBlock) tempClass.newInstance();
+                GenericBlock temp1 = (GenericBlock) tempClass.newInstance();
                 temp1.addMouseListener(gameControl);
                 enemyBoard.add(temp1);
-                GenerickBlock temp2 = (GenerickBlock) tempClass.newInstance();
+                GenericBlock temp2 = (GenericBlock) tempClass.newInstance();
                 temp2.addMouseListener(gameControl);
                 myBoard.add(temp2);
             }
@@ -106,13 +106,15 @@ public class BattleshipMain implements ActionListener {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             Constructor tempConstr = tempClass.getConstructor(int.class, boolean.class);
             for (int i = 0; i < (int) tempObj; i++) {
-                GenerickBlock temp1 = (GenerickBlock) tempConstr.newInstance(i, false);
+                GenericBlock temp1 = (GenericBlock) tempConstr.newInstance(i, false);
                 temp1.addMouseListener(gameControl);
                 shipPanel1.add(temp1);
-                GenerickBlock temp2 = (GenerickBlock) tempConstr.newInstance(i, true);
+                GenericBlock temp2 = (GenericBlock) tempConstr.newInstance(i, true);
                 temp2.addMouseListener(gameControl);
                 shipPanel2.add(temp2);
             }
+
+            gameControl.setCurrentPlayerValues(currentPlayer, tempSeaColor.getSeaColor());
 
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -123,7 +125,6 @@ public class BattleshipMain implements ActionListener {
         } catch (IllegalAccessException ex) {
             Logger.getLogger(ChildBlock.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         masterFrame.validate();
     }
 

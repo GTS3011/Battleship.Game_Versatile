@@ -1,6 +1,6 @@
 package gr.epp.thesis;
 
-import gr.epp.thesis.api.GenerickBlock;
+import gr.epp.thesis.api.GenericBlock;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 
@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
  *
  * @author vigos.ioannis
  */
-public class AdultBlock extends GenerickBlock {
+public class AdultBlock extends GenericBlock {
 
     public AdultBlock() {
         super();
@@ -23,7 +23,8 @@ public class AdultBlock extends GenerickBlock {
      */
     @Override
     public void initializeGridBlocks() {
-        setBackground(Color.CYAN);
+        setSeaColor(Color.CYAN);
+        setBackground(getSeaColor());
     }
 
     /*

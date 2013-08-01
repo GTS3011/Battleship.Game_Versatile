@@ -1,9 +1,12 @@
 package gr.epp.thesis;
 
-import gr.epp.thesis.api.GenerickBlock;
+import gr.epp.thesis.api.GenericBlock;
 import java.awt.Color;
+import java.awt.List;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -18,24 +21,30 @@ public class GameControl implements MouseListener {
     private boolean onShipsList = false;
     private int orientation = 3;
     private int shipBlocks = 0;
-    private JPanel parentPanel = null;
+    private JPanel myBoardPanel = null;
     private int tempHold = 0;
     private boolean horizontal = true;
-    private boolean shipOnGrid = false;
-    private GenerickBlock currentShip;
+    private GenericBlock currentWarShip;
+    private ArrayList<GenericBlock> shipsOnGrid = new ArrayList<>();
+    private String currentPlayer = null;
+    private Color seaColor = null;
 
     public GameControl(JPanel myBoard) {
-        this.parentPanel = myBoard;
+        this.myBoardPanel = myBoard;
+    }
+
+    public void setCurrentPlayerValues(String currentPlayer, Color seaColor) {
+        this.currentPlayer = currentPlayer;
+        this.seaColor = seaColor;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        GenerickBlock pressedButton = (GenerickBlock) e.getSource();
-        onShipsList = pressedButton.isOnShipsList();
+        GenericBlock pressedWarship = (GenericBlock) e.getSource();
+        onShipsList = pressedWarship.isOnShipsList();
         if (onShipsList) {
-            currentShip = pressedButton;
-            setShipBlocks(pressedButton.getTotalBlocks());
-            System.out.println("" + pressedButton.getTotalBlocks());
+            currentWarShip = pressedWarship;
+            shipBlocks = pressedWarship.getTotalBlocks();
         } else {
             if (e.getButton() == MouseEvent.BUTTON3) {
                 mouseExited(e);
@@ -47,30 +56,27 @@ public class GameControl implements MouseListener {
                     orientation = 6;
                     mouseEntered(e);
                 }
-                parentPanel.validate();
+                myBoardPanel.validate();
             } else {
-                getBlockPosition((GenerickBlock) e.getSource());
                 switch (orientation) {
                     case (3):
-                        if (coords[1] < (columns - (shipBlocks - 1)) && tempHold != shipBlocks) {
+                        if (coords[1] < (columns - (shipBlocks - 1)) && !shipsOnGrid.contains(currentWarShip)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
                                 tempHold = shipBlocks;
-                                shipOnGrid = true;
                             }
                         }
                         break;
                     case (6):
-                        if (coords[0] < rows - (shipBlocks - 1) && tempHold != shipBlocks) {
+                        if (coords[0] < rows - (shipBlocks - 1) && !shipsOnGrid.contains(currentWarShip)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
                                 tempHold = shipBlocks;
-                                shipOnGrid = true;
                             }
                         }
                         break;
                 }
-                parentPanel.validate();
+                myBoardPanel.validate();
             }
         }
 
@@ -81,7 +87,7 @@ public class GameControl implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        GenerickBlock pressedButton = (GenerickBlock) e.getSource();
+        GenericBlock pressedButton = (GenericBlock) e.getSource();
         onShipsList = pressedButton.isOnShipsList();
         if (onShipsList) {
             mouseClicked(e);
@@ -98,10 +104,10 @@ public class GameControl implements MouseListener {
      */
     @Override
     public void mouseEntered(MouseEvent e) {
-        GenerickBlock pressedButton = (GenerickBlock) e.getSource();
+        GenericBlock pressedButton = (GenericBlock) e.getSource();
         onShipsList = pressedButton.isOnShipsList();
         if (!onShipsList) {
-            getBlockPosition((GenerickBlock) e.getSource());
+            getBlockPosition((GenericBlock) e.getSource());
             switch (orientation) {
                 case (3):
                     if (coords[1] < (columns - (shipBlocks - 1)) && tempHold != shipBlocks) {
@@ -118,7 +124,7 @@ public class GameControl implements MouseListener {
                     }
                     break;
             }
-            parentPanel.validate();
+            myBoardPanel.validate();
         }
     }
 
@@ -127,10 +133,10 @@ public class GameControl implements MouseListener {
      */
     @Override
     public void mouseExited(MouseEvent e) {
-        GenerickBlock pressedButton = (GenerickBlock) e.getSource();
+        GenericBlock pressedButton = (GenericBlock) e.getSource();
         onShipsList = pressedButton.isOnShipsList();
         if (!onShipsList) {
-            getBlockPosition((GenerickBlock) e.getSource());
+            getBlockPosition((GenericBlock) e.getSource());
             switch (orientation) {
                 case (3):
                     if (coords[1] < (columns - (shipBlocks - 1))) {
@@ -147,7 +153,7 @@ public class GameControl implements MouseListener {
                     }
                     break;
             }
-            parentPanel.validate();
+            myBoardPanel.validate();
         }
     }
 
@@ -155,9 +161,9 @@ public class GameControl implements MouseListener {
      * A method that instantly, gives each SeaBlock unique coordinates, on the
      * grid.
      */
-    public void getBlockPosition(GenerickBlock pressedBlock) {
-        for (int i = 0; i < parentPanel.getComponentCount(); i++) {
-            if (parentPanel.getComponent(i) == pressedBlock) {
+    public void getBlockPosition(GenericBlock pressedBlock) {
+        for (int i = 0; i < myBoardPanel.getComponentCount(); i++) {
+            if (myBoardPanel.getComponent(i) == pressedBlock) {
                 coords[0] = i / rows;
                 coords[1] = i % columns;
                 coords[2] = i;
@@ -170,10 +176,14 @@ public class GameControl implements MouseListener {
      * A method to create shipBlocks of MyBoard Panel. This method also adds
      * MouseListener to each ShipBlock.
      */
-    public void warshipOnGrid(GenerickBlock warShipBlock) {
-        warShipBlock.setBackground(Color.DARK_GRAY);
+    public void warshipOnGrid(GenericBlock warShipBlock, int currentBlock) {
+        if (currentPlayer.equals("Adult")) {
+            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
+        }
+        //warShipBlock.setBackground(Color.DARK_GRAY);
         warShipBlock.setWarshipOn(true);
-        currentShip.setEnabled(false);
+        currentWarShip.setEnabled(false);
+        shipsOnGrid.add(currentWarShip);
     }
 
     /**
@@ -186,7 +196,7 @@ public class GameControl implements MouseListener {
         switch (orientation) {
             case (3):
                 for (int i = coords[2]; i < (coords[2] + shipBlocks); i++) {
-                    GenerickBlock tempBlock = (GenerickBlock) parentPanel.getComponent(i);
+                    GenericBlock tempBlock = (GenericBlock) myBoardPanel.getComponent(i);
                     if (tempBlock.isWarshipOn()) {
                         freeArea = false;
                         break;
@@ -195,7 +205,7 @@ public class GameControl implements MouseListener {
                 return freeArea;
             case (6):
                 for (int i = coords[2]; i < (coords[2] + (rows * shipBlocks)); i = i + rows) {
-                    GenerickBlock tempBlock = (GenerickBlock) parentPanel.getComponent(i);
+                    GenericBlock tempBlock = (GenericBlock) myBoardPanel.getComponent(i);
                     if (tempBlock.isWarshipOn()) {
                         freeArea = false;
                         break;
@@ -216,38 +226,32 @@ public class GameControl implements MouseListener {
      * of 3 & 6, about orientation means orientation of the WarShip clockwise.
      */
     public void battleFormations(boolean hovering, boolean exiting) {
+        int currentBlock = 0;
         switch (orientation) {
             case (3):
                 for (int i = 0; i < shipBlocks; i++) {
                     if (hovering) {
-                        System.out.println("ok edo!");
-                        parentPanel.getComponent(coords[2] + i).setBackground(Color.GREEN);
+                        myBoardPanel.getComponent(coords[2] + i).setBackground(Color.GREEN);
                     } else if (exiting) {
-                        parentPanel.getComponent(coords[2] + i).setBackground(Color.CYAN);
+                        myBoardPanel.getComponent(coords[2] + i).setBackground(seaColor);
                     } else {
-                        warshipOnGrid((GenerickBlock) parentPanel.getComponent(coords[2] + i));
+                        warshipOnGrid((GenericBlock) myBoardPanel.getComponent(coords[2] + i), currentBlock);
                     }
+                    currentBlock++;
                 }
                 break;
             case (6):
                 for (int i = 0; i < shipBlocks; i++) {
                     if (hovering) {
-                        parentPanel.getComponent(coords[2] + (i * rows)).setBackground(Color.GREEN);
+                        myBoardPanel.getComponent(coords[2] + (i * rows)).setBackground(Color.GREEN);
                     } else if (exiting) {
-                        parentPanel.getComponent(coords[2] + (i * rows)).setBackground(Color.CYAN);
+                        myBoardPanel.getComponent(coords[2] + (i * rows)).setBackground(seaColor);
                     } else {
-                        warshipOnGrid((GenerickBlock) parentPanel.getComponent(coords[2] + (i * rows)));
+                        warshipOnGrid((GenericBlock) myBoardPanel.getComponent(coords[2] + (i * rows)), currentBlock);
                     }
+                    currentBlock++;
                 }
                 break;
         }
-    }
-
-    public void setShipBlocks(int shipBlocks) {
-        this.shipBlocks = shipBlocks;
-    }
-
-    public int getShipBlocks() {
-        return shipBlocks;
     }
 }
