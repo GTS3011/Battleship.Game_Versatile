@@ -23,6 +23,7 @@ public class AdultBlock extends GenericBlock {
      */
     @Override
     public void initializeGridBlocks() {
+        setSize(50, 50);
         setSeaColor(Color.CYAN);
         setBackground(getSeaColor());
     }
@@ -35,34 +36,30 @@ public class AdultBlock extends GenericBlock {
         if (this.ownership) {
             switch (this.index) {
                 case (0):
-                    setBackground(Color.GREEN);
-                    setText("MY FLEET");
-                    break;
-                case (1):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/aircraftCarrier.gif"));
                     setTotalBlocks(5);
                     setOnShipsList(true);
                     break;
-                case (2):
+                case (1):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/battleship.gif"));
                     setTotalBlocks(4);
                     setOnShipsList(true);
                     break;
-                case (3):
+                case (2):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/submarine.gif"));
                     setTotalBlocks(3);
                     setOnShipsList(true);
                     break;
-                case (4):
+                case (3):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/destroyer.gif"));
                     setTotalBlocks(2);
                     setOnShipsList(true);
                     break;
-                case (5):
+                case (4):
                     setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/patrolShip.gif"));
                     setTotalBlocks(1);
@@ -72,26 +69,22 @@ public class AdultBlock extends GenericBlock {
         } else {
             switch (index) {
                 case (0):
-                    setBackground(Color.red);
-                    setText("ENEMY FLEET");
-                    break;
-                case (1):
                     setBackground(Color.DARK_GRAY);
                     setIcon(new ImageIcon("graphics/aircraftCarrier.gif"));
                     break;
-                case (2):
+                case (1):
                     setBackground(Color.DARK_GRAY);
                     setIcon(new ImageIcon("graphics/battleship.gif"));
                     break;
-                case (3):
+                case (2):
                     setBackground(Color.DARK_GRAY);
                     setIcon(new ImageIcon("graphics/submarine.gif"));
                     break;
-                case (4):
+                case (3):
                     setBackground(Color.DARK_GRAY);
                     setIcon(new ImageIcon("graphics/destroyer.gif"));
                     break;
-                case (5):
+                case (4):
                     setBackground(Color.DARK_GRAY);
                     setIcon(new ImageIcon("graphics/patrolShip.gif"));
                     break;

@@ -6,11 +6,20 @@ import javax.swing.JLabel;
 
 public abstract class GenericLabel extends JLabel implements View {
 
-    protected ImageIcon decorImage;
+    protected ImageIcon image;
+    protected boolean ownShipList;
 
     public GenericLabel() {
-        setLabel();
+        initializeDecorLabel();
     }
 
-    public abstract void setLabel();
+    public GenericLabel(boolean ownShipList) {
+        System.out.println("okk");
+        this.ownShipList = ownShipList;
+        initializeShipsListLabel();
+    }
+
+    public abstract void initializeDecorLabel();
+
+    public abstract void initializeShipsListLabel();
 }

@@ -2,6 +2,7 @@ package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericLabel;
 import gr.epp.thesis.api.GenericBlock;
+import gr.epp.thesis.api.GenericPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -37,7 +38,7 @@ public class BattleshipMain implements ActionListener {
     private JPanel myBoard = new JPanel();
     private JPanel enemyBoard = new JPanel();
     private static Class tempClass;
-    private GameControl gameControl = new GameControl(myBoard);
+    private GameControl gameControl;
 
     /*
      * Player Selection
@@ -80,38 +81,45 @@ public class BattleshipMain implements ActionListener {
         myBoard.setLayout(new GridLayout(rows, columns));
         upPanel.setSize(600, 500);
 
+        gameControl = new GameControl(myBoard, rows, columns);
+
         try {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             GenericBlock tempSeaColor = (GenericBlock) tempClass.newInstance();
             for (int i = 0; i < rows * columns; i++) {
-                GenericBlock temp1 = (GenericBlock) tempClass.newInstance();
-                temp1.addMouseListener(gameControl);
-                enemyBoard.add(temp1);
-                GenericBlock temp2 = (GenericBlock) tempClass.newInstance();
-                temp2.addMouseListener(gameControl);
-                myBoard.add(temp2);
+                GenericBlock tempSeaBlock1 = (GenericBlock) tempClass.newInstance();
+                tempSeaBlock1.addMouseListener(gameControl);
+                enemyBoard.add(tempSeaBlock1);
+                GenericBlock tempSeaBlock2 = (GenericBlock) tempClass.newInstance();
+                tempSeaBlock2.addMouseListener(gameControl);
+                myBoard.add(tempSeaBlock2);
             }
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
-            GenericLabel tempLabel = (GenericLabel) tempClass.newInstance();
-            decorPanel.add(tempLabel);
+            GenericLabel tempDecorLabel = (GenericLabel) tempClass.newInstance();
+            decorPanel.add(tempDecorLabel);
+
+            Constructor tempLabelConstructor = tempClass.getConstructor(boolean.class);
+            GenericLabel tempMyLabell = (GenericLabel) tempLabelConstructor.newInstance(false);
+            GenericLabel tempMyLabel2 = (GenericLabel) tempLabelConstructor.newInstance(true);
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
-            JPanel shipPanel1 = (JPanel) tempClass.newInstance();
-            JPanel shipPanel2 = (JPanel) tempClass.newInstance();
-            Method tempMethod = tempClass.getMethod("totalItems", (Class[]) null);
-            Object tempObj = tempMethod.invoke(shipPanel1, (Object[]) null);
-            upPanel.add(shipPanel1, BorderLayout.WEST);
-            downPanel.add(shipPanel2, BorderLayout.EAST);
+            GenericPanel tempShipList1 = (GenericPanel) tempClass.newInstance();
+            GenericPanel tempShipList2 = (GenericPanel) tempClass.newInstance();
+            upPanel.add(tempShipList1, BorderLayout.WEST);
+            downPanel.add(tempShipList2, BorderLayout.EAST);
+            
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
-            Constructor tempConstr = tempClass.getConstructor(int.class, boolean.class);
-            for (int i = 0; i < (int) tempObj; i++) {
-                GenericBlock temp1 = (GenericBlock) tempConstr.newInstance(i, false);
-                temp1.addMouseListener(gameControl);
-                shipPanel1.add(temp1);
-                GenericBlock temp2 = (GenericBlock) tempConstr.newInstance(i, true);
-                temp2.addMouseListener(gameControl);
-                shipPanel2.add(temp2);
+            Constructor tempShipConstructor = tempClass.getConstructor(int.class, boolean.class);
+            tempShipList1.add(tempMyLabell);
+            tempShipList2.add(tempMyLabel2);
+            for (int i = 0; i < tempShipList1.totalItems() - 1; i++) {
+                GenericBlock tempShip1 = (GenericBlock) tempShipConstructor.newInstance(i, false);
+                tempShip1.addMouseListener(gameControl);
+                tempShipList1.add(tempShip1);
+                GenericBlock tempShip2 = (GenericBlock) tempShipConstructor.newInstance(i, true);
+                tempShip2.addMouseListener(gameControl);
+                tempShipList2.add(tempShip2);
             }
 
             gameControl.setCurrentPlayerValues(currentPlayer, tempSeaColor.getSeaColor());
@@ -141,8 +149,8 @@ public class BattleshipMain implements ActionListener {
             frameWidth = 450;
             frameHeight = 900;
         } else {
-            rows = 20;
-            columns = 20;
+            rows = 15;
+            columns = 15;
             frameWidth = 525;
             frameHeight = 1050;
         }

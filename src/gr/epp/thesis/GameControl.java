@@ -15,22 +15,23 @@ import javax.swing.JPanel;
  */
 public class GameControl implements MouseListener {
 
-    private int rows = 10;
-    private int columns = 10;
+    private int rows = 0;
+    private int columns = 0;
     private int coords[] = new int[3];
     private boolean onShipsList = false;
     private int orientation = 3;
     private int shipBlocks = 0;
     private JPanel myBoardPanel = null;
-    private int tempHold = 0;
     private boolean horizontal = true;
     private GenericBlock currentWarShip;
     private ArrayList<GenericBlock> shipsOnGrid = new ArrayList<>();
     private String currentPlayer = null;
     private Color seaColor = null;
 
-    public GameControl(JPanel myBoard) {
+    public GameControl(JPanel myBoard, int rows, int columns) {
         this.myBoardPanel = myBoard;
+        this.rows = rows;
+        this.columns = columns;
     }
 
     public void setCurrentPlayerValues(String currentPlayer, Color seaColor) {
@@ -63,7 +64,6 @@ public class GameControl implements MouseListener {
                         if (coords[1] < (columns - (shipBlocks - 1)) && !shipsOnGrid.contains(currentWarShip)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
-                                tempHold = shipBlocks;
                             }
                         }
                         break;
@@ -71,7 +71,6 @@ public class GameControl implements MouseListener {
                         if (coords[0] < rows - (shipBlocks - 1) && !shipsOnGrid.contains(currentWarShip)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
-                                tempHold = shipBlocks;
                             }
                         }
                         break;
@@ -110,14 +109,14 @@ public class GameControl implements MouseListener {
             getBlockPosition((GenericBlock) e.getSource());
             switch (orientation) {
                 case (3):
-                    if (coords[1] < (columns - (shipBlocks - 1)) && tempHold != shipBlocks) {
+                    if (coords[1] < (columns - (shipBlocks - 1)) && !shipsOnGrid.contains(currentWarShip)) {
                         if (checkCollision()) {
                             battleFormations(true, false);
                         }
                     }
                     break;
                 case (6):
-                    if (coords[0] < rows - (shipBlocks - 1) && tempHold != shipBlocks) {
+                    if (coords[0] < rows - (shipBlocks - 1) && !shipsOnGrid.contains(currentWarShip)) {
                         if (checkCollision()) {
                             battleFormations(true, false);
                         }
@@ -177,10 +176,10 @@ public class GameControl implements MouseListener {
      * MouseListener to each ShipBlock.
      */
     public void warshipOnGrid(GenericBlock warShipBlock, int currentBlock) {
-        if (currentPlayer.equals("Adult")) {
+        if (currentPlayer.equals("Adult") || currentPlayer.equals("Admiral")) {
             warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
         }
-        //warShipBlock.setBackground(Color.DARK_GRAY);
+        warShipBlock.setBackground(seaColor);
         warShipBlock.setWarshipOn(true);
         currentWarShip.setEnabled(false);
         shipsOnGrid.add(currentWarShip);

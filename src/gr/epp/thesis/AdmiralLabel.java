@@ -9,15 +9,36 @@ import javax.swing.ImageIcon;
  */
 public class AdmiralLabel extends GenericLabel {
 
-    @Override
-    public void setLabel() {
-        decorImage = new ImageIcon("graphics/bismarck.png");
-        setHorizontalAlignment(CENTER);
-        setIcon(decorImage);
+    public AdmiralLabel() {
+    }
+
+    public AdmiralLabel(boolean ownShipList) {
+        super(ownShipList);
     }
 
     @Override
+    public void initializeDecorLabel() {
+        image = new ImageIcon("graphics/bismarck.png");
+        setHorizontalAlignment(CENTER);
+        setIcon(image);
+    }
+
+    @Override
+    public void initializeShipsListLabel() {
+        if (ownShipList) {
+            image = new ImageIcon("graphics/myFleetAdultIcon.gif");
+            setHorizontalAlignment(CENTER);
+            setIcon(image);
+        } else {
+            image = new ImageIcon("graphics/enemyFleetAdultIcon.gif");
+            setHorizontalAlignment(CENTER);
+            setIcon(image);
+        }
+    }
+
+    //To change body of generated methods, choose Tools | Templates.
+    @Override
     public void stateChanged(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
