@@ -100,11 +100,11 @@ public class GameControl implements MouseListener {
         }
 
     }
-    
-        public void initiateGame() {
+
+    public void initiateGame() {
         if (shipsOnGrid.size() == 15) {
             //Start the game session here...
-            readyToStart=true;
+            readyToStart = true;
         }
     }
 
