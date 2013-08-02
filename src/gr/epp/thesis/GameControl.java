@@ -29,6 +29,7 @@ public class GameControl implements MouseListener {
     private boolean horizontal = true;
     private GenericBlock currentWarShip;
     private ArrayList<GenericBlock> shipsOnGrid = new ArrayList<>();
+    private int maxShipsOnGrid = 0;
     private String currentPlayer = null;
     private Color seaColor = null;
     private int enemyComponentCount = 0;
@@ -44,10 +45,11 @@ public class GameControl implements MouseListener {
         this.columns = columns;
     }
 
-    public void setCurrentPlayerValues(String currentPlayer, Color seaColor, int enemyComponentCount) {
+    public void setCurrentPlayerValues(String currentPlayer, Color seaColor, int enemyComponentCount, int maxShipsOnGrid) {
         this.currentPlayer = currentPlayer;
         this.seaColor = seaColor;
         this.enemyComponentCount = enemyComponentCount;
+        this.maxShipsOnGrid = maxShipsOnGrid;
         activateEnemyGrid(false);
     }
 
@@ -102,7 +104,8 @@ public class GameControl implements MouseListener {
     }
 
     public void initiateGame() {
-        if (shipsOnGrid.size() == 15) {
+        maxShipsOnGrid--;
+        if (maxShipsOnGrid == 0) {
             //Start the game session here...
             readyToStart = true;
         }
