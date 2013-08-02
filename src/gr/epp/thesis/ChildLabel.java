@@ -27,17 +27,7 @@ public class ChildLabel extends GenericLabel {
 
     @Override
     public void initializeShipsListLabel() {
-        if (ownShipList) {
-            this.border = new LineBorder(Color.GREEN, 1, false);
-            image = new ImageIcon("graphics/myFleetAdultIcon.gif");
-            setHorizontalAlignment(CENTER);
-            setIcon(image);
-        } else {
-            this.border = new LineBorder(Color.RED, 1, false);
-            image = new ImageIcon("graphics/enemyFleetAdultIcon.gif");
-            setHorizontalAlignment(CENTER);
-            setIcon(image);
-        }
+        
     }
 
     //To change body of generated methods, choose Tools | Templates.

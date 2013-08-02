@@ -4,7 +4,6 @@ import gr.epp.thesis.api.GenericBlock;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
-import java.awt.List;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
@@ -104,8 +103,8 @@ public class GameControl implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        GenericBlock pressedButton = (GenericBlock) e.getSource();
-        onShipsList = pressedButton.isOnShipsList();
+        GenericBlock pressedBlock = (GenericBlock) e.getSource();
+        onShipsList = pressedBlock.isOnShipsList();
         if (onShipsList) {
             mouseClicked(e);
         }
@@ -154,8 +153,8 @@ public class GameControl implements MouseListener {
      */
     @Override
     public void mouseExited(MouseEvent e) {
-        GenericBlock pressedButton = (GenericBlock) e.getSource();
-        onShipsList = pressedButton.isOnShipsList();
+        GenericBlock pressedBlock = (GenericBlock) e.getSource();
+        onShipsList = pressedBlock.isOnShipsList();
         if (!onShipsList) {
             getBlockPosition((GenericBlock) e.getSource());
             switch (orientation) {
@@ -200,6 +199,8 @@ public class GameControl implements MouseListener {
     public void warshipOnGrid(GenericBlock warShipBlock, int currentBlock) {
         if (currentPlayer.equals("Adult") || currentPlayer.equals("Admiral")) {
             warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
+        } else {
+            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/childGridShip.gif"));
         }
         warShipBlock.setBackground(seaColor);
         warShipBlock.setWarshipOn(true);

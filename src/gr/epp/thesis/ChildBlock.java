@@ -1,8 +1,10 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericBlock;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 /**
@@ -33,22 +35,25 @@ public class ChildBlock extends GenericBlock {
      */
     @Override
     public void initializeShipList() {
+
         if (this.ownShipsList) {
+            setIcon(new ImageIcon("graphics/childMyListShip.png"));
             this.border = new LineBorder(Color.GREEN, 1, false);
             setBorder(border);
             setBackground(Color.LIGHT_GRAY);
             setTotalBlocks(1);
             setOnShipsList(true);
         } else {
+            setIcon(new ImageIcon("graphics/childMyListShip.png"));
             this.border = new LineBorder(Color.RED, 1, false);
             setBorder(border);
             setBackground(Color.DARK_GRAY);
         }
-        setIcon(new ImageIcon("graphics/childListShip.gif"));
     }
 
+    //To change body of generated methods, choose Tools | Templates.
     @Override
     public void stateChanged(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
