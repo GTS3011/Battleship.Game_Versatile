@@ -3,7 +3,6 @@ package gr.epp.thesis;
 import gr.epp.thesis.api.GenericBlock;
 import java.awt.Color;
 import javax.swing.ImageIcon;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 /**

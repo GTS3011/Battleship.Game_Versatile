@@ -4,7 +4,6 @@ import gr.epp.thesis.mvc.View;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
 public abstract class GenericBlock extends JButton implements View {
 
