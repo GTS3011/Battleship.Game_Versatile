@@ -44,7 +44,7 @@ public class ChildBlock extends GenericBlock {
             setTotalBlocks(1);
             setOnShipsList(true);
         } else {
-            setIcon(new ImageIcon("graphics/childMyListShip.png"));
+            setIcon(new ImageIcon("graphics/childEnemyListShip.png"));
             this.border = new LineBorder(Color.RED, 1, false);
             setBorder(border);
             setBackground(Color.DARK_GRAY);

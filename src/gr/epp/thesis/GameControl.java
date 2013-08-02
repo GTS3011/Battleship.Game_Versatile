@@ -210,7 +210,7 @@ public class GameControl implements MouseListener {
         if (currentPlayer.equals("Adult") || currentPlayer.equals("Admiral")) {
             warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
         } else {
-            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/childGridShip.gif"));
+            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/childGridShip.png"));
         }
         warShipBlock.setBackground(seaColor);
         warShipBlock.setWarshipOn(true);
