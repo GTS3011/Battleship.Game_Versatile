@@ -18,7 +18,7 @@ public class AdultLabel extends GenericLabel {
 
     @Override
     public void initializeDecorLabel() {
-        image = new ImageIcon("graphics/bismarck.png");
+        image = new ImageIcon("graphics/adultDecorLabel.png");
         setHorizontalAlignment(CENTER);
         setIcon(image);
     }

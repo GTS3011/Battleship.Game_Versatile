@@ -3,6 +3,7 @@ package gr.epp.thesis;
 import gr.epp.thesis.api.GenericBlock;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -13,8 +14,8 @@ public class AdmiralBlock extends GenericBlock {
     public AdmiralBlock() {
     }
 
-    public AdmiralBlock(int index, boolean ownership) {
-        super(index, ownership);
+    public AdmiralBlock(int index, boolean ownShipsList) {
+        super(index, ownShipsList);
     }
 
     @Override
@@ -25,8 +26,8 @@ public class AdmiralBlock extends GenericBlock {
 
     @Override
     public void initializeShipList() {
-
-        if (this.ownership) {
+        if (this.ownShipsList) {
+            this.border = new LineBorder(Color.GREEN.darker(), 1, false);
             switch (this.index) {
                 case (0):
                     setBackground(Color.LIGHT_GRAY);
@@ -102,6 +103,7 @@ public class AdmiralBlock extends GenericBlock {
                     break;
             }
         } else {
+            this.border = new LineBorder(Color.RED.darker(), 1, false);
             switch (index) {
                 case (0):
                     setBackground(Color.DARK_GRAY);

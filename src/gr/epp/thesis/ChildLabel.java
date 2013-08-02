@@ -18,7 +18,7 @@ public class ChildLabel extends GenericLabel {
 
     @Override
     public void initializeDecorLabel() {
-        image = new ImageIcon("graphics/bismarck.png");
+        image = new ImageIcon("graphics/childDecorLabel.png");
         setHorizontalAlignment(CENTER);
         setIcon(image);
     }

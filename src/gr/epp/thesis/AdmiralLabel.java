@@ -18,7 +18,7 @@ public class AdmiralLabel extends GenericLabel {
 
     @Override
     public void initializeDecorLabel() {
-        image = new ImageIcon("graphics/bismarck.png");
+        image = new ImageIcon("graphics/admiralDecorLabel.png");
         setHorizontalAlignment(CENTER);
         setIcon(image);
     }

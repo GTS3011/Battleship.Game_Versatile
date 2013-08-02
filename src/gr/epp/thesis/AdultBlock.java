@@ -3,6 +3,8 @@ package gr.epp.thesis;
 import gr.epp.thesis.api.GenericBlock;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -14,8 +16,9 @@ public class AdultBlock extends GenericBlock {
         super();
     }
 
-    public AdultBlock(int index, boolean ownership) {
-        super(index, ownership);
+    public AdultBlock(int index, boolean ownShipsList) {
+        super(index, ownShipsList);
+
     }
 
     /*
@@ -23,7 +26,6 @@ public class AdultBlock extends GenericBlock {
      */
     @Override
     public void initializeGridBlocks() {
-        setSize(50, 50);
         setSeaColor(Color.CYAN);
         setBackground(getSeaColor());
     }
@@ -33,7 +35,9 @@ public class AdultBlock extends GenericBlock {
      */
     @Override
     public void initializeShipList() {
-        if (this.ownership) {
+        if (this.ownShipsList) {
+            this.border = new LineBorder(Color.GREEN.darker(), 1, false);
+            setBorder(border);
             switch (this.index) {
                 case (0):
                     setBackground(Color.LIGHT_GRAY);
@@ -67,6 +71,8 @@ public class AdultBlock extends GenericBlock {
                     break;
             }
         } else {
+            this.border = new LineBorder(Color.RED.darker(), 1, false);
+            setBorder(border);
             switch (index) {
                 case (0):
                     setBackground(Color.DARK_GRAY);

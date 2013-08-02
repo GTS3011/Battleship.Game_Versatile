@@ -3,25 +3,30 @@ package gr.epp.thesis.api;
 import gr.epp.thesis.mvc.View;
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 public abstract class GenericBlock extends JButton implements View {
 
     protected int index;
-    protected boolean ownership;
+    protected boolean ownShipsList;
     protected int temp;
     protected int totalBlocks;
     protected boolean warship = false;
     protected boolean onShipsList = false;
     protected Color seaColor = null;
+    protected Border border;
 
     public GenericBlock() {
         initializeGridBlocks();
     }
 
-    public GenericBlock(int index, boolean ownership) {
+    public GenericBlock(int index, boolean ownShipsList) {
         this.index = index;
-        this.ownership = ownership;
+        this.ownShipsList = ownShipsList;
+        this.border = border;
         initializeShipList();
+        setBorder(border);
     }
 
     public abstract void initializeGridBlocks();
@@ -58,13 +63,5 @@ public abstract class GenericBlock extends JButton implements View {
 
     public int getTotalBlocks() {
         return totalBlocks;
-    }
-
-    public boolean isOwnership() {
-        return ownership;
-    }
-
-    public void setOwnership(boolean ownership) {
-        this.ownership = ownership;
     }
 }

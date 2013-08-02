@@ -32,7 +32,7 @@ public class BattleshipMain implements ActionListener {
     private JComboBox playerTypeList = new JComboBox(playerType);
     private String currentPlayer = null;
     private static JFrame masterFrame = new JFrame("Battleship Game");
-    private JPanel upPanel = new JPanel(new BorderLayout(10, 0));
+    private JPanel upPanel = new JPanel();
     private JPanel decorPanel = new JPanel();
     private JPanel downPanel = new JPanel(new BorderLayout(10, 0));
     private JPanel myBoard = new JPanel();
@@ -61,25 +61,26 @@ public class BattleshipMain implements ActionListener {
         /* All graphic contents of the game.
          * 
          */
-        masterFrame.setSize(frameWidth, frameHeight);
-        masterFrame.setResizable(true);
-        masterFrame.setVisible(true);
-        masterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        masterFrame.setLocationRelativeTo(null);
-        masterFrame.setVisible(true);
-        masterFrame.setLayout(new GridLayout(3, 1, 0, 5));
         masterFrame.setBackground(Color.WHITE);
+        masterFrame.setLayout(new GridLayout(3, 1, 0, 5));
         masterFrame.add(upPanel);
         upPanel.setBackground(Color.WHITE);
         masterFrame.add(decorPanel);
         decorPanel.setBackground(Color.WHITE);
         masterFrame.add(downPanel);
         downPanel.setBackground(Color.WHITE);
+        upPanel.setLayout(new BorderLayout(10, 0));
         upPanel.add(enemyBoard, BorderLayout.CENTER);
         enemyBoard.setLayout(new GridLayout(rows, columns));
+        downPanel.setLayout(new BorderLayout(10, 0));
         downPanel.add(myBoard, BorderLayout.CENTER);
         myBoard.setLayout(new GridLayout(rows, columns));
-        upPanel.setSize(600, 500);
+        masterFrame.setSize(frameWidth, frameHeight);
+        masterFrame.setResizable(false);
+        masterFrame.setVisible(true);
+        masterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        masterFrame.setLocationRelativeTo(null);
+        masterFrame.validate();
 
         gameControl = new GameControl(myBoard, rows, columns);
 
@@ -108,7 +109,7 @@ public class BattleshipMain implements ActionListener {
             GenericPanel tempShipList2 = (GenericPanel) tempClass.newInstance();
             upPanel.add(tempShipList1, BorderLayout.WEST);
             downPanel.add(tempShipList2, BorderLayout.EAST);
-            
+
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             Constructor tempShipConstructor = tempClass.getConstructor(int.class, boolean.class);
             tempShipList1.add(tempMyLabell);
