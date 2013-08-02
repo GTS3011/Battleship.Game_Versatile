@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  *
  * @author vigos.ioannis
  */
-public class BattleshipMain implements ActionListener {
+public class BattleshipMain implements ActionListener,Runnable {
 
     private int rows = 0;
     private int columns = 0;
@@ -38,6 +38,8 @@ public class BattleshipMain implements ActionListener {
     private JPanel enemyBoard = new JPanel();
     private static Class tempClass;
     private GameControl gameControl;
+    private GenericPanel tempShipList1;
+    private GenericPanel tempShipList2;
 
     /*
      * Player Selection
@@ -104,8 +106,8 @@ public class BattleshipMain implements ActionListener {
             GenericLabel tempMyLabel2 = (GenericLabel) tempLabelConstructor.newInstance(true);
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
-            GenericPanel tempShipList1 = (GenericPanel) tempClass.newInstance();
-            GenericPanel tempShipList2 = (GenericPanel) tempClass.newInstance();
+             tempShipList1 = (GenericPanel) tempClass.newInstance();
+             tempShipList2 = (GenericPanel) tempClass.newInstance();
             upPanel.add(tempShipList1, BorderLayout.WEST);
             downPanel.add(tempShipList2, BorderLayout.EAST);
 
@@ -155,8 +157,28 @@ public class BattleshipMain implements ActionListener {
             frameWidth = 525;
             frameHeight = 1050;
         }
-        new BattleshipMain(currentPlayer, rows, columns, frameWidth, frameHeight);
+          Thread thread = new Thread(new BattleshipMain(currentPlayer, rows, columns, frameWidth, frameHeight));
+        thread.start();
     }
+        @Override
+    public void run() {
+        while (!this.gameControl.isReadyToStart()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        for (int i = 0; i < myBoard.getComponentCount(); i++) {
+            myBoard.getComponent(i).removeMouseListener(gameControl);
+        }
+        for (int i = 0; i < tempShipList2.getComponentCount(); i++) {
+            tempShipList2.getComponent(i).removeMouseListener(gameControl);
+        }
+        System.out.println("Starting Game...");
+    }
+
+    
 
     public static void main(String[] args) {
         BattleshipMain entryPoint = new BattleshipMain();

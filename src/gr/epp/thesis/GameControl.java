@@ -32,6 +32,7 @@ public class GameControl implements MouseListener {
     private String currentPlayer = null;
     private Color seaColor = null;
     private int enemyComponentCount = 0;
+    private boolean readyToStart = false;
     private Toolkit toolkit = Toolkit.getDefaultToolkit();
     private Image target = toolkit.getImage("graphics/target.gif");
     private Point cursorHotSpot = new Point(10, 10);
@@ -275,5 +276,9 @@ public class GameControl implements MouseListener {
                 }
                 break;
         }
+    }
+
+    public boolean isReadyToStart() {
+        return readyToStart;
     }
 }
