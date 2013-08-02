@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  *
  * @author vigos.ioannis
  */
-public class BattleshipMain implements ActionListener,Runnable {
+public class BattleshipMain implements ActionListener, Runnable {
 
     private int rows = 0;
     private int columns = 0;
@@ -40,6 +40,7 @@ public class BattleshipMain implements ActionListener,Runnable {
     private GameControl gameControl;
     private GenericPanel tempShipList1;
     private GenericPanel tempShipList2;
+    private int maxShipsOnGrid = 0;
 
     /*
      * Player Selection
@@ -95,6 +96,7 @@ public class BattleshipMain implements ActionListener,Runnable {
                 GenericBlock tempSeaBlock2 = (GenericBlock) tempClass.newInstance();
                 tempSeaBlock2.addMouseListener(gameControl);
                 myBoard.add(tempSeaBlock2);
+
             }
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
@@ -106,8 +108,8 @@ public class BattleshipMain implements ActionListener,Runnable {
             GenericLabel tempMyLabel2 = (GenericLabel) tempLabelConstructor.newInstance(true);
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
-             tempShipList1 = (GenericPanel) tempClass.newInstance();
-             tempShipList2 = (GenericPanel) tempClass.newInstance();
+            tempShipList1 = (GenericPanel) tempClass.newInstance();
+            tempShipList2 = (GenericPanel) tempClass.newInstance();
             upPanel.add(tempShipList1, BorderLayout.WEST);
             downPanel.add(tempShipList2, BorderLayout.EAST);
 
@@ -122,9 +124,10 @@ public class BattleshipMain implements ActionListener,Runnable {
                 GenericBlock tempShip2 = (GenericBlock) tempShipConstructor.newInstance(i, true);
                 tempShip2.addMouseListener(gameControl);
                 tempShipList2.add(tempShip2);
+                maxShipsOnGrid++;
             }
 
-            gameControl.setCurrentPlayerValues(currentPlayer, tempSeaColor.getSeaColor(), enemyBoard.getComponentCount());
+            gameControl.setCurrentPlayerValues(currentPlayer, tempSeaColor.getSeaColor(), enemyBoard.getComponentCount(), maxShipsOnGrid);
 
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -157,10 +160,11 @@ public class BattleshipMain implements ActionListener,Runnable {
             frameWidth = 525;
             frameHeight = 1050;
         }
-          Thread thread = new Thread(new BattleshipMain(currentPlayer, rows, columns, frameWidth, frameHeight));
+        Thread thread = new Thread(new BattleshipMain(currentPlayer, rows, columns, frameWidth, frameHeight));
         thread.start();
     }
-        @Override
+
+    @Override
     public void run() {
         while (!this.gameControl.isReadyToStart()) {
             try {
@@ -177,8 +181,6 @@ public class BattleshipMain implements ActionListener,Runnable {
         }
         System.out.println("Starting Game...");
     }
-
-    
 
     public static void main(String[] args) {
         BattleshipMain entryPoint = new BattleshipMain();
