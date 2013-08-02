@@ -30,7 +30,7 @@ public class AdmiralLabel extends GenericLabel {
             setHorizontalAlignment(CENTER);
             setIcon(image);
         } else {
-            image = new ImageIcon("graphics/enemyFleetAdultIcon.gif");
+            image = new ImageIcon("graphics/enemyFleetAdmiralIcon.gif");
             setHorizontalAlignment(CENTER);
             setIcon(image);
         }
