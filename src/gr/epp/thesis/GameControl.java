@@ -2,7 +2,11 @@ package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericBlock;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Image;
 import java.awt.List;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -21,31 +25,45 @@ public class GameControl implements MouseListener {
     private boolean onShipsList = false;
     private int orientation = 3;
     private int shipBlocks = 0;
+    private JPanel enemyBoardPanel = null;
     private JPanel myBoardPanel = null;
     private boolean horizontal = true;
     private GenericBlock currentWarShip;
     private ArrayList<GenericBlock> shipsOnGrid = new ArrayList<>();
     private String currentPlayer = null;
     private Color seaColor = null;
+    private int enemyComponentCount = 0;
+    private Toolkit toolkit = Toolkit.getDefaultToolkit();
+    private Image target = toolkit.getImage("graphics/target.gif");
+    private Point cursorHotSpot = new Point(10, 10);
 
-    public GameControl(JPanel myBoard, int rows, int columns) {
+    public GameControl(JPanel enemyBoard, JPanel myBoard, int rows, int columns) {
+        this.enemyBoardPanel = enemyBoard;
         this.myBoardPanel = myBoard;
         this.rows = rows;
         this.columns = columns;
     }
 
-    public void setCurrentPlayerValues(String currentPlayer, Color seaColor) {
+    public void setCurrentPlayerValues(String currentPlayer, Color seaColor, int enemyComponentCount) {
         this.currentPlayer = currentPlayer;
         this.seaColor = seaColor;
+        this.enemyComponentCount = enemyComponentCount;
+        activateEnemyGrid(false);
+    }
+
+    public void activateEnemyGrid(boolean activate) {
+        for (int i = 0; i < enemyComponentCount; i++) {
+            enemyBoardPanel.getComponent(i).setEnabled(activate);
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        GenericBlock pressedWarship = (GenericBlock) e.getSource();
-        onShipsList = pressedWarship.isOnShipsList();
+        GenericBlock pressedBlock = (GenericBlock) e.getSource();
+        onShipsList = pressedBlock.isOnShipsList();
         if (onShipsList) {
-            currentWarShip = pressedWarship;
-            shipBlocks = pressedWarship.getTotalBlocks();
+            currentWarShip = pressedBlock;
+            shipBlocks = pressedBlock.getTotalBlocks();
         } else {
             if (e.getButton() == MouseEvent.BUTTON3) {
                 mouseExited(e);
@@ -103,8 +121,8 @@ public class GameControl implements MouseListener {
      */
     @Override
     public void mouseEntered(MouseEvent e) {
-        GenericBlock pressedButton = (GenericBlock) e.getSource();
-        onShipsList = pressedButton.isOnShipsList();
+        GenericBlock pressedBlock = (GenericBlock) e.getSource();
+        onShipsList = pressedBlock.isOnShipsList();
         if (!onShipsList) {
             getBlockPosition((GenericBlock) e.getSource());
             switch (orientation) {
@@ -124,6 +142,10 @@ public class GameControl implements MouseListener {
                     break;
             }
             myBoardPanel.validate();
+        }
+        if (pressedBlock.getParent().equals(enemyBoardPanel)) {
+            Cursor targetCursor = toolkit.createCustomCursor(target, cursorHotSpot, "Cursor");
+            enemyBoardPanel.setCursor(targetCursor);
         }
     }
 

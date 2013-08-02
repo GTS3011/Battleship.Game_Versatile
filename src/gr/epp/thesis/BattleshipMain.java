@@ -81,7 +81,7 @@ public class BattleshipMain implements ActionListener {
         masterFrame.setLocationRelativeTo(null);
         masterFrame.validate();
 
-        gameControl = new GameControl(myBoard, rows, columns);
+        gameControl = new GameControl(enemyBoard, myBoard, rows, columns);
 
         try {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
@@ -122,7 +122,7 @@ public class BattleshipMain implements ActionListener {
                 tempShipList2.add(tempShip2);
             }
 
-            gameControl.setCurrentPlayerValues(currentPlayer, tempSeaColor.getSeaColor());
+            gameControl.setCurrentPlayerValues(currentPlayer, tempSeaColor.getSeaColor(), enemyBoard.getComponentCount());
 
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,6 +133,7 @@ public class BattleshipMain implements ActionListener {
         } catch (IllegalAccessException ex) {
             Logger.getLogger(ChildBlock.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         masterFrame.validate();
     }
 
