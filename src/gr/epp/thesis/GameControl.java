@@ -82,6 +82,7 @@ public class GameControl implements MouseListener {
                         if (coords[1] < (columns - (shipBlocks - 1)) && !shipsOnGrid.contains(currentWarShip)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
+                                initiateGame();
                             }
                         }
                         break;
@@ -89,6 +90,7 @@ public class GameControl implements MouseListener {
                         if (coords[0] < rows - (shipBlocks - 1) && !shipsOnGrid.contains(currentWarShip)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
+                                initiateGame();
                             }
                         }
                         break;
@@ -97,6 +99,13 @@ public class GameControl implements MouseListener {
             }
         }
 
+    }
+    
+        public void initiateGame() {
+        if (shipsOnGrid.size() == 15) {
+            //Start the game session here...
+            readyToStart=true;
+        }
     }
 
     /*
