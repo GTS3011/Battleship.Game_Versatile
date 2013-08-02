@@ -2,6 +2,7 @@ package gr.epp.thesis.api;
 
 import gr.epp.thesis.mvc.View;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
@@ -15,9 +16,12 @@ public abstract class GenericBlock extends JButton implements View {
     protected boolean onShipsList = false;
     protected Color seaColor = null;
     protected Border border;
+    protected ImageIcon water = new ImageIcon("graphics/water.gif");
 
     public GenericBlock() {
         initializeGridBlocks();
+        setBackground(getSeaColor());
+        setIcon(water);
     }
 
     public GenericBlock(int index, boolean ownShipsList) {
@@ -31,6 +35,10 @@ public abstract class GenericBlock extends JButton implements View {
     public abstract void initializeGridBlocks();
 
     public abstract void initializeShipList();
+
+    public ImageIcon getWater() {
+        return water;
+    }
 
     public void setOnShipsList(boolean onShipsList) {
         this.onShipsList = onShipsList;

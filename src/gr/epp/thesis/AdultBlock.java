@@ -26,7 +26,6 @@ public class AdultBlock extends GenericBlock {
     @Override
     public void initializeGridBlocks() {
         setSeaColor(Color.CYAN);
-        setBackground(getSeaColor());
     }
 
     /*
@@ -36,7 +35,6 @@ public class AdultBlock extends GenericBlock {
     public void initializeShipList() {
         if (this.ownShipsList) {
             this.border = new LineBorder(Color.GREEN.darker(), 1, false);
-            setBorder(border);
             switch (this.index) {
                 case (0):
                     setBackground(Color.LIGHT_GRAY);
@@ -71,7 +69,6 @@ public class AdultBlock extends GenericBlock {
             }
         } else {
             this.border = new LineBorder(Color.RED.darker(), 1, false);
-            setBorder(border);
             switch (index) {
                 case (0):
                     setBackground(Color.DARK_GRAY);
@@ -97,8 +94,9 @@ public class AdultBlock extends GenericBlock {
         }
     }
 
+    //To change body of generated methods, choose Tools | Templates.
     @Override
     public void stateChanged(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

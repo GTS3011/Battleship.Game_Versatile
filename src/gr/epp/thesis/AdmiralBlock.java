@@ -21,7 +21,6 @@ public class AdmiralBlock extends GenericBlock {
     @Override
     public void initializeGridBlocks() {
         setSeaColor(Color.CYAN.darker());
-        setBackground(getSeaColor());
     }
 
     @Override
@@ -95,12 +94,6 @@ public class AdmiralBlock extends GenericBlock {
                     setTotalBlocks(1);
                     setOnShipsList(true);
                     break;
-                case (11):
-                    setBackground(Color.LIGHT_GRAY);
-                    setIcon(new ImageIcon("graphics/patrolShip.gif"));
-                    setTotalBlocks(1);
-                    setOnShipsList(true);
-                    break;
             }
         } else {
             this.border = new LineBorder(Color.RED.darker(), 1, false);
@@ -149,16 +142,13 @@ public class AdmiralBlock extends GenericBlock {
                     setBackground(Color.DARK_GRAY);
                     setIcon(new ImageIcon("graphics/patrolShip.gif"));
                     break;
-                case (11):
-                    setBackground(Color.DARK_GRAY);
-                    setIcon(new ImageIcon("graphics/patrolShip.gif"));
-                    break;
             }
         }
     }
 
+    //To change body of generated methods, choose Tools | Templates.
     @Override
     public void stateChanged(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -9,13 +9,11 @@ import javax.swing.JPanel;
  */
 public abstract class GenericPanel extends JPanel implements View {
 
-    protected int totalItems;
-
     public GenericPanel() {
         initializeList();
     }
 
     public abstract void initializeList();
 
-    public abstract int totalItems();
+    public abstract int getTotalItems();
 }

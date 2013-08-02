@@ -4,7 +4,6 @@ import gr.epp.thesis.api.GenericBlock;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 /**
@@ -27,7 +26,6 @@ public class ChildBlock extends GenericBlock {
     @Override
     public void initializeGridBlocks() {
         setSeaColor(Color.CYAN);
-        setBackground(getSeaColor());
     }
 
     /*
@@ -39,14 +37,12 @@ public class ChildBlock extends GenericBlock {
         if (this.ownShipsList) {
             setIcon(new ImageIcon("graphics/childMyListShip.png"));
             this.border = new LineBorder(Color.GREEN, 1, false);
-            setBorder(border);
             setBackground(Color.LIGHT_GRAY);
             setTotalBlocks(1);
             setOnShipsList(true);
         } else {
             setIcon(new ImageIcon("graphics/childEnemyListShip.png"));
             this.border = new LineBorder(Color.RED, 1, false);
-            setBorder(border);
             setBackground(Color.DARK_GRAY);
         }
     }

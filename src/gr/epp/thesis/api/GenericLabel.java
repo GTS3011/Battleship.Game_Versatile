@@ -13,13 +13,17 @@ public abstract class GenericLabel extends JLabel implements View {
 
     public GenericLabel() {
         initializeDecorLabel();
+        setHorizontalAlignment(CENTER);
+        setIcon(image);
     }
 
     public GenericLabel(boolean ownShipList) {
         this.ownShipList = ownShipList;
         this.border = border;
         initializeShipsListLabel();
+        setHorizontalAlignment(CENTER);
         setBorder(border);
+        setIcon(image);
     }
 
     public abstract void initializeDecorLabel();

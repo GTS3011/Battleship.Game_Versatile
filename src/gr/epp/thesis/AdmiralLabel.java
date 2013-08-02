@@ -21,22 +21,16 @@ public class AdmiralLabel extends GenericLabel {
     @Override
     public void initializeDecorLabel() {
         image = new ImageIcon("graphics/admiralDecorLabel.png");
-        setHorizontalAlignment(CENTER);
-        setIcon(image);
     }
 
     @Override
     public void initializeShipsListLabel() {
         if (ownShipList) {
             this.border = new LineBorder(Color.GREEN.darker(), 1, false);
-            image = new ImageIcon("graphics/myFleetAdmiralIcon.gif");
-            setHorizontalAlignment(CENTER);
-            setIcon(image);
+            image = new ImageIcon("graphics/myFleetAdmiralIcon.png");
         } else {
             this.border = new LineBorder(Color.RED.darker(), 1, false);
-            image = new ImageIcon("graphics/enemyFleetAdmiralIcon.gif");
-            setHorizontalAlignment(CENTER);
-            setIcon(image);
+            image = new ImageIcon("graphics/enemyFleetAdmiralIcon.png");
         }
     }
 

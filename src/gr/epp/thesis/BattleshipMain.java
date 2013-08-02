@@ -12,6 +12,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -96,7 +97,6 @@ public class BattleshipMain implements ActionListener, Runnable {
                 GenericBlock tempSeaBlock2 = (GenericBlock) tempClass.newInstance();
                 tempSeaBlock2.addMouseListener(gameControl);
                 myBoard.add(tempSeaBlock2);
-
             }
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
@@ -117,7 +117,7 @@ public class BattleshipMain implements ActionListener, Runnable {
             Constructor tempShipConstructor = tempClass.getConstructor(int.class, boolean.class);
             tempShipList1.add(tempMyLabell);
             tempShipList2.add(tempMyLabel2);
-            for (int i = 0; i < tempShipList1.totalItems() - 1; i++) {
+            for (int i = 0; i < tempShipList1.getTotalItems() - 1; i++) {
                 GenericBlock tempShip1 = (GenericBlock) tempShipConstructor.newInstance(i, false);
                 tempShip1.addMouseListener(gameControl);
                 tempShipList1.add(tempShip1);

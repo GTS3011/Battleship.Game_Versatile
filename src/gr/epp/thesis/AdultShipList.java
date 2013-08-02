@@ -18,12 +18,13 @@ public class AdultShipList extends GenericPanel {
     }
 
     @Override
-    public int totalItems() {
+    public int getTotalItems() {
         return 6;
     }
 
+    //To change body of generated methods, choose Tools | Templates.
     @Override
     public void stateChanged(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

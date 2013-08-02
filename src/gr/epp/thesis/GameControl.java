@@ -265,24 +265,30 @@ public class GameControl implements MouseListener {
         switch (orientation) {
             case (3):
                 for (int i = 0; i < shipBlocks; i++) {
+                    GenericBlock tempSeaBlock = (GenericBlock) myBoardPanel.getComponent(coords[2] + i);
                     if (hovering) {
-                        myBoardPanel.getComponent(coords[2] + i).setBackground(Color.GREEN);
+                        tempSeaBlock.setIcon(null);
+                        tempSeaBlock.setBackground(Color.GREEN);
                     } else if (exiting) {
-                        myBoardPanel.getComponent(coords[2] + i).setBackground(seaColor);
+                        tempSeaBlock.setIcon(tempSeaBlock.getWater());
+                        tempSeaBlock.setBackground(seaColor);
                     } else {
-                        warshipOnGrid((GenericBlock) myBoardPanel.getComponent(coords[2] + i), currentBlock);
+                        warshipOnGrid(tempSeaBlock, currentBlock);
                     }
                     currentBlock++;
                 }
                 break;
             case (6):
                 for (int i = 0; i < shipBlocks; i++) {
+                    GenericBlock tempSeaBlock = (GenericBlock) myBoardPanel.getComponent(coords[2] + (i * rows));
                     if (hovering) {
-                        myBoardPanel.getComponent(coords[2] + (i * rows)).setBackground(Color.GREEN);
+                        tempSeaBlock.setIcon(null);
+                        tempSeaBlock.setBackground(Color.GREEN);
                     } else if (exiting) {
-                        myBoardPanel.getComponent(coords[2] + (i * rows)).setBackground(seaColor);
+                        tempSeaBlock.setIcon(tempSeaBlock.getWater());
+                        tempSeaBlock.setBackground(seaColor);
                     } else {
-                        warshipOnGrid((GenericBlock) myBoardPanel.getComponent(coords[2] + (i * rows)), currentBlock);
+                        warshipOnGrid(tempSeaBlock, currentBlock);
                     }
                     currentBlock++;
                 }
