@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  *
  * @author vigos.ioannis
  */
-public class BattleshipMain implements ActionListener, Runnable {
+public class BattleshipMain implements ActionListener {
 
     private int rows = 0;
     private int columns = 0;
@@ -36,8 +36,6 @@ public class BattleshipMain implements ActionListener, Runnable {
     private JPanel downPanel = new JPanel(new BorderLayout(10, 0));
     private JPanel myBoard = new JPanel();
     private JPanel enemyBoard = new JPanel();
-    private GenericPanel tempShipList1;
-    private GenericPanel tempShipList2;
     private static Class tempClass;
     private GameControl gameControl;
 
@@ -106,8 +104,8 @@ public class BattleshipMain implements ActionListener, Runnable {
             GenericLabel tempMyLabel2 = (GenericLabel) tempLabelConstructor.newInstance(true);
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
-            tempShipList1 = (GenericPanel) tempClass.newInstance();
-            tempShipList2 = (GenericPanel) tempClass.newInstance();
+            GenericPanel tempShipList1 = (GenericPanel) tempClass.newInstance();
+            GenericPanel tempShipList2 = (GenericPanel) tempClass.newInstance();
             upPanel.add(tempShipList1, BorderLayout.WEST);
             downPanel.add(tempShipList2, BorderLayout.EAST);
 
@@ -120,8 +118,10 @@ public class BattleshipMain implements ActionListener, Runnable {
                 tempShip1.addMouseListener(gameControl);
                 tempShipList1.add(tempShip1);
                 GenericBlock tempShip2 = (GenericBlock) tempShipConstructor.newInstance(i, true);
+                tempShip2.addMouseListener(gameControl);
                 tempShipList2.add(tempShip2);
             }
+
             gameControl.setCurrentPlayerValues(currentPlayer, tempSeaColor.getSeaColor(), enemyBoard.getComponentCount());
 
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
@@ -155,26 +155,7 @@ public class BattleshipMain implements ActionListener, Runnable {
             frameWidth = 525;
             frameHeight = 1050;
         }
-        Thread thread = new Thread(new BattleshipMain(currentPlayer, rows, columns, frameWidth, frameHeight));
-        thread.start();
-    }
-
-    @Override
-    public void run() {
-        while (!this.gameControl.isReadyToStart()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        for (int i = 0; i < myBoard.getComponentCount(); i++) {
-            myBoard.getComponent(i).removeMouseListener(gameControl);
-        }
-        for (int i = 0; i < tempShipList2.getComponentCount(); i++) {
-            tempShipList2.getComponent(i).removeMouseListener(gameControl);
-        }
-        System.out.println("Starting Game...");
+        new BattleshipMain(currentPlayer, rows, columns, frameWidth, frameHeight);
     }
 
     public static void main(String[] args) {

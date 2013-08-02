@@ -35,7 +35,6 @@ public class GameControl implements MouseListener {
     private Toolkit toolkit = Toolkit.getDefaultToolkit();
     private Image target = toolkit.getImage("graphics/target.gif");
     private Point cursorHotSpot = new Point(10, 10);
-    private boolean readyToStart = false;
 
     public GameControl(JPanel enemyBoard, JPanel myBoard, int rows, int columns) {
         this.enemyBoardPanel = enemyBoard;
@@ -82,7 +81,6 @@ public class GameControl implements MouseListener {
                         if (coords[1] < (columns - (shipBlocks - 1)) && !shipsOnGrid.contains(currentWarShip)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
-                                initiateGame();
                             }
                         }
                         break;
@@ -90,7 +88,6 @@ public class GameControl implements MouseListener {
                         if (coords[0] < rows - (shipBlocks - 1) && !shipsOnGrid.contains(currentWarShip)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
-                                initiateGame();
                             }
                         }
                         break;
@@ -101,20 +98,13 @@ public class GameControl implements MouseListener {
 
     }
 
-    public void initiateGame() {
-        if (shipsOnGrid.size() == 15) {
-            //Start the game session here...
-            readyToStart=true;
-        }
-    }
-
     /*
      * Just for quicker ship selection.
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        GenericBlock pressedButton = (GenericBlock) e.getSource();
-        onShipsList = pressedButton.isOnShipsList();
+        GenericBlock pressedBlock = (GenericBlock) e.getSource();
+        onShipsList = pressedBlock.isOnShipsList();
         if (onShipsList) {
             mouseClicked(e);
         }
@@ -130,7 +120,6 @@ public class GameControl implements MouseListener {
      */
     @Override
     public void mouseEntered(MouseEvent e) {
-        System.out.println("...");
         GenericBlock pressedBlock = (GenericBlock) e.getSource();
         onShipsList = pressedBlock.isOnShipsList();
         if (!onShipsList) {
@@ -164,8 +153,8 @@ public class GameControl implements MouseListener {
      */
     @Override
     public void mouseExited(MouseEvent e) {
-        GenericBlock pressedButton = (GenericBlock) e.getSource();
-        onShipsList = pressedButton.isOnShipsList();
+        GenericBlock pressedBlock = (GenericBlock) e.getSource();
+        onShipsList = pressedBlock.isOnShipsList();
         if (!onShipsList) {
             getBlockPosition((GenericBlock) e.getSource());
             switch (orientation) {
@@ -210,6 +199,8 @@ public class GameControl implements MouseListener {
     public void warshipOnGrid(GenericBlock warShipBlock, int currentBlock) {
         if (currentPlayer.equals("Adult") || currentPlayer.equals("Admiral")) {
             warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
+        } else {
+            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/childGridShip.gif"));
         }
         warShipBlock.setBackground(seaColor);
         warShipBlock.setWarshipOn(true);
@@ -284,9 +275,5 @@ public class GameControl implements MouseListener {
                 }
                 break;
         }
-    }
-
-    public boolean isReadyToStart() {
-        return readyToStart;
     }
 }
