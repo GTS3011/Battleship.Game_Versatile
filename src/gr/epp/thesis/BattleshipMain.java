@@ -19,7 +19,12 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author vigos.ioannis
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @inst. Applied Informatics and Multimedia - TEI of Crete
+ * 
  */
 public class BattleshipMain implements ActionListener, Runnable {
 
