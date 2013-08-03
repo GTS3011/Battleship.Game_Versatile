@@ -8,7 +8,13 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -20,7 +26,7 @@ import javax.swing.JPanel;
  * @since Spring Semester 2013
  * @inst. Applied Informatics and Multimedia - TEI of Crete
  */
-public class GameControl implements MouseListener {
+public class GameControl implements MouseListener, Runnable {
 
     private int rows = 0;
     private int columns = 0;
@@ -41,6 +47,9 @@ public class GameControl implements MouseListener {
     private Toolkit toolkit = Toolkit.getDefaultToolkit();
     private Image target = toolkit.getImage("graphics/target.gif");
     private Point cursorHotSpot = new Point(10, 10);
+    private DataOutputStream out = null;
+    private DataInputStream in = null;
+    private Socket clientSocket = null;
 
     public GameControl(JPanel enemyBoard, JPanel myBoard, int rows, int columns) {
         this.enemyBoardPanel = enemyBoard;
@@ -191,6 +200,14 @@ public class GameControl implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         GenericBlock pressedBlock = (GenericBlock) e.getSource();
         onShipsList = pressedBlock.isOnShipsList();
+               if (readyToStart) {
+            try {
+                getBlockPosition(pressedBlock);
+                out.writeInt(coords[2]);
+            } catch (IOException ex) {
+                Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         if (onShipsList) {
             currentWarShip = pressedBlock;
             shipBlocks = pressedBlock.getTotalBlocks();
@@ -315,6 +332,19 @@ public class GameControl implements MouseListener {
                     break;
             }
             myBoardPanel.validate();
+        }
+    }
+
+    public void setSocket(Socket clientSocket) {
+        this.clientSocket = clientSocket;
+    }
+
+    @Override
+    public void run() {
+        try {
+            out = new DataOutputStream(clientSocket.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

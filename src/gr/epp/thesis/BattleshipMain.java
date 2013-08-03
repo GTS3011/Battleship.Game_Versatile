@@ -8,11 +8,15 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.net.UnknownHostException;
+import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,7 +28,7 @@ import javax.swing.JPanel;
  * @author Vidakis.Nikolas & Vellis Giorgos
  * @since Spring Semester 2013
  * @inst. Applied Informatics and Multimedia - TEI of Crete
- * 
+ *
  */
 public class BattleshipMain implements ActionListener, Runnable {
 
@@ -47,6 +51,9 @@ public class BattleshipMain implements ActionListener, Runnable {
     private GenericPanel tempShipList1;
     private GenericPanel tempShipList2;
     private int maxShipsOnGrid = 0;
+    private DataOutputStream out = null;
+    private DataInputStream in = null;
+    private static Socket clientSocket = null;
 
     /*
      * Player Selection
@@ -134,6 +141,20 @@ public class BattleshipMain implements ActionListener, Runnable {
 
             gameControl.setCurrentPlayerValues(currentPlayer, tempSeaColor.getSeaColor(), enemyBoard.getComponentCount(), maxShipsOnGrid);
 
+            int portNumber = 1501;
+            String host = "localhost";
+            System.out.print("Connect with " + host + " in port " + portNumber + ": ");
+            try {
+                clientSocket = new Socket(host, portNumber);
+                System.out.println("Connected");
+                gameControl.setSocket(clientSocket);
+                (new Thread(gameControl)).start();
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -178,13 +199,27 @@ public class BattleshipMain implements ActionListener, Runnable {
                 Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        for (int i = 0; i < myBoard.getComponentCount(); i++) {
-            myBoard.getComponent(i).removeMouseListener(gameControl);
-        }
+          //Temporary
+//        for (int i = 0; i < myBoard.getComponentCount(); i++) {
+//            myBoard.getComponent(i).removeMouseListener(gameControl);
+//        }
         for (int i = 0; i < tempShipList2.getComponentCount(); i++) {
             tempShipList2.getComponent(i).removeMouseListener(gameControl);
         }
         System.out.println("Starting Game...");
+
+        try {
+            in = new DataInputStream(clientSocket.getInputStream());
+            out = new DataOutputStream(clientSocket.getOutputStream());
+
+            while (true) {
+                int value = in.readInt();
+                System.out.println("Enemy has pressed the block " + value + " on his board");
+                //notifies all views with the incoming value from the server.
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
