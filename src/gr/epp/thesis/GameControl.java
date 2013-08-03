@@ -14,7 +14,11 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author vigos.ioannis
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @inst. Applied Informatics and Multimedia - TEI of Crete
  */
 public class GameControl implements MouseListener {
 
@@ -45,6 +49,13 @@ public class GameControl implements MouseListener {
         this.columns = columns;
     }
 
+    /**
+     * Current player values, needed for the setup of the game. Different
+     * players equals to different values and behavior. Values needed every time
+     * are the Current Player, it's pre-specified seaBlock's color, the enemy's
+     * board component count (needed for the activateEnemyGrid() method), and an
+     * integer about the maximum ships they can be put to the grid.
+     */
     public void setCurrentPlayerValues(String currentPlayer, Color seaColor, int enemyComponentCount, int maxShipsOnGrid) {
         this.currentPlayer = currentPlayer;
         this.seaColor = seaColor;
@@ -53,10 +64,127 @@ public class GameControl implements MouseListener {
         activateEnemyGrid(false);
     }
 
+    /**
+     * A method that activates/deactivates the enemy's board components, so that
+     * you can't fire if it's not your turn, or you haven't place your warships
+     * already. If it's your turn to fire, enemy's components reactivating.
+     */
     public void activateEnemyGrid(boolean activate) {
         for (int i = 0; i < enemyComponentCount; i++) {
             enemyBoardPanel.getComponent(i).setEnabled(activate);
         }
+    }
+
+    /**
+     * A method that instantly, gives each seaBlock unique coordinates, on the
+     * grid.
+     */
+    public void getBlockPosition(GenericBlock pressedBlock) {
+        JPanel currentParent = (JPanel) pressedBlock.getParent();
+        for (int i = 0; i < currentParent.getComponentCount(); i++) {
+            if (currentParent.getComponent(i) == pressedBlock) {
+                coords[0] = i / rows;
+                coords[1] = i % columns;
+                coords[2] = i;
+                break;
+            }
+        }
+    }
+
+    /**
+     * A method to create the shipBlocks on myBoard panel. This method adds
+     * icons for every ship in every orientation. Later deactivates the war
+     *
+     */
+    public void warshipOnGrid(GenericBlock warShipBlock, int currentBlock) {
+        if (currentPlayer.equals("Adult") || currentPlayer.equals("Admiral")) {
+            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
+        } else {
+            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/childGridShip.png"));
+        }
+        warShipBlock.setBackground(seaColor);
+        warShipBlock.setWarshipOn(true);
+        currentWarShip.setEnabled(false);
+        shipsOnGrid.add(currentWarShip);
+    }
+
+    /**
+     * A method for collision detection. This method prevents the installation
+     * of another WarShip, that collides on the first one. Values of 3 & 6,
+     * about orientation means orientation of the WarShip clockwise.
+     */
+    public boolean checkCollision() {
+        boolean freeArea = true;
+        switch (orientation) {
+            case (3):
+                for (int i = coords[2]; i < (coords[2] + shipBlocks); i++) {
+                    GenericBlock tempBlock = (GenericBlock) myBoardPanel.getComponent(i);
+                    if (tempBlock.isWarshipOn()) {
+                        freeArea = false;
+                        break;
+                    }
+                }
+                return freeArea;
+            case (6):
+                for (int i = coords[2]; i < (coords[2] + (rows * shipBlocks)); i = i + rows) {
+                    GenericBlock tempBlock = (GenericBlock) myBoardPanel.getComponent(i);
+                    if (tempBlock.isWarshipOn()) {
+                        freeArea = false;
+                        break;
+                    }
+                }
+                return freeArea;
+        }
+        return false;
+    }
+
+    /**
+     * A method that contains all interactions with the grid. Those are,
+     * Hovering on seaBlocks, Exiting from seaBlocks hover, and Capturing. This
+     * method needs the orientation of the ship placement, and also two
+     * arguments for the behavior of the WarShip before the capture. If Hovering
+     * is true, then a ship is above buttons. If Exiting is true, then the
+     * SeaBlock, has to repaint itself because the WarShip is elsewhere. Values
+     * of 3 & 6, about orientation means orientation of the WarShip clockwise.
+     */
+    public void battleFormations(boolean hovering, boolean exiting) {
+        int currentBlock = 0;
+        switch (orientation) {
+            case (3):
+                for (int i = 0; i < shipBlocks; i++) {
+                    GenericBlock tempSeaBlock = (GenericBlock) myBoardPanel.getComponent(coords[2] + i);
+                    if (hovering) {
+                        tempSeaBlock.setIcon(null);
+                        tempSeaBlock.setBackground(Color.GREEN);
+                    } else if (exiting) {
+                        tempSeaBlock.setIcon(tempSeaBlock.getWater());
+                        tempSeaBlock.setBackground(seaColor);
+                    } else {
+                        warshipOnGrid(tempSeaBlock, currentBlock);
+                    }
+                    currentBlock++;
+                }
+                break;
+            case (6):
+                for (int i = 0; i < shipBlocks; i++) {
+                    GenericBlock tempSeaBlock = (GenericBlock) myBoardPanel.getComponent(coords[2] + (i * rows));
+                    if (hovering) {
+                        tempSeaBlock.setIcon(null);
+                        tempSeaBlock.setBackground(Color.GREEN);
+                    } else if (exiting) {
+                        tempSeaBlock.setIcon(tempSeaBlock.getWater());
+                        tempSeaBlock.setBackground(seaColor);
+                    } else {
+                        warshipOnGrid(tempSeaBlock, currentBlock);
+                    }
+                    currentBlock++;
+                }
+                break;
+        }
+    }
+
+    public boolean isReadyToStart() {
+        return readyToStart;
     }
 
     @Override
@@ -188,115 +316,5 @@ public class GameControl implements MouseListener {
             }
             myBoardPanel.validate();
         }
-    }
-
-    /**
-     * A method that instantly, gives each SeaBlock unique coordinates, on the
-     * grid.
-     */
-    public void getBlockPosition(GenericBlock pressedBlock) {
-        for (int i = 0; i < myBoardPanel.getComponentCount(); i++) {
-            if (myBoardPanel.getComponent(i) == pressedBlock) {
-                coords[0] = i / rows;
-                coords[1] = i % columns;
-                coords[2] = i;
-                break;
-            }
-        }
-    }
-
-    /**
-     * A method to create shipBlocks of MyBoard Panel. This method also adds
-     * MouseListener to each ShipBlock.
-     */
-    public void warshipOnGrid(GenericBlock warShipBlock, int currentBlock) {
-        if (currentPlayer.equals("Adult") || currentPlayer.equals("Admiral")) {
-            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
-        } else {
-            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/childGridShip.png"));
-        }
-        warShipBlock.setBackground(seaColor);
-        warShipBlock.setWarshipOn(true);
-        currentWarShip.setEnabled(false);
-        shipsOnGrid.add(currentWarShip);
-    }
-
-    /**
-     * A method for collision detection. This method prevents the installation
-     * of another WarShip, that collides on the first one. Values of 3 & 6,
-     * about orientation means orientation of the WarShip clockwise.
-     */
-    public boolean checkCollision() {
-        boolean freeArea = true;
-        switch (orientation) {
-            case (3):
-                for (int i = coords[2]; i < (coords[2] + shipBlocks); i++) {
-                    GenericBlock tempBlock = (GenericBlock) myBoardPanel.getComponent(i);
-                    if (tempBlock.isWarshipOn()) {
-                        freeArea = false;
-                        break;
-                    }
-                }
-                return freeArea;
-            case (6):
-                for (int i = coords[2]; i < (coords[2] + (rows * shipBlocks)); i = i + rows) {
-                    GenericBlock tempBlock = (GenericBlock) myBoardPanel.getComponent(i);
-                    if (tempBlock.isWarshipOn()) {
-                        freeArea = false;
-                        break;
-                    }
-                }
-                return freeArea;
-        }
-        return false;
-    }
-
-    /**
-     * A method that contains all interactions with the grid. Those are,
-     * Hovering on seaBlocks, Exiting from seaBlocks hover, and Capturing. This
-     * method needs the orientation of the ship placement, and also two
-     * arguments for the behavior of the WarShip before the capture. If Hovering
-     * is true, then a ship is above buttons. If Exiting is true, then the
-     * SeaBlock, has to repaint itself because the WarShip is elsewhere. Values
-     * of 3 & 6, about orientation means orientation of the WarShip clockwise.
-     */
-    public void battleFormations(boolean hovering, boolean exiting) {
-        int currentBlock = 0;
-        switch (orientation) {
-            case (3):
-                for (int i = 0; i < shipBlocks; i++) {
-                    GenericBlock tempSeaBlock = (GenericBlock) myBoardPanel.getComponent(coords[2] + i);
-                    if (hovering) {
-                        tempSeaBlock.setIcon(null);
-                        tempSeaBlock.setBackground(Color.GREEN);
-                    } else if (exiting) {
-                        tempSeaBlock.setIcon(tempSeaBlock.getWater());
-                        tempSeaBlock.setBackground(seaColor);
-                    } else {
-                        warshipOnGrid(tempSeaBlock, currentBlock);
-                    }
-                    currentBlock++;
-                }
-                break;
-            case (6):
-                for (int i = 0; i < shipBlocks; i++) {
-                    GenericBlock tempSeaBlock = (GenericBlock) myBoardPanel.getComponent(coords[2] + (i * rows));
-                    if (hovering) {
-                        tempSeaBlock.setIcon(null);
-                        tempSeaBlock.setBackground(Color.GREEN);
-                    } else if (exiting) {
-                        tempSeaBlock.setIcon(tempSeaBlock.getWater());
-                        tempSeaBlock.setBackground(seaColor);
-                    } else {
-                        warshipOnGrid(tempSeaBlock, currentBlock);
-                    }
-                    currentBlock++;
-                }
-                break;
-        }
-    }
-
-    public boolean isReadyToStart() {
-        return readyToStart;
     }
 }
