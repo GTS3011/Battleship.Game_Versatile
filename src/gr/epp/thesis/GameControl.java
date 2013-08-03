@@ -196,11 +196,32 @@ public class GameControl implements MouseListener, Runnable {
         return readyToStart;
     }
 
+    public void initiateGame() {
+        maxShipsOnGrid--;
+        if (maxShipsOnGrid == 0) {
+            //Start the game session here...
+            readyToStart = true;
+        }
+    }
+
+    public void setSocket(Socket clientSocket) {
+        this.clientSocket = clientSocket;
+    }
+
+    @Override
+    public void run() {
+        try {
+            out = new DataOutputStream(clientSocket.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         GenericBlock pressedBlock = (GenericBlock) e.getSource();
         onShipsList = pressedBlock.isOnShipsList();
-               if (readyToStart) {
+        if (readyToStart) {
             try {
                 getBlockPosition(pressedBlock);
                 out.writeInt(coords[2]);
@@ -246,14 +267,6 @@ public class GameControl implements MouseListener, Runnable {
             }
         }
 
-    }
-
-    public void initiateGame() {
-        maxShipsOnGrid--;
-        if (maxShipsOnGrid == 0) {
-            //Start the game session here...
-            readyToStart = true;
-        }
     }
 
     /*
@@ -332,19 +345,6 @@ public class GameControl implements MouseListener, Runnable {
                     break;
             }
             myBoardPanel.validate();
-        }
-    }
-
-    public void setSocket(Socket clientSocket) {
-        this.clientSocket = clientSocket;
-    }
-
-    @Override
-    public void run() {
-        try {
-            out = new DataOutputStream(clientSocket.getOutputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
