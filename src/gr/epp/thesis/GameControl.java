@@ -93,8 +93,8 @@ public class GameControl implements MouseListener {
 
     /**
      * A method to create the shipBlocks on myBoard panel. This method adds
-     * icons for every ship in every orientation. Later deactivates the war
-     *
+     * icons for every ship in every orientation. Later deactivates the
+     * positioned warship on the list.
      */
     public void warshipOnGrid(GenericBlock warShipBlock, int currentBlock) {
         if (currentPlayer.equals("Adult") || currentPlayer.equals("Admiral")) {
@@ -110,8 +110,8 @@ public class GameControl implements MouseListener {
 
     /**
      * A method for collision detection. This method prevents the installation
-     * of another WarShip, that collides on the first one. Values of 3 & 6,
-     * about orientation means orientation of the WarShip clockwise.
+     * of another warship, that collides on other ones. Values of 3 & 6, about
+     * orientation means orientation of the warship clockwise.
      */
     public boolean checkCollision() {
         boolean freeArea = true;
@@ -142,10 +142,10 @@ public class GameControl implements MouseListener {
      * A method that contains all interactions with the grid. Those are,
      * Hovering on seaBlocks, Exiting from seaBlocks hover, and Capturing. This
      * method needs the orientation of the ship placement, and also two
-     * arguments for the behavior of the WarShip before the capture. If Hovering
+     * arguments for the behavior of the warship before the capture. If Hovering
      * is true, then a ship is above buttons. If Exiting is true, then the
-     * SeaBlock, has to repaint itself because the WarShip is elsewhere. Values
-     * of 3 & 6, about orientation means orientation of the WarShip clockwise.
+     * SeaBlock, has to repaint itself because the warship is elsewhere. Values
+     * of 3 & 6, about orientation means orientation of the warship clockwise.
      */
     public void battleFormations(boolean hovering, boolean exiting) {
         int currentBlock = 0;
