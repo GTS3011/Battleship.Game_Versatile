@@ -19,8 +19,12 @@ public class AdultLabel extends GenericLabel {
     }
 
     @Override
+    public void initializeValues() {
+        this.values = new AdultValues();
+    }
+
+    @Override
     public void initializeDecorLabel() {
-        image = new ImageIcon("graphics/adultDecorLabel.png");
     }
 
     @Override

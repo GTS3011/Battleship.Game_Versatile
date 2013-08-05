@@ -1,7 +1,6 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericBlock;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
@@ -20,19 +19,23 @@ public class ChildBlock extends GenericBlock {
         super(index, ownShipsList);
     }
 
+    @Override
+    public void initializeValues() {
+        this.values = new ChildValues();
+    }
+
     /*
      * Grid's seaBlocks:
      */
     @Override
     public void initializeGridBlocks() {
-        setSeaColor(Color.CYAN);
     }
 
     /*
      * Enemy's and My Ship List.
      */
     @Override
-    public void initializeShipList() {
+    public void initializeShipsList() {
 
         if (this.ownShipsList) {
             setIcon(new ImageIcon("graphics/childMyListShip.png"));

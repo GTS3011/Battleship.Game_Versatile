@@ -19,12 +19,16 @@ public class AdmiralBlock extends GenericBlock {
     }
 
     @Override
-    public void initializeGridBlocks() {
-        setSeaColor(Color.CYAN.darker());
+    public void initializeValues() {
+        this.values = new AdmiralValues();
     }
 
     @Override
-    public void initializeShipList() {
+    public void initializeGridBlocks() {
+    }
+
+    @Override
+    public void initializeShipsList() {
         if (this.ownShipsList) {
             this.border = new LineBorder(Color.GREEN.darker(), 1, false);
             switch (this.index) {

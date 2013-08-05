@@ -28,7 +28,7 @@ public class ChildValues extends GenericValues {
         this.target = toolkit.getImage("graphics/target.gif");
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
-        this.myWarshipsIcons.add(new ImageIcon("graphics/childMyListShip.png"));
-        this.enemyWarshipsIcons.add(new ImageIcon("graphics/childEnemyListShip.png"));
+        //this.myWarshipsIcons.add(new ImageIcon("graphics/childMyListShip.png"));
+        //this.enemyWarshipsIcons.add(new ImageIcon("graphics/childEnemyListShip.png"));
     }
 }

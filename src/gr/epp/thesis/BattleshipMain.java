@@ -97,23 +97,23 @@ public class BattleshipMain implements ActionListener, Runnable {
         myBoard.setLayout(new GridLayout(this.currentPlayerValues.getRows(), this.currentPlayerValues.getColumns()));
         masterFrame.validate();
 
-        gameControl = new GameControl(enemyBoard, myBoard, rows, columns);
+        gameControl = new GameControl(enemyBoard, myBoard, this.currentPlayerValues.getRows(), this.currentPlayerValues.getColumns());
 
         try {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             GenericBlock tempSeaColor = (GenericBlock) tempClass.newInstance();
-            for (int i = 0; i < rows * columns; i++) {
-                GenericBlock tempSeaBlock1 = (GenericBlock) tempClass.newInstance();
-                tempSeaBlock1.addMouseListener(gameControl);
-                enemyBoard.add(tempSeaBlock1);
-                GenericBlock tempSeaBlock2 = (GenericBlock) tempClass.newInstance();
-                tempSeaBlock2.addMouseListener(gameControl);
-                myBoard.add(tempSeaBlock2);
+            for (int i = 0; i < this.currentPlayerValues.getRows() * this.currentPlayerValues.getColumns(); i++) {
+                GenericBlock enemySeaBlock = (GenericBlock) tempClass.newInstance();
+                enemySeaBlock.addMouseListener(gameControl);
+                enemyBoard.add(enemySeaBlock);
+                GenericBlock mySeaBlock = (GenericBlock) tempClass.newInstance();
+                mySeaBlock.addMouseListener(gameControl);
+                myBoard.add(mySeaBlock);
             }
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
-            GenericLabel tempDecorLabel = (GenericLabel) tempClass.newInstance();
-            decorPanel.add(tempDecorLabel);
+            GenericLabel decorLabel = (GenericLabel) tempClass.newInstance();
+            decorPanel.add(decorLabel);
 
             Constructor tempLabelConstructor = tempClass.getConstructor(boolean.class);
             GenericLabel tempMyLabell = (GenericLabel) tempLabelConstructor.newInstance(false);

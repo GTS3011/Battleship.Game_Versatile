@@ -8,6 +8,7 @@ import javax.swing.border.Border;
 
 public abstract class GenericBlock extends JButton implements View {
 
+    protected GenericValues values;
     protected int index;
     protected boolean ownShipsList;
     protected int temp;
@@ -19,22 +20,26 @@ public abstract class GenericBlock extends JButton implements View {
     protected ImageIcon water = new ImageIcon("graphics/water.gif");
 
     public GenericBlock() {
+        initializeValues();
+        setBackground(values.getSeaColor());
+        setIcon(values.getWater());
         initializeGridBlocks();
-        setBackground(getSeaColor());
-        setIcon(water);
     }
 
     public GenericBlock(int index, boolean ownShipsList) {
+        initializeValues();
         this.index = index;
         this.ownShipsList = ownShipsList;
         this.border = border;
-        initializeShipList();
+        initializeShipsList();
         setBorder(border);
     }
 
+    public abstract void initializeValues();
+
     public abstract void initializeGridBlocks();
 
-    public abstract void initializeShipList();
+    public abstract void initializeShipsList();
 
     public ImageIcon getWater() {
         return water;

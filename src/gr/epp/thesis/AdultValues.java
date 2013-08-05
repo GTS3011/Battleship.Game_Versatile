@@ -29,9 +29,10 @@ public class AdultValues extends GenericValues {
         this.target = toolkit.getImage("graphics/target.gif");
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
+        this.myWarshipsIcons = new ImageIcon[totalShips];
         for (int i = 0; i < totalShips; i++) {
-            this.myWarshipsIcons.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
+            this.myWarshipsIcons[i] = new ImageIcon("graphics/modernWarship" + i + ".gif");
         }
-        this.enemyWarshipsIcons = (ArrayList<ImageIcon>) myWarshipsIcons.clone();
+        //this.enemyWarshipsIcons = (ArrayList<ImageIcon>) myWarshipsIcons.clone();
     }
 }

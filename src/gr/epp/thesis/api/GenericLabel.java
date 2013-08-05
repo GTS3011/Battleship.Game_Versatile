@@ -7,17 +7,19 @@ import javax.swing.border.Border;
 
 public abstract class GenericLabel extends JLabel implements View {
 
+    protected GenericValues values;
     protected ImageIcon image;
     protected boolean ownShipList;
     protected Border border;
 
     public GenericLabel() {
-        initializeDecorLabel();
+        initializeValues();
+        setIcon(values.getDecor());
         setHorizontalAlignment(CENTER);
-        setIcon(image);
     }
 
     public GenericLabel(boolean ownShipList) {
+        initializeValues();
         this.ownShipList = ownShipList;
         this.border = border;
         initializeShipsListLabel();
@@ -25,6 +27,8 @@ public abstract class GenericLabel extends JLabel implements View {
         setBorder(border);
         setIcon(image);
     }
+
+    public abstract void initializeValues();
 
     public abstract void initializeDecorLabel();
 

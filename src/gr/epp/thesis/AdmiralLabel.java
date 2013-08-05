@@ -19,6 +19,11 @@ public class AdmiralLabel extends GenericLabel {
     }
 
     @Override
+    public void initializeValues() {
+        this.values = new AdmiralValues();
+    }
+
+    @Override
     public void initializeDecorLabel() {
         image = new ImageIcon("graphics/admiralDecorLabel.png");
     }

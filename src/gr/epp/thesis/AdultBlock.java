@@ -12,15 +12,18 @@ import javax.swing.border.LineBorder;
  */
 public class AdultBlock extends GenericBlock {
 
-    protected AdultValues adultValues;
-
     public AdultBlock() {
         super();
-        adultValues = new AdultValues();
+        System.out.println("" + values.getRows());
     }
 
     public AdultBlock(int index, boolean ownShipsList) {
         super(index, ownShipsList);
+    }
+
+    @Override
+    public void initializeValues() {
+        this.values = new AdultValues();
     }
 
     /*
@@ -28,43 +31,40 @@ public class AdultBlock extends GenericBlock {
      */
     @Override
     public void initializeGridBlocks() {
-        setSeaColor(adultValues.getSeaColor());
     }
 
     /*
      * Enemy's and My Ship List.
      */
     @Override
-    public void initializeShipList() {
+    public void initializeShipsList() {
         if (this.ownShipsList) {
             this.border = new LineBorder(Color.GREEN.darker(), 1, false);
+            setBackground(values.getMyShipsListBackColor());
             switch (this.index) {
                 case (0):
-                    //setBackground(adultValues.getMyShipsListBackColor());
-                    //setIcon(adultValues.getMyWarshipsIcons().get(index));
+                    ImageIcon img = values.getMyWarshipsIcons(index);
+                    setIcon(new ImageIcon("graphics/modernWarship0.gif"));
+                    //System.out.println("" + values.getMyWarshipsIcons().length);
                     setTotalBlocks(5);
                     setOnShipsList(true);
                     break;
                 case (1):
-                    setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/battleship.gif"));
                     setTotalBlocks(4);
                     setOnShipsList(true);
                     break;
                 case (2):
-                    setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/submarine.gif"));
                     setTotalBlocks(3);
                     setOnShipsList(true);
                     break;
                 case (3):
-                    setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/destroyer.gif"));
                     setTotalBlocks(2);
                     setOnShipsList(true);
                     break;
                 case (4):
-                    setBackground(Color.LIGHT_GRAY);
                     setIcon(new ImageIcon("graphics/patrolShip.gif"));
                     setTotalBlocks(1);
                     setOnShipsList(true);

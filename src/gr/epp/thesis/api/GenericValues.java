@@ -31,11 +31,20 @@ public abstract class GenericValues {
     protected Image target;
     protected ImageIcon hit;
     protected ImageIcon miss;
-    protected ArrayList<ImageIcon> myWarshipsIcons = new ArrayList<>();
+    protected ImageIcon[] myWarshipsIcons;
+    //protected ArrayList<ImageIcon> myWarshipsIcons = new ArrayList<>();
     protected ArrayList<ImageIcon> enemyWarshipsIcons = new ArrayList<>();
 
     public ImageIcon getGridPieces(int shipBlocks, int currentBlock, int orientation) {
         return (new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
+    }
+
+    public ImageIcon getMyWarshipsIcons(int index) {
+        return myWarshipsIcons[index];
+    }
+
+    public void setMyWarshipsIcons(ImageIcon[] myWarshipsIcons) {
+        this.myWarshipsIcons = myWarshipsIcons;
     }
 
     public int getRows() {
@@ -166,13 +175,13 @@ public abstract class GenericValues {
         this.miss = miss;
     }
 
-    public ArrayList<ImageIcon> getMyWarshipsIcons() {
-        return myWarshipsIcons;
-    }
+    //public ArrayList<ImageIcon> getMyWarshipsIcons() {
+       // return myWarshipsIcons;
+   // }
 
-    public void setMyWarshipsIcons(ArrayList<ImageIcon> myWarshipsIcons) {
-        this.myWarshipsIcons = myWarshipsIcons;
-    }
+    //public void setMyWarshipsIcons(ArrayList<ImageIcon> myWarshipsIcons) {
+      //  this.myWarshipsIcons = myWarshipsIcons;
+   // }
 
     public ArrayList<ImageIcon> getEnemyWarshipsIcons() {
         return enemyWarshipsIcons;

@@ -30,8 +30,8 @@ public class AdmiralValues extends GenericValues {
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
         for (int i = 0; i < totalShips; i++) {
-            this.myWarshipsIcons.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
+            //this.myWarshipsIcons.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
         }
-        this.enemyWarshipsIcons = (ArrayList<ImageIcon>) myWarshipsIcons.clone();
+        //this.enemyWarshipsIcons = (ArrayList<ImageIcon>) myWarshipsIcons.clone();
     }
 }

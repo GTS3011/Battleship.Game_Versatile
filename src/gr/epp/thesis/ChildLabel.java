@@ -19,6 +19,11 @@ public class ChildLabel extends GenericLabel {
     }
 
     @Override
+    public void initializeValues() {
+        this.values = new ChildValues();
+    }
+
+    @Override
     public void initializeDecorLabel() {
         image = new ImageIcon("graphics/childDecorLabel.png");
     }
