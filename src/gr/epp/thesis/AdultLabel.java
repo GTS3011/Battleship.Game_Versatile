@@ -1,7 +1,6 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericLabel;
-import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
@@ -14,8 +13,8 @@ public class AdultLabel extends GenericLabel {
     public AdultLabel() {
     }
 
-    public AdultLabel(boolean ownShipList) {
-        super(ownShipList);
+    public AdultLabel(boolean player) {
+        super(player);
     }
 
     @Override
@@ -24,17 +23,13 @@ public class AdultLabel extends GenericLabel {
     }
 
     @Override
-    public void initializeDecorLabel() {
-    }
-
-    @Override
     public void initializeShipsListLabel() {
-        if (ownShipList) {
-            this.border = new LineBorder(Color.GREEN.darker(), 1, false);
-            image = new ImageIcon("graphics/myFleetAdultIcon.png");
+        if (player) {
+            this.border = values.getMyShipListBorder();
+            playerLabel = values.getPlayerBanner();
         } else {
-            this.border = new LineBorder(Color.RED.darker(), 1, false);
-            image = new ImageIcon("graphics/enemyFleetAdultIcon.png");
+            this.border = values.getEnemyShipListBorder();
+            playerLabel = values.getEnemyPlayerBanner();
         }
     }
 

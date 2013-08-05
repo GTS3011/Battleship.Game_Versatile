@@ -4,6 +4,8 @@ import gr.epp.thesis.api.GenericValues;
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -20,6 +22,8 @@ public class ChildValues extends GenericValues {
         this.seaColor = Color.CYAN;
         this.myShipsListBackColor = Color.GREEN;
         this.enemyShipsListBackColor = Color.RED;
+        this.myShipListBorder = new LineBorder(Color.GREEN, 1, false);
+        this.myShipListBorder = new LineBorder(Color.RED, 1, false);
         this.water = new ImageIcon("graphics/water.gif");
         this.decor = new ImageIcon("graphics/childDecorLabel.png");
         this.playerBanner = new ImageIcon("graphics/childMyListMotherShip.png");

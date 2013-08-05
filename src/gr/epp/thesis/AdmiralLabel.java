@@ -14,8 +14,8 @@ public class AdmiralLabel extends GenericLabel {
     public AdmiralLabel() {
     }
 
-    public AdmiralLabel(boolean ownShipList) {
-        super(ownShipList);
+    public AdmiralLabel(boolean player) {
+        super(player);
     }
 
     @Override
@@ -24,18 +24,13 @@ public class AdmiralLabel extends GenericLabel {
     }
 
     @Override
-    public void initializeDecorLabel() {
-        image = new ImageIcon("graphics/admiralDecorLabel.png");
-    }
-
-    @Override
     public void initializeShipsListLabel() {
-        if (ownShipList) {
-            this.border = new LineBorder(Color.GREEN.darker(), 1, false);
-            image = new ImageIcon("graphics/myFleetAdmiralIcon.png");
+        if (player) {
+            this.border = values.getEnemyShipListBorder();
+            this.playerLabel = values.getPlayerBanner();
         } else {
-            this.border = new LineBorder(Color.RED.darker(), 1, false);
-            image = new ImageIcon("graphics/enemyFleetAdmiralIcon.png");
+            this.border = values.getEnemyShipListBorder();
+            this.playerLabel = values.getEnemyPlayerBanner();
         }
     }
 

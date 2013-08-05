@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -21,6 +22,8 @@ public class AdultValues extends GenericValues {
         this.seaColor = Color.CYAN;
         this.myShipsListBackColor = Color.GREEN.darker();
         this.enemyShipsListBackColor = Color.RED.darker();
+        this.myShipListBorder = new LineBorder(Color.GREEN.darker(), 1, false);
+        this.myShipListBorder = new LineBorder(Color.RED.darker(), 1, false);
         this.water = new ImageIcon("graphics/water.gif");
         this.decor = new ImageIcon("graphics/adultDecorLabel.png");
         this.playerBanner = new ImageIcon("graphics/myFleetAdultIcon.png");

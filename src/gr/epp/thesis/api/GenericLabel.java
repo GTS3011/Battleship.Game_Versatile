@@ -8,29 +8,32 @@ import javax.swing.border.Border;
 public abstract class GenericLabel extends JLabel implements View {
 
     protected GenericValues values;
-    protected ImageIcon image;
-    protected boolean ownShipList;
+    protected ImageIcon playerLabel;
+    protected boolean player;
     protected Border border;
 
+    /**
+     * Constructor for the decor panel of a specific player.
+     */
     public GenericLabel() {
-        initializeValues();
+        initializeValues();             // All values needed for a specific player.
         setIcon(values.getDecor());
         setHorizontalAlignment(CENTER);
     }
 
-    public GenericLabel(boolean ownShipList) {
-        initializeValues();
-        this.ownShipList = ownShipList;
-        this.border = border;
+    /**
+     * Constructor for the player labels above ships list of a specific player.
+     */
+    public GenericLabel(boolean player) {
+        initializeValues();             // All values needed for a specific player.
+        this.player = player;
         initializeShipsListLabel();
-        setHorizontalAlignment(CENTER);
         setBorder(border);
-        setIcon(image);
+        setHorizontalAlignment(CENTER);
+        setIcon(playerLabel);
     }
 
     public abstract void initializeValues();
-
-    public abstract void initializeDecorLabel();
 
     public abstract void initializeShipsListLabel();
 }

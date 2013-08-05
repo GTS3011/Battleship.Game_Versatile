@@ -114,10 +114,9 @@ public class BattleshipMain implements ActionListener, Runnable {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Label");
             GenericLabel decorLabel = (GenericLabel) tempClass.newInstance();
             decorPanel.add(decorLabel);
-
-            Constructor tempLabelConstructor = tempClass.getConstructor(boolean.class);
-            GenericLabel tempMyLabell = (GenericLabel) tempLabelConstructor.newInstance(false);
-            GenericLabel tempMyLabel2 = (GenericLabel) tempLabelConstructor.newInstance(true);
+            Constructor playerLabelsConstructor = tempClass.getConstructor(boolean.class);
+            GenericLabel enemyPlayerLabel = (GenericLabel) playerLabelsConstructor.newInstance(false);
+            GenericLabel playerLabel = (GenericLabel) playerLabelsConstructor.newInstance(true);
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
             tempShipList1 = (GenericPanel) tempClass.newInstance();
@@ -127,8 +126,8 @@ public class BattleshipMain implements ActionListener, Runnable {
 
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             Constructor tempShipConstructor = tempClass.getConstructor(int.class, boolean.class);
-            tempShipList1.add(tempMyLabell);
-            tempShipList2.add(tempMyLabel2);
+            tempShipList1.add(enemyPlayerLabel);
+            tempShipList2.add(playerLabel);
             for (int i = 0; i < tempShipList1.getTotalItems() - 1; i++) {
                 GenericBlock tempShip1 = (GenericBlock) tempShipConstructor.newInstance(i, false);
                 tempShip1.addMouseListener(gameControl);

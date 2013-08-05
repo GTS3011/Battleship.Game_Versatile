@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -22,7 +23,8 @@ public abstract class GenericValues {
     protected Color seaColor;
     protected Color myShipsListBackColor;
     protected Color enemyShipsListBackColor;
-    protected Border border;
+    protected LineBorder myShipListBorder;
+    protected LineBorder enemyShipListBorder;
     protected ImageIcon water;
     protected ImageIcon decor;
     protected ImageIcon playerBanner;
@@ -37,6 +39,22 @@ public abstract class GenericValues {
 
     public ImageIcon getGridPieces(int shipBlocks, int currentBlock, int orientation) {
         return (new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
+    }
+
+    public LineBorder getMyShipListBorder() {
+        return myShipListBorder;
+    }
+
+    public void setMyShipListBorder(LineBorder myShipListBorder) {
+        this.myShipListBorder = myShipListBorder;
+    }
+
+    public LineBorder getEnemyShipListBorder() {
+        return enemyShipListBorder;
+    }
+
+    public void setEnemyShipListBorder(LineBorder enemyShipListBorder) {
+        this.enemyShipListBorder = enemyShipListBorder;
     }
 
     public ImageIcon getMyWarshipsIcons(int index) {
@@ -101,14 +119,6 @@ public abstract class GenericValues {
 
     public void setSeaColor(Color seaColor) {
         this.seaColor = seaColor;
-    }
-
-    public Border getBorder() {
-        return border;
-    }
-
-    public void setBorder(Border border) {
-        this.border = border;
     }
 
     public ImageIcon getWater() {
@@ -176,13 +186,11 @@ public abstract class GenericValues {
     }
 
     //public ArrayList<ImageIcon> getMyWarshipsIcons() {
-       // return myWarshipsIcons;
-   // }
-
+    // return myWarshipsIcons;
+    // }
     //public void setMyWarshipsIcons(ArrayList<ImageIcon> myWarshipsIcons) {
-      //  this.myWarshipsIcons = myWarshipsIcons;
-   // }
-
+    //  this.myWarshipsIcons = myWarshipsIcons;
+    // }
     public ArrayList<ImageIcon> getEnemyWarshipsIcons() {
         return enemyWarshipsIcons;
     }

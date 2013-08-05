@@ -14,8 +14,8 @@ public class ChildLabel extends GenericLabel {
     public ChildLabel() {
     }
 
-    public ChildLabel(boolean ownShipList) {
-        super(ownShipList);
+    public ChildLabel(boolean player) {
+        super(player);
     }
 
     @Override
@@ -24,18 +24,13 @@ public class ChildLabel extends GenericLabel {
     }
 
     @Override
-    public void initializeDecorLabel() {
-        image = new ImageIcon("graphics/childDecorLabel.png");
-    }
-
-    @Override
     public void initializeShipsListLabel() {
-        if (ownShipList) {
-            this.border = new LineBorder(Color.GREEN, 1, false);
-            image = new ImageIcon("graphics/childMyListMotherShip.png");
+        if (player) {
+            this.border = values.getEnemyShipListBorder();
+            playerLabel = values.getPlayerBanner();
         } else {
-            this.border = new LineBorder(Color.RED, 1, false);
-            image = new ImageIcon("graphics/childEnemyListMotherShip.png");
+            this.border = values.getEnemyShipListBorder();
+            playerLabel = values.getEnemyPlayerBanner();
         }
     }
 
