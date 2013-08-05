@@ -19,34 +19,40 @@ public class ChildBlock extends GenericBlock {
         super(index, ownShipsList);
     }
 
+    /**
+     * Initializing current player's values.
+     */
     @Override
     public void initializeValues() {
         this.values = new ChildValues();
     }
 
-    /*
-     * Grid's seaBlocks:
+    /**
+     * Initializing the Grid. Preparing seaBlocks. Background Color & sea water
+     * Icon.
      */
     @Override
     public void initializeGridBlocks() {
+        setBackground(values.getSeaColor());
+        setIcon(values.getWater());
     }
 
-    /*
-     * Enemy's and My Ship List.
+    /**
+     * Initializing the ships list. Preparing available warships.
      */
     @Override
     public void initializeShipsList() {
 
-        if (this.ownShipsList) {
+        if (this.player) {
+            setBorder(values.getMyShipListBorder());
+            setBackground(values.getMyShipsListBackColor());
             setIcon(new ImageIcon("graphics/childMyListShip.png"));
-            this.border = new LineBorder(Color.GREEN, 1, false);
-            setBackground(Color.LIGHT_GRAY);
             setTotalBlocks(1);
             setOnShipsList(true);
         } else {
+            setBorder(values.getEnemyShipListBorder());
+            setBackground(values.getEnemyShipsListBackColor());
             setIcon(new ImageIcon("graphics/childEnemyListShip.png"));
-            this.border = new LineBorder(Color.RED, 1, false);
-            setBackground(Color.DARK_GRAY);
         }
     }
 

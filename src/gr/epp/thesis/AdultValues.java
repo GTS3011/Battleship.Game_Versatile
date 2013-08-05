@@ -8,11 +8,18 @@ import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
 /**
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @inst. Applied Informatics and Multimedia - TEI of Crete
  *
- * @author vigos.ioannis
  */
 public class AdultValues extends GenericValues {
 
+    /**
+     * Values defined for the Adult Player.
+     */
     public AdultValues() {
         this.rows = 10;
         this.columns = 10;
@@ -20,10 +27,10 @@ public class AdultValues extends GenericValues {
         this.frameHeight = 900;
         this.totalShips = 5;
         this.seaColor = Color.CYAN;
-        this.myShipsListBackColor = Color.GREEN.darker();
-        this.enemyShipsListBackColor = Color.RED.darker();
+        this.myShipsListBackColor = Color.LIGHT_GRAY;
+        this.enemyShipsListBackColor = Color.DARK_GRAY;
         this.myShipListBorder = new LineBorder(Color.GREEN.darker(), 1, false);
-        this.myShipListBorder = new LineBorder(Color.RED.darker(), 1, false);
+        this.enemyShipListBorder = new LineBorder(Color.RED.darker(), 1, false);
         this.water = new ImageIcon("graphics/water.gif");
         this.decor = new ImageIcon("graphics/adultDecorLabel.png");
         this.playerBanner = new ImageIcon("graphics/myFleetAdultIcon.png");
@@ -32,10 +39,11 @@ public class AdultValues extends GenericValues {
         this.target = toolkit.getImage("graphics/target.gif");
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
-        this.myWarshipsIcons = new ImageIcon[totalShips];
+        this.myWarshipsIcons = new ArrayList<>();
+        this.enemyWarshipsIcons = new ArrayList<>();
         for (int i = 0; i < totalShips; i++) {
-            this.myWarshipsIcons[i] = new ImageIcon("graphics/modernWarship" + i + ".gif");
+            this.myWarshipsIcons.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
         }
-        //this.enemyWarshipsIcons = (ArrayList<ImageIcon>) myWarshipsIcons.clone();
+        this.enemyWarshipsIcons = myWarshipsIcons;
     }
 }
