@@ -1,6 +1,7 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericBlock;
+import gr.epp.thesis.api.GenericValues;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
@@ -11,13 +12,15 @@ import javax.swing.border.LineBorder;
  */
 public class AdultBlock extends GenericBlock {
 
+    protected AdultValues adultValues;
+
     public AdultBlock() {
         super();
+        adultValues = new AdultValues();
     }
 
     public AdultBlock(int index, boolean ownShipsList) {
         super(index, ownShipsList);
-
     }
 
     /*
@@ -25,7 +28,7 @@ public class AdultBlock extends GenericBlock {
      */
     @Override
     public void initializeGridBlocks() {
-        setSeaColor(Color.CYAN);
+        setSeaColor(adultValues.getSeaColor());
     }
 
     /*
@@ -37,8 +40,8 @@ public class AdultBlock extends GenericBlock {
             this.border = new LineBorder(Color.GREEN.darker(), 1, false);
             switch (this.index) {
                 case (0):
-                    setBackground(Color.LIGHT_GRAY);
-                    setIcon(new ImageIcon("graphics/aircraftCarrier.gif"));
+                    //setBackground(adultValues.getMyShipsListBackColor());
+                    //setIcon(adultValues.getMyWarshipsIcons().get(index));
                     setTotalBlocks(5);
                     setOnShipsList(true);
                     break;

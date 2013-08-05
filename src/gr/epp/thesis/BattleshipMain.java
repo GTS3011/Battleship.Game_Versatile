@@ -1,8 +1,9 @@
 package gr.epp.thesis;
 
-import gr.epp.thesis.api.GenericLabel;
 import gr.epp.thesis.api.GenericBlock;
+import gr.epp.thesis.api.GenericLabel;
 import gr.epp.thesis.api.GenericPanel;
+import gr.epp.thesis.api.GenericValues;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -13,8 +14,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.UnknownHostException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -32,18 +33,19 @@ import javax.swing.JPanel;
  */
 public class BattleshipMain implements ActionListener, Runnable {
 
+    private GenericValues currentPlayerValues;
     private int rows = 0;
     private int columns = 0;
     private int frameWidth = 0;
     private int frameHeight = 0;
-    private JFrame compoFrame = new JFrame("Type of Player: ");
+    private JFrame compoBoxFrame = new JFrame("Type of Player: ");
     private String[] playerType = {"Adult", "Child", "Admiral"};
-    private JComboBox playerTypeList = new JComboBox(playerType);
+    private JComboBox playerTypeBox = new JComboBox(playerType);
     private String currentPlayer = null;
     private static JFrame masterFrame = new JFrame("Battleship Game");
     private JPanel upPanel = new JPanel();
     private JPanel decorPanel = new JPanel();
-    private JPanel downPanel = new JPanel(new BorderLayout(10, 0));
+    private JPanel downPanel = new JPanel();
     private JPanel myBoard = new JPanel();
     private JPanel enemyBoard = new JPanel();
     private static Class tempClass;
@@ -59,25 +61,28 @@ public class BattleshipMain implements ActionListener, Runnable {
      * Player Selection
      */
     public BattleshipMain() {
-        playerTypeList.setSelectedIndex(0);
-        playerTypeList.addActionListener(this);
-        compoFrame.add(playerTypeList);
-        compoFrame.setVisible(true);
-        compoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        compoFrame.setLocationRelativeTo(null);
-        compoFrame.setSize(250, 80);
+        playerTypeBox.setSelectedIndex(0);
+        playerTypeBox.addActionListener(this);
+        compoBoxFrame.add(playerTypeBox);
+        compoBoxFrame.setVisible(true);
+        compoBoxFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        compoBoxFrame.setLocationRelativeTo(null);
+        compoBoxFrame.setSize(250, 80);
+        compoBoxFrame.setResizable(true);
     }
 
     /*
      * Main Game
      */
-    public BattleshipMain(String currentPlayer, int rows, int columns, int frameWidth, int frameHeight) {
-
-        /* All graphic contents of the game.
-         * 
-         */
-        masterFrame.setBackground(Color.WHITE);
+    public BattleshipMain(String currentPlayer, GenericValues currentPlayerValues) {
+        this.currentPlayerValues = currentPlayerValues;
+        masterFrame.setSize(this.currentPlayerValues.getFrameWidth(), this.currentPlayerValues.getFrameHeight());
+        masterFrame.setResizable(false);
+        masterFrame.setVisible(true);
+        masterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        masterFrame.setLocationRelativeTo(null);
         masterFrame.setLayout(new GridLayout(3, 1, 0, 5));
+        masterFrame.setBackground(Color.WHITE);
         masterFrame.add(upPanel);
         upPanel.setBackground(Color.WHITE);
         masterFrame.add(decorPanel);
@@ -86,15 +91,10 @@ public class BattleshipMain implements ActionListener, Runnable {
         downPanel.setBackground(Color.WHITE);
         upPanel.setLayout(new BorderLayout(10, 0));
         upPanel.add(enemyBoard, BorderLayout.CENTER);
-        enemyBoard.setLayout(new GridLayout(rows, columns));
+        enemyBoard.setLayout(new GridLayout(this.currentPlayerValues.getRows(), this.currentPlayerValues.getColumns()));
         downPanel.setLayout(new BorderLayout(10, 0));
         downPanel.add(myBoard, BorderLayout.CENTER);
-        myBoard.setLayout(new GridLayout(rows, columns));
-        masterFrame.setSize(frameWidth, frameHeight);
-        masterFrame.setResizable(false);
-        masterFrame.setVisible(true);
-        masterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        masterFrame.setLocationRelativeTo(null);
+        myBoard.setLayout(new GridLayout(this.currentPlayerValues.getRows(), this.currentPlayerValues.getColumns()));
         masterFrame.validate();
 
         gameControl = new GameControl(enemyBoard, myBoard, rows, columns);
@@ -170,23 +170,20 @@ public class BattleshipMain implements ActionListener, Runnable {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JComboBox playerTypeList = (JComboBox) e.getSource();
-        String playerType = (String) playerTypeList.getSelectedItem();
-        currentPlayer = playerType;
-        compoFrame.setEnabled(false);
-        compoFrame.dispose();
-        if (currentPlayer.equals("Child") || currentPlayer.equals("Adult")) {
-            rows = 10;
-            columns = 10;
-            frameWidth = 450;
-            frameHeight = 900;
-        } else {
-            rows = 15;
-            columns = 15;
-            frameWidth = 525;
-            frameHeight = 1050;
+        JComboBox playerTypeBox = (JComboBox) e.getSource();
+        currentPlayer = (String) playerTypeBox.getSelectedItem();
+        compoBoxFrame.dispose();
+        try {
+            tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Values");
+            currentPlayerValues = (GenericValues) tempClass.newInstance();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ChildBlock.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Thread thread = new Thread(new BattleshipMain(currentPlayer, rows, columns, frameWidth, frameHeight));
+        Thread thread = new Thread(new BattleshipMain(currentPlayer, currentPlayerValues));
         thread.start();
     }
 
@@ -199,7 +196,7 @@ public class BattleshipMain implements ActionListener, Runnable {
                 Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-          //Temporary
+        //Temporary
 //        for (int i = 0; i < myBoard.getComponentCount(); i++) {
 //            myBoard.getComponent(i).removeMouseListener(gameControl);
 //        }
