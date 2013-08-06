@@ -44,8 +44,8 @@ public class AdmiralValues extends GenericValues {
         }
         this.enemyWarshipsIcons = new ArrayList<>();
         this.enemyWarshipsIcons = myWarshipsIcons;
-        this.totalShipsListItems = 11;
-        this.shipsListRows = 11;
-        this.shipsListColumns = 1;
+        this.listItems = 11;
+        this.listRows = 11;
+        this.listColumns = 1;
     }
 }

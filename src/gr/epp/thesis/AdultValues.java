@@ -44,8 +44,8 @@ public class AdultValues extends GenericValues {
         }
         this.enemyWarshipsIcons = new ArrayList<>();
         this.enemyWarshipsIcons = myWarshipsIcons;
-        this.totalShipsListItems = 6;
-        this.shipsListRows = 6;
-        this.shipsListColumns = 1;
+        this.listItems = 6;
+        this.listRows = 6;
+        this.listColumns = 1;
     }
 }

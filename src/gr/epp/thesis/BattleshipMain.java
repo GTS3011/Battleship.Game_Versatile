@@ -2,7 +2,6 @@ package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericBlock;
 import gr.epp.thesis.api.GenericLabel;
-import gr.epp.thesis.api.GenericPanel;
 import gr.epp.thesis.api.GenericValues;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -33,11 +32,7 @@ import javax.swing.JPanel;
  */
 public class BattleshipMain implements ActionListener, Runnable {
 
-    private GenericValues currentPlayerValues;
-    private int rows = 0;
-    private int columns = 0;
-    private int frameWidth = 0;
-    private int frameHeight = 0;
+    private GenericValues playerValues;
     private JFrame compoBoxFrame = new JFrame("Type of Player: ");
     private String[] playerType = {"Adult", "Child", "Admiral"};
     private JComboBox playerTypeBox = new JComboBox(playerType);
@@ -50,8 +45,8 @@ public class BattleshipMain implements ActionListener, Runnable {
     private JPanel enemyBoard = new JPanel();
     private static Class tempClass;
     private GameControl gameControl;
-    private GenericPanel tempShipList1;
-    private GenericPanel tempShipList2;
+    private JPanel myShipsList;
+    private JPanel enemyShipsList;
     private int maxShipsOnGrid = 0;
     private DataOutputStream out = null;
     private DataInputStream in = null;
@@ -74,9 +69,9 @@ public class BattleshipMain implements ActionListener, Runnable {
     /*
      * Main Game
      */
-    public BattleshipMain(String currentPlayer, GenericValues currentPlayerValues) {
-        this.currentPlayerValues = currentPlayerValues;
-        masterFrame.setSize(this.currentPlayerValues.getFrameWidth(), this.currentPlayerValues.getFrameHeight());
+    public BattleshipMain(String currentPlayer, GenericValues playerValues) {
+        this.playerValues = playerValues;
+        masterFrame.setSize(this.playerValues.getFrameWidth(), this.playerValues.getFrameHeight());
         masterFrame.setResizable(false);
         masterFrame.setVisible(true);
         masterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,18 +86,21 @@ public class BattleshipMain implements ActionListener, Runnable {
         downPanel.setBackground(Color.WHITE);
         upPanel.setLayout(new BorderLayout(10, 0));
         upPanel.add(enemyBoard, BorderLayout.CENTER);
-        enemyBoard.setLayout(new GridLayout(this.currentPlayerValues.getRows(), this.currentPlayerValues.getColumns()));
+        enemyBoard.setLayout(new GridLayout(this.playerValues.getRows(), this.playerValues.getColumns()));
         downPanel.setLayout(new BorderLayout(10, 0));
         downPanel.add(myBoard, BorderLayout.CENTER);
-        myBoard.setLayout(new GridLayout(this.currentPlayerValues.getRows(), this.currentPlayerValues.getColumns()));
+        myBoard.setLayout(new GridLayout(this.playerValues.getRows(), this.playerValues.getColumns()));
+        myShipsList = new JPanel(new GridLayout(playerValues.getListRows(), playerValues.getListColumns()));
+        enemyShipsList = new JPanel(new GridLayout(playerValues.getListRows(), playerValues.getListColumns()));
+        downPanel.add(myShipsList, BorderLayout.EAST);
+        upPanel.add(enemyShipsList, BorderLayout.WEST);
         masterFrame.validate();
 
-        gameControl = new GameControl(enemyBoard, myBoard, this.currentPlayerValues.getRows(), this.currentPlayerValues.getColumns());
+        gameControl = new GameControl(playerValues, enemyBoard, myBoard);
 
         try {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
-            GenericBlock tempSeaColor = (GenericBlock) tempClass.newInstance();
-            for (int i = 0; i < this.currentPlayerValues.getRows() * this.currentPlayerValues.getColumns(); i++) {
+            for (int i = 0; i < this.playerValues.getRows() * this.playerValues.getColumns(); i++) {
                 GenericBlock enemySeaBlock = (GenericBlock) tempClass.newInstance();
                 enemySeaBlock.addMouseListener(gameControl);
                 enemyBoard.add(enemySeaBlock);
@@ -118,27 +116,21 @@ public class BattleshipMain implements ActionListener, Runnable {
             GenericLabel enemyPlayerLabel = (GenericLabel) playerLabelsConstructor.newInstance(false);
             GenericLabel playerLabel = (GenericLabel) playerLabelsConstructor.newInstance(true);
 
-            tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "ShipList");
-            tempShipList1 = (GenericPanel) tempClass.newInstance();
-            tempShipList2 = (GenericPanel) tempClass.newInstance();
-            upPanel.add(tempShipList1, BorderLayout.WEST);
-            downPanel.add(tempShipList2, BorderLayout.EAST);
-
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
             Constructor tempShipConstructor = tempClass.getConstructor(int.class, boolean.class);
-            tempShipList1.add(enemyPlayerLabel);
-            tempShipList2.add(playerLabel);
-            for (int i = 0; i < tempShipList1.getTotalItems() - 1; i++) {
-                GenericBlock tempShip1 = (GenericBlock) tempShipConstructor.newInstance(i, false);
-                tempShip1.addMouseListener(gameControl);
-                tempShipList1.add(tempShip1);
-                GenericBlock tempShip2 = (GenericBlock) tempShipConstructor.newInstance(i, true);
-                tempShip2.addMouseListener(gameControl);
-                tempShipList2.add(tempShip2);
+            enemyShipsList.add(enemyPlayerLabel);
+            myShipsList.add(playerLabel);
+            for (int i = 0; i < playerValues.getListItems() - 1; i++) {
+                GenericBlock enemyWarship = (GenericBlock) tempShipConstructor.newInstance(i, false);
+                enemyWarship.addMouseListener(gameControl);
+                enemyShipsList.add(enemyWarship);
+                GenericBlock myWarship = (GenericBlock) tempShipConstructor.newInstance(i, true);
+                myWarship.addMouseListener(gameControl);
+                myShipsList.add(myWarship);
                 maxShipsOnGrid++;
             }
 
-            gameControl.setCurrentPlayerValues(currentPlayer, tempSeaColor.getSeaColor(), enemyBoard.getComponentCount(), maxShipsOnGrid);
+            gameControl.setCurrentPlayerValues(currentPlayer, playerValues.getSeaColor(), maxShipsOnGrid);
 
             int portNumber = 1501;
             String host = "localhost";
@@ -174,7 +166,7 @@ public class BattleshipMain implements ActionListener, Runnable {
         compoBoxFrame.dispose();
         try {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Values");
-            currentPlayerValues = (GenericValues) tempClass.newInstance();
+            playerValues = (GenericValues) tempClass.newInstance();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ChildBlock.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -182,7 +174,7 @@ public class BattleshipMain implements ActionListener, Runnable {
         } catch (IllegalAccessException ex) {
             Logger.getLogger(BattleshipMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Thread thread = new Thread(new BattleshipMain(currentPlayer, currentPlayerValues));
+        Thread thread = new Thread(new BattleshipMain(currentPlayer, playerValues));
         thread.start();
     }
 
@@ -199,8 +191,8 @@ public class BattleshipMain implements ActionListener, Runnable {
 //        for (int i = 0; i < myBoard.getComponentCount(); i++) {
 //            myBoard.getComponent(i).removeMouseListener(gameControl);
 //        }
-        for (int i = 0; i < tempShipList2.getComponentCount(); i++) {
-            tempShipList2.getComponent(i).removeMouseListener(gameControl);
+        for (int i = 0; i < myShipsList.getComponentCount(); i++) {
+            myShipsList.getComponent(i).removeMouseListener(gameControl);
         }
         System.out.println("Starting Game...");
 

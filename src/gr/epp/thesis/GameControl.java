@@ -1,6 +1,7 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericBlock;
+import gr.epp.thesis.api.GenericValues;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
@@ -28,6 +29,7 @@ import javax.swing.JPanel;
  */
 public class GameControl implements MouseListener, Runnable {
 
+    private GenericValues playerValues;
     private int rows = 0;
     private int columns = 0;
     private int coords[] = new int[3];
@@ -42,7 +44,6 @@ public class GameControl implements MouseListener, Runnable {
     private int maxShipsOnGrid = 0;
     private String currentPlayer = null;
     private Color seaColor = null;
-    private int enemyComponentCount = 0;
     private boolean readyToStart = false;
     private Toolkit toolkit = Toolkit.getDefaultToolkit();
     private Image target = toolkit.getImage("graphics/target.gif");
@@ -51,11 +52,12 @@ public class GameControl implements MouseListener, Runnable {
     private DataInputStream in = null;
     private Socket clientSocket = null;
 
-    public GameControl(JPanel enemyBoard, JPanel myBoard, int rows, int columns) {
+    public GameControl(GenericValues playerValues, JPanel enemyBoard, JPanel myBoard) {
+        this.playerValues = playerValues;
         this.enemyBoardPanel = enemyBoard;
         this.myBoardPanel = myBoard;
-        this.rows = rows;
-        this.columns = columns;
+        this.rows = playerValues.getRows();
+        this.columns = playerValues.getColumns();
     }
 
     /**
@@ -65,10 +67,9 @@ public class GameControl implements MouseListener, Runnable {
      * board component count (needed for the activateEnemyGrid() method), and an
      * integer about the maximum ships they can be put to the grid.
      */
-    public void setCurrentPlayerValues(String currentPlayer, Color seaColor, int enemyComponentCount, int maxShipsOnGrid) {
+    public void setCurrentPlayerValues(String currentPlayer, Color seaColor, int maxShipsOnGrid) {
         this.currentPlayer = currentPlayer;
         this.seaColor = seaColor;
-        this.enemyComponentCount = enemyComponentCount;
         this.maxShipsOnGrid = maxShipsOnGrid;
         activateEnemyGrid(false);
     }
@@ -79,7 +80,7 @@ public class GameControl implements MouseListener, Runnable {
      * already. If it's your turn to fire, enemy's components reactivating.
      */
     public void activateEnemyGrid(boolean activate) {
-        for (int i = 0; i < enemyComponentCount; i++) {
+        for (int i = 0; i < playerValues.getTotalGridItems(); i++) {
             enemyBoardPanel.getComponent(i).setEnabled(activate);
         }
     }
@@ -112,7 +113,7 @@ public class GameControl implements MouseListener, Runnable {
             warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/childGridShip.png"));
         }
         warShipBlock.setBackground(seaColor);
-        warShipBlock.setWarshipOn(true);
+        warShipBlock.setWarshipBlockOnGrid(true);
         currentWarShip.setEnabled(false);
         shipsOnGrid.add(currentWarShip);
     }
@@ -128,7 +129,7 @@ public class GameControl implements MouseListener, Runnable {
             case (3):
                 for (int i = coords[2]; i < (coords[2] + shipBlocks); i++) {
                     GenericBlock tempBlock = (GenericBlock) myBoardPanel.getComponent(i);
-                    if (tempBlock.isWarshipOn()) {
+                    if (tempBlock.isWarshipBlockOnGrid()) {
                         freeArea = false;
                         break;
                     }
@@ -137,7 +138,7 @@ public class GameControl implements MouseListener, Runnable {
             case (6):
                 for (int i = coords[2]; i < (coords[2] + (rows * shipBlocks)); i = i + rows) {
                     GenericBlock tempBlock = (GenericBlock) myBoardPanel.getComponent(i);
-                    if (tempBlock.isWarshipOn()) {
+                    if (tempBlock.isWarshipBlockOnGrid()) {
                         freeArea = false;
                         break;
                     }
@@ -166,7 +167,7 @@ public class GameControl implements MouseListener, Runnable {
                         tempSeaBlock.setIcon(null);
                         tempSeaBlock.setBackground(Color.GREEN);
                     } else if (exiting) {
-                        tempSeaBlock.setIcon(tempSeaBlock.getWater());
+                        tempSeaBlock.setIcon(playerValues.getWater());
                         tempSeaBlock.setBackground(seaColor);
                     } else {
                         warshipOnGrid(tempSeaBlock, currentBlock);
@@ -181,7 +182,7 @@ public class GameControl implements MouseListener, Runnable {
                         tempSeaBlock.setIcon(null);
                         tempSeaBlock.setBackground(Color.GREEN);
                     } else if (exiting) {
-                        tempSeaBlock.setIcon(tempSeaBlock.getWater());
+                        tempSeaBlock.setIcon(playerValues.getWater());
                         tempSeaBlock.setBackground(seaColor);
                     } else {
                         warshipOnGrid(tempSeaBlock, currentBlock);

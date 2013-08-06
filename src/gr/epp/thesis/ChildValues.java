@@ -42,8 +42,8 @@ public class ChildValues extends GenericValues {
         this.myWarshipsIcons.add(new ImageIcon("graphics/childMyListShip.png"));
         this.enemyWarshipsIcons = new ArrayList<>();
         this.enemyWarshipsIcons.add(new ImageIcon("graphics/childEnemyListShip.png"));
-        this.totalShipsListItems = 10;
-        this.shipsListRows = 5;
-        this.shipsListColumns = 2;
+        this.listItems = 10;
+        this.listRows = 5;
+        this.listColumns = 2;
     }
 }
