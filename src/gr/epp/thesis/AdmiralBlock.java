@@ -1,11 +1,14 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericBlock;
-import javax.swing.ImageIcon;
 
 /**
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @institute Applied Informatics and Multimedia - TEI of Crete
  *
- * @author USER1
  */
 public class AdmiralBlock extends GenericBlock {
 
@@ -42,63 +45,51 @@ public class AdmiralBlock extends GenericBlock {
         if (this.player) {
             setBorder(values.getMyShipListBorder());
             setBackground(values.getMyShipsListBackColor());
+            setOnShipsList(true);
             switch (this.index) {
                 case (0):
-                    setIcon(values.getMyWarshipsIcons()[index]);
-                    //setIcon(new ImageIcon("graphics/aircraftCarrier.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(4));
                     setTotalBlocks(5);
-                    setOnShipsList(true);
                     break;
                 case (1):
-                    //setIcon(values.getMyWarshipsIcons(index));
-                    //setIcon(new ImageIcon("graphics/battleship.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(3));
                     setTotalBlocks(4);
-                    setOnShipsList(true);
                     break;
                 case (2):
-                    setIcon(new ImageIcon("graphics/battleship.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(3));
                     setTotalBlocks(4);
-                    setOnShipsList(true);
                     break;
                 case (3):
-                    setIcon(new ImageIcon("graphics/submarine.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(2));
                     setTotalBlocks(3);
-                    setOnShipsList(true);
                     break;
                 case (4):
-                    setIcon(new ImageIcon("graphics/submarine.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(2));
                     setTotalBlocks(3);
-                    setOnShipsList(true);
                     break;
                 case (5):
-                    setIcon(new ImageIcon("graphics/submarine.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(2));
                     setTotalBlocks(3);
-                    setOnShipsList(true);
                     break;
                 case (6):
-                    setIcon(new ImageIcon("graphics/destroyer.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(1));
                     setTotalBlocks(2);
-                    setOnShipsList(true);
                     break;
                 case (7):
-                    setIcon(new ImageIcon("graphics/destroyer.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(1));
                     setTotalBlocks(2);
-                    setOnShipsList(true);
                     break;
                 case (8):
-                    setIcon(new ImageIcon("graphics/patrolShip.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(0));
                     setTotalBlocks(1);
-                    setOnShipsList(true);
                     break;
                 case (9):
-                    setIcon(new ImageIcon("graphics/patrolShip.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(0));
                     setTotalBlocks(1);
-                    setOnShipsList(true);
                     break;
                 case (10):
-                    setIcon(new ImageIcon("graphics/patrolShip.gif"));
+                    setIcon(values.getMyWarshipsIcons().get(0));
                     setTotalBlocks(1);
-                    setOnShipsList(true);
                     break;
             }
         } else {
@@ -106,37 +97,37 @@ public class AdmiralBlock extends GenericBlock {
             setBackground(values.getEnemyShipsListBackColor());
             switch (index) {
                 case (0):
-                    setIcon(new ImageIcon("graphics/aircraftCarrier.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(4));
                     break;
                 case (1):
-                    setIcon(new ImageIcon("graphics/battleship.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(3));
                     break;
                 case (2):
-                    setIcon(new ImageIcon("graphics/battleship.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(3));
                     break;
                 case (3):
-                    setIcon(new ImageIcon("graphics/submarine.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(2));
                     break;
                 case (4):
-                    setIcon(new ImageIcon("graphics/submarine.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(2));
                     break;
                 case (5):
-                    setIcon(new ImageIcon("graphics/submarine.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(2));
                     break;
                 case (6):
-                    setIcon(new ImageIcon("graphics/destroyer.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(1));
                     break;
                 case (7):
-                    setIcon(new ImageIcon("graphics/destroyer.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(1));
                     break;
                 case (8):
-                    setIcon(new ImageIcon("graphics/patrolShip.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(0));
                     break;
                 case (9):
-                    setIcon(new ImageIcon("graphics/patrolShip.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(0));
                     break;
                 case (10):
-                    setIcon(new ImageIcon("graphics/patrolShip.gif"));
+                    setIcon(values.getEnemyWarshipsIcons().get(0));
                     break;
             }
         }

@@ -13,7 +13,6 @@ import javax.swing.border.LineBorder;
  * @author Vidakis.Nikolas & Vellis Giorgos
  * @since Spring Semester 2013
  * @inst. Applied Informatics and Multimedia - TEI of Crete
- *
  */
 public class AdultValues extends GenericValues {
 

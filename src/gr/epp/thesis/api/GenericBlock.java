@@ -3,6 +3,14 @@ package gr.epp.thesis.api;
 import gr.epp.thesis.mvc.View;
 import javax.swing.JButton;
 
+/**
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @institute Applied Informatics and Multimedia - TEI of Crete
+ * 
+ */
 public abstract class GenericBlock extends JButton implements View {
 
     protected GenericValues values;
