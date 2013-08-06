@@ -12,7 +12,7 @@ import javax.swing.border.LineBorder;
  * @project Thesis_Battleship.Game
  * @author Vidakis.Nikolas & Vellis Giorgos
  * @since Spring Semester 2013
- * @inst. Applied Informatics and Multimedia - TEI of Crete
+ * @institute Applied Informatics and Multimedia - TEI of Crete *
  */
 public class AdultValues extends GenericValues {
 
@@ -39,10 +39,10 @@ public class AdultValues extends GenericValues {
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
         this.myWarshipsIcons = new ArrayList<>();
-        this.enemyWarshipsIcons = new ArrayList<>();
         for (int i = 0; i < totalShips; i++) {
             this.myWarshipsIcons.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
         }
+        this.enemyWarshipsIcons = new ArrayList<>();
         this.enemyWarshipsIcons = myWarshipsIcons;
     }
 }

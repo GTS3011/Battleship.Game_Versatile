@@ -3,16 +3,22 @@ package gr.epp.thesis;
 import gr.epp.thesis.api.GenericValues;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 /**
- *
- * @author vigos.ioannis
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @institute Applied Informatics and Multimedia - TEI of Crete *
  */
 public class ChildValues extends GenericValues {
 
+    /**
+     * Values defined for the Adult Player.
+     */
     public ChildValues() {
         this.rows = 10;
         this.columns = 10;
@@ -32,9 +38,11 @@ public class ChildValues extends GenericValues {
         this.target = toolkit.getImage("graphics/target.gif");
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
+        this.myWarshipsIcons = new ArrayList<>();
         for (int i = 0; i < totalShips; i++) {
             this.myWarshipsIcons.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
         }
+        this.enemyWarshipsIcons = new ArrayList<>();
         this.enemyWarshipsIcons = myWarshipsIcons;
     }
 }

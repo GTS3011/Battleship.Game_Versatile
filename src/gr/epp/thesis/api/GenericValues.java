@@ -12,10 +12,13 @@ import javax.swing.border.LineBorder;
  * @project Thesis_Battleship.Game
  * @author Vidakis.Nikolas & Vellis Giorgos
  * @since Spring Semester 2013
- * @inst. Applied Informatics and Multimedia - TEI of Crete *
+ * @institute Applied Informatics and Multimedia - TEI of Crete *
  */
 public abstract class GenericValues {
 
+    /**
+     * Values defined for a Player.
+     */
     protected int rows;
     protected int columns;
     protected int frameWidth;
@@ -39,7 +42,8 @@ public abstract class GenericValues {
     protected ArrayList<ImageIcon> enemyWarshipsIcons;
 
     /**
-     * Method needed for the placement of warships on the grid.
+     * Method needed for the placement of warships on the grid. Every
+     * orientation.
      *
      * @param shipBlocks
      * @param currentBlock

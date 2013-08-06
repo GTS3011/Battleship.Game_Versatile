@@ -8,11 +8,17 @@ import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
 /**
- *
- * @author vigos.ioannis
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @institute Applied Informatics and Multimedia - TEI of Crete *
  */
 public class AdmiralValues extends GenericValues {
 
+    /**
+     * Values defined for the Adult Player.
+     */
     public AdmiralValues() {
         this.rows = 15;
         this.columns = 15;
@@ -20,10 +26,10 @@ public class AdmiralValues extends GenericValues {
         this.frameHeight = 1050;
         this.totalShips = 10;
         this.seaColor = Color.CYAN.darker();
-        this.myShipsListBackColor = Color.LIGHT_GRAY;
-        this.enemyShipsListBackColor = Color.DARK_GRAY;
+        this.myShipsListBackColor = Color.LIGHT_GRAY.darker();
+        this.enemyShipsListBackColor = Color.DARK_GRAY.darker();
         this.myShipListBorder = new LineBorder(Color.GREEN.darker(), 1, false);
-        this.myShipListBorder = new LineBorder(Color.RED.darker(), 1, false);
+        this.enemyShipListBorder = new LineBorder(Color.RED.darker(), 1, false);
         this.water = new ImageIcon("graphics/water.gif");
         this.decor = new ImageIcon("graphics/admiralDecorLabel.png");
         this.playerBanner = new ImageIcon("graphics/myFleetAdmiralIcon.png");
@@ -32,9 +38,11 @@ public class AdmiralValues extends GenericValues {
         this.target = toolkit.getImage("graphics/target.gif");
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
+        this.myWarshipsIcons = new ArrayList<>();
         for (int i = 0; i < totalShips; i++) {
             this.myWarshipsIcons.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
         }
+        this.enemyWarshipsIcons = new ArrayList<>();
         this.enemyWarshipsIcons = myWarshipsIcons;
     }
 }
