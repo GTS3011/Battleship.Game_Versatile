@@ -1,35 +1,46 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericLabel;
-import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 
 /**
- *
- * @author vigos.ioannis
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @institute Applied Informatics and Multimedia - TEI of Crete
  */
 public class AdultLabel extends GenericLabel {
 
     public AdultLabel() {
+        super();
+        setIcon(values.getDecor());
+        setHorizontalAlignment(CENTER);
     }
 
     public AdultLabel(boolean player) {
         super(player);
     }
 
+    /**
+     * Initializing Adult player's values.
+     */
     @Override
     public void initializeValues() {
         this.values = new AdultValues();
     }
 
+    /**
+     * Initializing Adult player's label.
+     */
     @Override
-    public void initializeShipsListLabel() {
+    public void initializePlayerLabel() {
+        setHorizontalAlignment(CENTER);
         if (player) {
-            this.border = values.getMyShipListBorder();
-            playerLabel = values.getPlayerBanner();
+            setBorder(values.getMyShipListBorder());
+            setIcon(values.getPlayerBanner());
         } else {
-            this.border = values.getEnemyShipListBorder();
-            playerLabel = values.getEnemyPlayerBanner();
+            setBorder(values.getEnemyShipListBorder());
+            setIcon(values.getEnemyPlayerBanner());
         }
     }
 

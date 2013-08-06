@@ -1,36 +1,46 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericLabel;
-import java.awt.Color;
-import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 
 /**
- *
- * @author USER1
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @institute Applied Informatics and Multimedia - TEI of Crete
  */
 public class AdmiralLabel extends GenericLabel {
 
     public AdmiralLabel() {
+        super();
+        setIcon(values.getDecor());
+        setHorizontalAlignment(CENTER);
     }
 
     public AdmiralLabel(boolean player) {
         super(player);
     }
 
+    /**
+     * Initializing Admiral player's values.
+     */
     @Override
     public void initializeValues() {
         this.values = new AdmiralValues();
     }
 
+    /**
+     * Initializing Admiral player's label.
+     */
     @Override
-    public void initializeShipsListLabel() {
+    public void initializePlayerLabel() {
+        setHorizontalAlignment(CENTER);
         if (player) {
-            this.border = values.getEnemyShipListBorder();
-            this.playerLabel = values.getPlayerBanner();
+            setBorder(values.getMyShipListBorder());
+            setIcon(values.getPlayerBanner());
         } else {
-            this.border = values.getEnemyShipListBorder();
-            this.playerLabel = values.getEnemyPlayerBanner();
+            setBorder(values.getEnemyShipListBorder());
+            setIcon(values.getEnemyPlayerBanner());
         }
     }
 

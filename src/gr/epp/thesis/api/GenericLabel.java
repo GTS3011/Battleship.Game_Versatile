@@ -5,6 +5,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 
+/**
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @institute Applied Informatics and Multimedia - TEI of Crete
+ */
 public abstract class GenericLabel extends JLabel implements View {
 
     protected GenericValues values;
@@ -16,24 +23,25 @@ public abstract class GenericLabel extends JLabel implements View {
      * Constructor for the decor panel of a specific player.
      */
     public GenericLabel() {
-        initializeValues();             // All values needed for a specific player.
-        setIcon(values.getDecor());
-        setHorizontalAlignment(CENTER);
+        initializeValues();
     }
 
     /**
      * Constructor for the player labels above ships list of a specific player.
      */
     public GenericLabel(boolean player) {
-        initializeValues();             // All values needed for a specific player.
+        initializeValues();
         this.player = player;
-        initializeShipsListLabel();
-        setBorder(border);
-        setHorizontalAlignment(CENTER);
-        setIcon(playerLabel);
+        initializePlayerLabel();
     }
 
+    /**
+     * Initializing current player's values.
+     */
     public abstract void initializeValues();
 
-    public abstract void initializeShipsListLabel();
+    /**
+     * Initializing current player's label.
+     */
+    public abstract void initializePlayerLabel();
 }
