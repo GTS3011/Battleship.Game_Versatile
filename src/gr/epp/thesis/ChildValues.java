@@ -29,7 +29,7 @@ public class ChildValues extends GenericValues {
         this.myShipsListBackColor = Color.LIGHT_GRAY;
         this.enemyShipsListBackColor = Color.DARK_GRAY;
         this.myShipListBorder = new LineBorder(Color.GREEN, 1, false);
-        this.myShipListBorder = new LineBorder(Color.RED, 1, false);
+        this.enemyShipListBorder = new LineBorder(Color.RED, 1, false);
         this.water = new ImageIcon("graphics/water.gif");
         this.decor = new ImageIcon("graphics/childDecorLabel.png");
         this.playerBanner = new ImageIcon("graphics/childMyListMotherShip.png");
@@ -39,10 +39,8 @@ public class ChildValues extends GenericValues {
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
         this.myWarshipsIcons = new ArrayList<>();
-        for (int i = 0; i < totalShips; i++) {
-            this.myWarshipsIcons.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
-        }
+        this.myWarshipsIcons.add(new ImageIcon("graphics/childMyListShip.png"));
         this.enemyWarshipsIcons = new ArrayList<>();
-        this.enemyWarshipsIcons = myWarshipsIcons;
+        this.enemyWarshipsIcons.add(new ImageIcon("graphics/childEnemyListShip.png"));
     }
 }

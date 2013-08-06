@@ -1,13 +1,13 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericBlock;
-import java.awt.Color;
-import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 
 /**
- *
- * @author vigos.ioannis
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @institute Applied Informatics and Multimedia - TEI of Crete
  */
 public class ChildBlock extends GenericBlock {
 
@@ -20,7 +20,7 @@ public class ChildBlock extends GenericBlock {
     }
 
     /**
-     * Initializing current player's values.
+     * Initializing Child player's values.
      */
     @Override
     public void initializeValues() {
@@ -46,13 +46,13 @@ public class ChildBlock extends GenericBlock {
         if (this.player) {
             setBorder(values.getMyShipListBorder());
             setBackground(values.getMyShipsListBackColor());
-            setIcon(new ImageIcon("graphics/childMyListShip.png"));
-            setTotalBlocks(1);
             setOnShipsList(true);
+            setIcon(values.getMyWarshipsIcons().get(0));
+            setTotalBlocks(1);
         } else {
             setBorder(values.getEnemyShipListBorder());
             setBackground(values.getEnemyShipsListBackColor());
-            setIcon(new ImageIcon("graphics/childEnemyListShip.png"));
+            setIcon(values.getEnemyWarshipsIcons().get(0));
         }
     }
 

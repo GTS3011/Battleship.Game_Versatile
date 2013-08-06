@@ -8,11 +8,11 @@ import gr.epp.thesis.api.GenericBlock;
  * @author Vidakis.Nikolas & Vellis Giorgos
  * @since Spring Semester 2013
  * @institute Applied Informatics and Multimedia - TEI of Crete
- *
  */
 public class AdmiralBlock extends GenericBlock {
 
     public AdmiralBlock() {
+        super();
     }
 
     public AdmiralBlock(int index, boolean ownShipsList) {
@@ -20,7 +20,7 @@ public class AdmiralBlock extends GenericBlock {
     }
 
     /**
-     * Initializing current player's values.
+     * Initializing Admiral player's values.
      */
     @Override
     public void initializeValues() {

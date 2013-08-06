@@ -1,20 +1,18 @@
 package gr.epp.thesis;
 
 import gr.epp.thesis.api.GenericBlock;
-import gr.epp.thesis.api.GenericValues;
-import java.awt.Color;
-import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 
 /**
- *
- * @author vigos.ioannis
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @institute Applied Informatics and Multimedia - TEI of Crete
  */
 public class AdultBlock extends GenericBlock {
 
     public AdultBlock() {
         super();
-        System.out.println("" + values.getRows());
     }
 
     public AdultBlock(int index, boolean ownShipsList) {
@@ -22,7 +20,7 @@ public class AdultBlock extends GenericBlock {
     }
 
     /**
-     * Initializing current player's values.
+     * Initializing Adult player's values.
      */
     @Override
     public void initializeValues() {
@@ -73,7 +71,7 @@ public class AdultBlock extends GenericBlock {
         } else {
             setBorder(values.getEnemyShipListBorder());
             setBackground(values.getEnemyShipsListBackColor());
-            setIcon(values.getMyWarshipsIcons().get(4 - index));
+            setIcon(values.getEnemyWarshipsIcons().get(4 - index));
         }
     }
 
