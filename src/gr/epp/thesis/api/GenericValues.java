@@ -40,6 +40,9 @@ public abstract class GenericValues {
     protected ImageIcon miss;
     protected ArrayList<ImageIcon> myWarshipsIcons;
     protected ArrayList<ImageIcon> enemyWarshipsIcons;
+    protected int totalShipsListItems;
+    protected int shipsListRows;
+    protected int shipsListColumns;
 
     /**
      * Method needed for the placement of warships on the grid. Every
@@ -221,5 +224,29 @@ public abstract class GenericValues {
 
     public void setEnemyWarshipsIcons(ArrayList<ImageIcon> enemyWarshipsIcons) {
         this.enemyWarshipsIcons = enemyWarshipsIcons;
+    }
+
+    public int getTotalShipsListItems() {
+        return totalShipsListItems;
+    }
+
+    public void setTotalShipsListItems(int totalShipsListItems) {
+        this.totalShipsListItems = totalShipsListItems;
+    }
+
+    public int getShipsListRows() {
+        return shipsListRows;
+    }
+
+    public void setShipsListRows(int shipsListRows) {
+        this.shipsListRows = shipsListRows;
+    }
+
+    public int getShipsListColumns() {
+        return shipsListColumns;
+    }
+
+    public void setShipsListColumns(int shipsListColumns) {
+        this.shipsListColumns = shipsListColumns;
     }
 }
