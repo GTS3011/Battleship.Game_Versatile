@@ -12,7 +12,7 @@ import javax.swing.border.LineBorder;
  * @project Thesis_Battleship.Game
  * @author Vidakis.Nikolas & Vellis Giorgos
  * @since Spring Semester 2013
- * @institute Applied Informatics and Multimedia - TEI of Crete *
+ * @institute Applied Informatics and Multimedia - TEI of Crete
  */
 public class AdmiralValues extends GenericValues {
 

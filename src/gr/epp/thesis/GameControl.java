@@ -38,6 +38,7 @@ public class GameControl implements MouseListener, Runnable {
     private boolean horizontal = true;
     private GenericBlock currentWarShip;
     private ArrayList<GenericBlock> shipsOnGrid = new ArrayList<>();
+    private ArrayList<GenericBlock> hitteBlocks = new ArrayList<>();
     private int maxShipsOnGrid = 0;
     private Color seaColor = null;
     private ImageIcon water = null;
@@ -62,7 +63,7 @@ public class GameControl implements MouseListener, Runnable {
         this.maxShipsOnGrid = maxShipsOnGrid;
         this.enemyBoard = enemyBoard;
         this.myBoard = myBoard;
-        activateEnemyGrid(false);
+        activateEnemyGrid(true);
     }
 
     /**
@@ -73,11 +74,13 @@ public class GameControl implements MouseListener, Runnable {
      * gameConstrol Listener.
      */
     public void activateEnemyGrid(boolean activate) {
-        for (int i = 0; i < playerValues.getTotalGridBlocks(); i++) {
-            GenericBlock tempBlock = (GenericBlock) enemyBoard.getComponent(i);
-            tempBlock.setEnabled(activate);
-            tempBlock.removeMouseListener(this);
-            tempBlock.setDisabledIcon(water);
+        if (!activate) {
+            for (int i = 0; i < playerValues.getTotalGridBlocks(); i++) {
+                GenericBlock tempBlock = (GenericBlock) enemyBoard.getComponent(i);
+                tempBlock.setEnabled(false);
+                tempBlock.removeMouseListener(this);
+                tempBlock.setDisabledIcon(water);
+            }
         }
     }
 
@@ -207,6 +210,19 @@ public class GameControl implements MouseListener, Runnable {
             out = new DataOutputStream(clientSocket.getOutputStream());
         } catch (IOException ex) {
             Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void setHits(int hit) {
+    }
+
+    public void battle(int hit) {
+        GenericBlock tempHit = (GenericBlock) myBoard.getComponent(hit);
+        tempHit.setIcon(null);
+        if (tempHit.isWarshipBlockOnGrid()) {
+            tempHit.setIcon(playerValues.getHit());
+        } else {
+            tempHit.setIcon(playerValues.getMiss());
         }
     }
 
