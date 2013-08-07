@@ -35,7 +35,7 @@ public class AdmiralValues extends GenericValues {
         this.playerBanner = new ImageIcon("graphics/myFleetAdmiralIcon.png");
         this.enemyPlayerBanner = new ImageIcon("graphics/enemyFleetAdmiralIcon.png");
         this.toolkit = Toolkit.getDefaultToolkit();
-        this.target = toolkit.getImage("graphics/target.gif");
+        this.target = toolkit.getImage("graphics/sword.gif");
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
         this.myWarshipsIcons = new ArrayList<>();

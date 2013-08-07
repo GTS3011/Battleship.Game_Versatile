@@ -4,9 +4,7 @@ import gr.epp.thesis.api.GenericBlock;
 import gr.epp.thesis.api.GenericValues;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Image;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.DataInputStream;
@@ -45,8 +43,6 @@ public class GameControl implements MouseListener, Runnable {
     private String currentPlayer = null;
     private Color seaColor = null;
     private boolean readyToStart = false;
-    private Toolkit toolkit = Toolkit.getDefaultToolkit();
-    private Image target = toolkit.getImage("graphics/target.gif");
     private Point cursorHotSpot = new Point(10, 10);
     private DataOutputStream out = null;
     private DataInputStream in = null;
@@ -107,11 +103,7 @@ public class GameControl implements MouseListener, Runnable {
      * positioned warship on the list.
      */
     public void warshipOnGrid(GenericBlock warShipBlock, int currentBlock) {
-        if (currentPlayer.equals("Adult") || currentPlayer.equals("Admiral")) {
-            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
-        } else {
-            warShipBlock.setIcon(new ImageIcon("graphics/gridPieces/childGridShip.png"));
-        }
+        warShipBlock.setIcon(playerValues.getGridPieces(shipBlocks, currentBlock, orientation));
         warShipBlock.setBackground(seaColor);
         warShipBlock.setWarshipBlockOnGrid(true);
         currentWarShip.setEnabled(false);
@@ -315,7 +307,7 @@ public class GameControl implements MouseListener, Runnable {
             myBoardPanel.validate();
         }
         if (pressedBlock.getParent().equals(enemyBoardPanel)) {
-            Cursor targetCursor = toolkit.createCustomCursor(target, cursorHotSpot, "Cursor");
+            Cursor targetCursor = playerValues.getToolkit().createCustomCursor(playerValues.getTarget(), cursorHotSpot, "Cursor");
             enemyBoardPanel.setCursor(targetCursor);
         }
     }

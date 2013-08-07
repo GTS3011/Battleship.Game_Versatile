@@ -46,4 +46,9 @@ public class ChildValues extends GenericValues {
         this.listRows = 5;
         this.listColumns = 2;
     }
+
+    @Override
+    public ImageIcon getGridPieces(int shipBlocks, int currentBlock, int orientation) {
+        return (new ImageIcon("graphics/gridPieces/childGridShip.png"));
+    }
 }
