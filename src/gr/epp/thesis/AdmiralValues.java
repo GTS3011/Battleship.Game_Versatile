@@ -38,14 +38,19 @@ public class AdmiralValues extends GenericValues {
         this.target = toolkit.getImage("graphics/sword.gif");
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
-        this.myWarshipsIcons = new ArrayList<>();
+        this.myWarships = new ArrayList<>();
         for (int i = 0; i < totalShips; i++) {
-            this.myWarshipsIcons.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
+            this.myWarships.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
         }
-        this.enemyWarshipsIcons = new ArrayList<>();
-        this.enemyWarshipsIcons = myWarshipsIcons;
+        this.enemyWarships = new ArrayList<>();
+        this.enemyWarships = myWarships;
         this.listItems = 11;
         this.listRows = 11;
         this.listColumns = 1;
+    }
+
+    @Override
+    public int getTotalGridBlocks() {
+        return this.rows * this.columns;
     }
 }

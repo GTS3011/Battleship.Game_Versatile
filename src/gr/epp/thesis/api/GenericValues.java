@@ -23,7 +23,7 @@ public abstract class GenericValues {
     protected int columns;
     protected int frameWidth;
     protected int frameHeight;
-    protected int totalGridItems;
+    protected int totalGridBlocks;
     protected int totalShips;
     protected Color seaColor;
     protected Color myShipsListBackColor;
@@ -38,8 +38,8 @@ public abstract class GenericValues {
     protected Image target;
     protected ImageIcon hit;
     protected ImageIcon miss;
-    protected ArrayList<ImageIcon> myWarshipsIcons;
-    protected ArrayList<ImageIcon> enemyWarshipsIcons;
+    protected ArrayList<ImageIcon> myWarships;
+    protected ArrayList<ImageIcon> enemyWarships;
     protected int listItems;
     protected int listRows;
     protected int listColumns;
@@ -90,12 +90,12 @@ public abstract class GenericValues {
         this.frameHeight = frameHeight;
     }
 
-    public int getTotalGridItems() {
-        return totalGridItems;
+    public int getTotalGridBlocks() {
+        return totalGridBlocks;
     }
 
-    public void setTotalGridItems(int totalGridItems) {
-        this.totalGridItems = totalGridItems;
+    public void setTotalGridBlocks(int totalGridBlocks) {
+        this.totalGridBlocks = totalGridBlocks;
     }
 
     public int getTotalShips() {
@@ -210,20 +210,20 @@ public abstract class GenericValues {
         this.miss = miss;
     }
 
-    public ArrayList<ImageIcon> getMyWarshipsIcons() {
-        return myWarshipsIcons;
+    public ArrayList<ImageIcon> getMyWarships() {
+        return myWarships;
     }
 
-    public void setMyWarshipsIcons(ArrayList<ImageIcon> myWarshipsIcons) {
-        this.myWarshipsIcons = myWarshipsIcons;
+    public void setMyWarships(ArrayList<ImageIcon> myWarships) {
+        this.myWarships = myWarships;
     }
 
-    public ArrayList<ImageIcon> getEnemyWarshipsIcons() {
-        return enemyWarshipsIcons;
+    public ArrayList<ImageIcon> getEnemyWarships() {
+        return enemyWarships;
     }
 
-    public void setEnemyWarshipsIcons(ArrayList<ImageIcon> enemyWarshipsIcons) {
-        this.enemyWarshipsIcons = enemyWarshipsIcons;
+    public void setEnemyWarships(ArrayList<ImageIcon> enemyWarships) {
+        this.enemyWarships = enemyWarships;
     }
 
     public int getListItems() {

@@ -38,10 +38,10 @@ public class ChildValues extends GenericValues {
         this.target = toolkit.getImage("graphics/target.gif");
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
-        this.myWarshipsIcons = new ArrayList<>();
-        this.myWarshipsIcons.add(new ImageIcon("graphics/childMyListShip.png"));
-        this.enemyWarshipsIcons = new ArrayList<>();
-        this.enemyWarshipsIcons.add(new ImageIcon("graphics/childEnemyListShip.png"));
+        this.myWarships = new ArrayList<>();
+        this.myWarships.add(new ImageIcon("graphics/childMyListShip.png"));
+        this.enemyWarships = new ArrayList<>();
+        this.enemyWarships.add(new ImageIcon("graphics/childEnemyListShip.png"));
         this.listItems = 10;
         this.listRows = 5;
         this.listColumns = 2;
@@ -50,5 +50,10 @@ public class ChildValues extends GenericValues {
     @Override
     public ImageIcon getGridPieces(int shipBlocks, int currentBlock, int orientation) {
         return (new ImageIcon("graphics/gridPieces/childGridShip.png"));
+    }
+
+    @Override
+    public int getTotalGridBlocks() {
+        return this.rows * this.columns;
     }
 }

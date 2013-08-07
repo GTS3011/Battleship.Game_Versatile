@@ -47,12 +47,12 @@ public class ChildBlock extends GenericBlock {
             setBorder(values.getMyShipListBorder());
             setBackground(values.getMyShipsListBackColor());
             setOnShipsList(true);
-            setIcon(values.getMyWarshipsIcons().get(0));
+            setIcon(values.getMyWarships().get(0));
             setTotalBlocks(1);
         } else {
             setBorder(values.getEnemyShipListBorder());
             setBackground(values.getEnemyShipsListBackColor());
-            setIcon(values.getEnemyWarshipsIcons().get(0));
+            setIcon(values.getEnemyWarships().get(0));
         }
     }
 

@@ -96,7 +96,7 @@ public class BattleshipMain implements ActionListener, Runnable {
         upPanel.add(enemyShipsList, BorderLayout.WEST);
         masterFrame.validate();
 
-        gameControl = new GameControl(playerValues, enemyBoard, myBoard);
+        gameControl = new GameControl(playerValues);
 
         try {
             tempClass = Class.forName("gr.epp.thesis." + currentPlayer + "Block");
@@ -130,7 +130,7 @@ public class BattleshipMain implements ActionListener, Runnable {
                 maxShipsOnGrid++;
             }
 
-            gameControl.setCurrentPlayerValues(currentPlayer, playerValues.getSeaColor(), maxShipsOnGrid);
+            gameControl.setLateValues(maxShipsOnGrid, enemyBoard, myBoard);
 
             int portNumber = 1501;
             String host = "localhost";

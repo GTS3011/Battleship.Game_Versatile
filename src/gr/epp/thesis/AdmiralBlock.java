@@ -48,47 +48,47 @@ public class AdmiralBlock extends GenericBlock {
             setOnShipsList(true);
             switch (this.index) {
                 case (0):
-                    setIcon(values.getMyWarshipsIcons().get(4));
+                    setIcon(values.getMyWarships().get(4));
                     setTotalBlocks(5);
                     break;
                 case (1):
-                    setIcon(values.getMyWarshipsIcons().get(3));
+                    setIcon(values.getMyWarships().get(3));
                     setTotalBlocks(4);
                     break;
                 case (2):
-                    setIcon(values.getMyWarshipsIcons().get(3));
+                    setIcon(values.getMyWarships().get(3));
                     setTotalBlocks(4);
                     break;
                 case (3):
-                    setIcon(values.getMyWarshipsIcons().get(2));
+                    setIcon(values.getMyWarships().get(2));
                     setTotalBlocks(3);
                     break;
                 case (4):
-                    setIcon(values.getMyWarshipsIcons().get(2));
+                    setIcon(values.getMyWarships().get(2));
                     setTotalBlocks(3);
                     break;
                 case (5):
-                    setIcon(values.getMyWarshipsIcons().get(2));
+                    setIcon(values.getMyWarships().get(2));
                     setTotalBlocks(3);
                     break;
                 case (6):
-                    setIcon(values.getMyWarshipsIcons().get(1));
+                    setIcon(values.getMyWarships().get(1));
                     setTotalBlocks(2);
                     break;
                 case (7):
-                    setIcon(values.getMyWarshipsIcons().get(1));
+                    setIcon(values.getMyWarships().get(1));
                     setTotalBlocks(2);
                     break;
                 case (8):
-                    setIcon(values.getMyWarshipsIcons().get(0));
+                    setIcon(values.getMyWarships().get(0));
                     setTotalBlocks(1);
                     break;
                 case (9):
-                    setIcon(values.getMyWarshipsIcons().get(0));
+                    setIcon(values.getMyWarships().get(0));
                     setTotalBlocks(1);
                     break;
                 case (10):
-                    setIcon(values.getMyWarshipsIcons().get(0));
+                    setIcon(values.getMyWarships().get(0));
                     setTotalBlocks(1);
                     break;
             }
@@ -97,37 +97,37 @@ public class AdmiralBlock extends GenericBlock {
             setBackground(values.getEnemyShipsListBackColor());
             switch (index) {
                 case (0):
-                    setIcon(values.getEnemyWarshipsIcons().get(4));
+                    setIcon(values.getEnemyWarships().get(4));
                     break;
                 case (1):
-                    setIcon(values.getEnemyWarshipsIcons().get(3));
+                    setIcon(values.getEnemyWarships().get(3));
                     break;
                 case (2):
-                    setIcon(values.getEnemyWarshipsIcons().get(3));
+                    setIcon(values.getEnemyWarships().get(3));
                     break;
                 case (3):
-                    setIcon(values.getEnemyWarshipsIcons().get(2));
+                    setIcon(values.getEnemyWarships().get(2));
                     break;
                 case (4):
-                    setIcon(values.getEnemyWarshipsIcons().get(2));
+                    setIcon(values.getEnemyWarships().get(2));
                     break;
                 case (5):
-                    setIcon(values.getEnemyWarshipsIcons().get(2));
+                    setIcon(values.getEnemyWarships().get(2));
                     break;
                 case (6):
-                    setIcon(values.getEnemyWarshipsIcons().get(1));
+                    setIcon(values.getEnemyWarships().get(1));
                     break;
                 case (7):
-                    setIcon(values.getEnemyWarshipsIcons().get(1));
+                    setIcon(values.getEnemyWarships().get(1));
                     break;
                 case (8):
-                    setIcon(values.getEnemyWarshipsIcons().get(0));
+                    setIcon(values.getEnemyWarships().get(0));
                     break;
                 case (9):
-                    setIcon(values.getEnemyWarshipsIcons().get(0));
+                    setIcon(values.getEnemyWarships().get(0));
                     break;
                 case (10):
-                    setIcon(values.getEnemyWarshipsIcons().get(0));
+                    setIcon(values.getEnemyWarships().get(0));
                     break;
             }
         }

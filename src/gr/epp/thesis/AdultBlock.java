@@ -48,30 +48,30 @@ public class AdultBlock extends GenericBlock {
             setOnShipsList(true);
             switch (this.index) {
                 case (0):
-                    setIcon(values.getMyWarshipsIcons().get(4 - index));
+                    setIcon(values.getMyWarships().get(4 - index));
                     setTotalBlocks(5);
                     break;
                 case (1):
-                    setIcon(values.getMyWarshipsIcons().get(4 - index));
+                    setIcon(values.getMyWarships().get(4 - index));
                     setTotalBlocks(4);
                     break;
                 case (2):
-                    setIcon(values.getMyWarshipsIcons().get(4 - index));
+                    setIcon(values.getMyWarships().get(4 - index));
                     setTotalBlocks(3);
                     break;
                 case (3):
-                    setIcon(values.getMyWarshipsIcons().get(4 - index));
+                    setIcon(values.getMyWarships().get(4 - index));
                     setTotalBlocks(2);
                     break;
                 case (4):
-                    setIcon(values.getMyWarshipsIcons().get(4 - index));
+                    setIcon(values.getMyWarships().get(4 - index));
                     setTotalBlocks(1);
                     break;
             }
         } else {
             setBorder(values.getEnemyShipListBorder());
             setBackground(values.getEnemyShipsListBackColor());
-            setIcon(values.getEnemyWarshipsIcons().get(4 - index));
+            setIcon(values.getEnemyWarships().get(4 - index));
         }
     }
 
