@@ -14,7 +14,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -33,13 +33,14 @@ public class GameControl implements MouseListener, Runnable {
     private int coords[] = new int[3];
     private int orientation = 3;
     private int shipBlocks = 0;
-    private JPanel enemyBoardPanel = null;
-    private JPanel myBoardPanel = null;
+    private JPanel enemyBoard = null;
+    private JPanel myBoard = null;
     private boolean horizontal = true;
     private GenericBlock currentWarShip;
     private ArrayList<GenericBlock> shipsOnGrid = new ArrayList<>();
     private int maxShipsOnGrid = 0;
     private Color seaColor = null;
+    private ImageIcon water = null;
     private boolean readyToStart = false;
     private Point cursorHotSpot = new Point(10, 10);
     private DataOutputStream out = null;
@@ -47,37 +48,36 @@ public class GameControl implements MouseListener, Runnable {
     private Socket clientSocket = null;
 
     public GameControl(GenericValues playerValues) {
-        this.playerValues = playerValues;
+        this.playerValues = playerValues;               //Current player values.
         this.rows = playerValues.getRows();
         this.columns = playerValues.getColumns();
         this.seaColor = playerValues.getSeaColor();
+        this.water = playerValues.getWater();
     }
 
     /**
-     * Current player values, needed for the setup of the game. Different
-     * players equals to different values and behavior. Values needed every time
-     * are the Current Player, it's pre-specified seaBlock's color, the enemy's
-     * board component count (needed for the activateEnemyGrid() method), and an
-     * integer about the maximum ships they can be put to the grid.
+     * Values needed to continue the game.
      */
-    public void setLateValues(int maxShipsOnGrid, JPanel enemyBoardPanel, JPanel myBoardPanel) {
+    public void setLateValues(int maxShipsOnGrid, JPanel enemyBoard, JPanel myBoard) {
         this.maxShipsOnGrid = maxShipsOnGrid;
-        this.enemyBoardPanel = enemyBoardPanel;
-        this.myBoardPanel = myBoardPanel;
+        this.enemyBoard = enemyBoard;
+        this.myBoard = myBoard;
         activateEnemyGrid(false);
     }
 
     /**
      * A method that activates/deactivates the enemy's board components, so that
      * you can't fire if it's not your turn, or you haven't place your warships
-     * already. If it's your turn to fire, enemy's components reactivating.
+     * already. If it's your turn to fire, enemy's components reactivating. This
+     * method also, sets a disable icon on the blocks, and removes the
+     * gameConstrol Listener.
      */
     public void activateEnemyGrid(boolean activate) {
         for (int i = 0; i < playerValues.getTotalGridBlocks(); i++) {
-            JButton temp = (JButton) enemyBoardPanel.getComponent(i);
-            temp.setEnabled(activate);
-            temp.removeMouseListener(this);
-            temp.setDisabledIcon(playerValues.getWater());
+            GenericBlock tempBlock = (GenericBlock) enemyBoard.getComponent(i);
+            tempBlock.setEnabled(activate);
+            tempBlock.removeMouseListener(this);
+            tempBlock.setDisabledIcon(water);
         }
     }
 
@@ -85,10 +85,10 @@ public class GameControl implements MouseListener, Runnable {
      * A method that instantly, gives each seaBlock unique coordinates, on the
      * grid.
      */
-    public void getBlockPosition(GenericBlock pressedBlock) {
-        JPanel currentParent = (JPanel) pressedBlock.getParent();
+    public void getBlockPosition(GenericBlock block) {
+        JPanel currentParent = (JPanel) block.getParent();
         for (int i = 0; i < currentParent.getComponentCount(); i++) {
-            if (currentParent.getComponent(i) == pressedBlock) {
+            if (currentParent.getComponent(i) == block) {
                 coords[0] = i / rows;
                 coords[1] = i % columns;
                 coords[2] = i;
@@ -120,7 +120,7 @@ public class GameControl implements MouseListener, Runnable {
         switch (orientation) {
             case (3):
                 for (int i = coords[2]; i < (coords[2] + shipBlocks); i++) {
-                    GenericBlock tempBlock = (GenericBlock) myBoardPanel.getComponent(i);
+                    GenericBlock tempBlock = (GenericBlock) myBoard.getComponent(i);
                     if (tempBlock.isWarshipBlockOnGrid()) {
                         freeArea = false;
                         break;
@@ -129,7 +129,7 @@ public class GameControl implements MouseListener, Runnable {
                 return freeArea;
             case (6):
                 for (int i = coords[2]; i < (coords[2] + (rows * shipBlocks)); i = i + rows) {
-                    GenericBlock tempBlock = (GenericBlock) myBoardPanel.getComponent(i);
+                    GenericBlock tempBlock = (GenericBlock) myBoard.getComponent(i);
                     if (tempBlock.isWarshipBlockOnGrid()) {
                         freeArea = false;
                         break;
@@ -154,12 +154,12 @@ public class GameControl implements MouseListener, Runnable {
         switch (orientation) {
             case (3):
                 for (int i = 0; i < shipBlocks; i++) {
-                    GenericBlock tempSeaBlock = (GenericBlock) myBoardPanel.getComponent(coords[2] + i);
+                    GenericBlock tempSeaBlock = (GenericBlock) myBoard.getComponent(coords[2] + i);
                     if (hovering) {
                         tempSeaBlock.setIcon(null);
                         tempSeaBlock.setBackground(Color.GREEN);
                     } else if (exiting) {
-                        tempSeaBlock.setIcon(playerValues.getWater());
+                        tempSeaBlock.setIcon(water);
                         tempSeaBlock.setBackground(seaColor);
                     } else {
                         warshipOnGrid(tempSeaBlock, currentBlock);
@@ -169,12 +169,12 @@ public class GameControl implements MouseListener, Runnable {
                 break;
             case (6):
                 for (int i = 0; i < shipBlocks; i++) {
-                    GenericBlock tempSeaBlock = (GenericBlock) myBoardPanel.getComponent(coords[2] + (i * rows));
+                    GenericBlock tempSeaBlock = (GenericBlock) myBoard.getComponent(coords[2] + (i * rows));
                     if (hovering) {
                         tempSeaBlock.setIcon(null);
                         tempSeaBlock.setBackground(Color.GREEN);
                     } else if (exiting) {
-                        tempSeaBlock.setIcon(playerValues.getWater());
+                        tempSeaBlock.setIcon(water);
                         tempSeaBlock.setBackground(seaColor);
                     } else {
                         warshipOnGrid(tempSeaBlock, currentBlock);
@@ -210,6 +210,12 @@ public class GameControl implements MouseListener, Runnable {
         }
     }
 
+    /**
+     * Handles all click interactions. Also changes orientation if right button
+     * is clicked.
+     *
+     * @param e
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         GenericBlock clickedBlock = (GenericBlock) e.getSource();
@@ -235,7 +241,7 @@ public class GameControl implements MouseListener, Runnable {
                     orientation = 6;
                     mouseEntered(e);
                 }
-                myBoardPanel.validate();
+                myBoard.validate();
             } else {
                 switch (orientation) {
                     case (3):
@@ -255,13 +261,13 @@ public class GameControl implements MouseListener, Runnable {
                         }
                         break;
                 }
-                myBoardPanel.validate();
+                myBoard.validate();
             }
         }
 
     }
 
-    /*
+    /**
      * Just for quicker ship selection.
      */
     @Override
@@ -276,9 +282,10 @@ public class GameControl implements MouseListener, Runnable {
     public void mouseReleased(MouseEvent e) {
     }
 
-    /* 
-     * Code about the Hover effect. On Mouse Enter, and with the proper orientation, 
-     * the grid paints so many SeaBlocks as many as the number of ShipsBlocks.
+    /**
+     * Code about the Hover effect. On Mouse Enter, and with the proper
+     * orientation, the grid paints so many SeaBlocks as many as the number of
+     * ShipsBlocks.
      */
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -301,16 +308,17 @@ public class GameControl implements MouseListener, Runnable {
                     }
                     break;
             }
-            myBoardPanel.validate();
+            myBoard.validate();
         }
-        if (enteredBlock.getParent().equals(enemyBoardPanel)) {
+        if (enteredBlock.getParent().equals(enemyBoard)) {
             Cursor targetCursor = playerValues.getToolkit().createCustomCursor(playerValues.getTarget(), cursorHotSpot, "Cursor");
-            enemyBoardPanel.setCursor(targetCursor);
+            enemyBoard.setCursor(targetCursor);
         }
     }
 
-    /* 
-     * Code about the Exit Hover effect. On Mouse Exited, and with the proper orientation, the grid has to paint each SeaBlock again.
+    /**
+     * Code about the Exit Hover effect. On Mouse Exited, and with the proper
+     * orientation, the grid has to paint each SeaBlock again.
      */
     @Override
     public void mouseExited(MouseEvent e) {
@@ -333,7 +341,7 @@ public class GameControl implements MouseListener, Runnable {
                     }
                     break;
             }
-            myBoardPanel.validate();
+            myBoard.validate();
         }
     }
 }
