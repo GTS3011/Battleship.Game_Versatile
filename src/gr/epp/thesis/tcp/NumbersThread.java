@@ -20,6 +20,7 @@ public class NumbersThread extends Thread implements Runnable {
     private static NumbersThread[] threads;
     private int maxClientsCount; //Total number of clients connected to the server in the current session (even the disconnected).
     private int value;
+    private boolean hh;
 
     public NumbersThread(Socket clientSocket, NumbersThread[] threads) {
         this.clientSocket = clientSocket;
@@ -28,7 +29,8 @@ public class NumbersThread extends Thread implements Runnable {
     }
 
     /**
-     * Thread to read incoming data from a client and send data to the rest of the clients.
+     * Thread to read incoming data from a client and send data to the rest of
+     * the clients.
      */
     @Override
     public void run() {
@@ -38,11 +40,13 @@ public class NumbersThread extends Thread implements Runnable {
             while (true) {
                 synchronized (this) {
                     value = in.readInt();
+                    //hh = in.readBoolean();
                     // Send to all clients except itself.
                     for (int i = 0; i < maxClientsCount; i++) {
                         if (threads[i] != null && threads[i] != this) {
                             System.out.println("Sending " + value + " to PC " + i);
                             threads[i].out.writeInt(value);
+                            //threads[i].out.writeBoolean(hh);
                         }
                     }
                 }

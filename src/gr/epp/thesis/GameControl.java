@@ -43,7 +43,8 @@ public class GameControl implements MouseListener, Runnable {
     private Color seaColor = null;
     private ImageIcon water = null;
     private Point cursorHotSpot = new Point(10, 10);
-    private DataOutputStream out = null;
+    private DataOutputStream outFire = null;
+    private DataOutputStream outResult = null;
     private DataInputStream in = null;
     private Socket clientSocket = null;
     private boolean gameStarted = false;
@@ -196,6 +197,7 @@ public class GameControl implements MouseListener, Runnable {
     public void initiateGame() {
         if (warshipBlocksList.size() == playerValues.getMaxWarshipsBlocks()) {
             //Start the game session here...
+            activateBoard(enemyBoard, true);
             gameStarted = true;
         }
     }
@@ -207,13 +209,11 @@ public class GameControl implements MouseListener, Runnable {
     @Override
     public void run() {
         try {
-            out = new DataOutputStream(clientSocket.getOutputStream());
+            outFire = new DataOutputStream(clientSocket.getOutputStream());
+            //outResult = new DataOutputStream(clientSocket.getOutputStream());
         } catch (IOException ex) {
             Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void setHits(int hit) {
     }
 
     public void battleStations(int hit, boolean enemyHit) {
@@ -222,6 +222,7 @@ public class GameControl implements MouseListener, Runnable {
             tempHit.setIcon(null);
             if (tempHit.isWarshipBlockOnGrid()) {
                 tempHit.setIcon(playerValues.getHit());
+                //outResult.writeBoolean(true);
             } else {
                 tempHit.setIcon(playerValues.getMiss());
             }
@@ -230,6 +231,7 @@ public class GameControl implements MouseListener, Runnable {
             tempHit.setIcon(null);
             if (tempHit.isWarshipBlockOnGrid()) {
                 tempHit.setIcon(playerValues.getHit());
+                //outResult.writeBoolean(true);
             } else {
                 tempHit.setIcon(playerValues.getMiss());
             }
@@ -252,8 +254,8 @@ public class GameControl implements MouseListener, Runnable {
         if (gameStarted) {
             try {
                 getBlockPosition(clickedBlock);
-                out.writeInt(coords[2]);
-                battleStations(coords[2], false);
+                outFire.writeInt(coords[2]);
+                //battleStations(coords[2], false);
             } catch (IOException ex) {
                 Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -279,7 +281,6 @@ public class GameControl implements MouseListener, Runnable {
                         if (coords[1] < (columns - (warshipBlocks - 1)) && !warshipBlocksList.contains(currentWarship)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
-                                System.out.println("ok!");
                                 initiateGame();
                             }
                         }
@@ -322,25 +323,27 @@ public class GameControl implements MouseListener, Runnable {
     @Override
     public void mouseEntered(MouseEvent e) {
         GenericBlock enteredBlock = (GenericBlock) e.getSource();
-        if (!enteredBlock.isOnShipsList()) {
-            getBlockPosition((GenericBlock) e.getSource());
-            switch (orientation) {
-                case (3):
-                    if (coords[1] < (columns - (warshipBlocks - 1)) && !warshipBlocksList.contains(currentWarship)) {
-                        if (checkCollision()) {
-                            battleFormations(true, false);
+        if (!gameStarted) {
+            if (!enteredBlock.isOnShipsList()) {
+                getBlockPosition((GenericBlock) e.getSource());
+                switch (orientation) {
+                    case (3):
+                        if (coords[1] < (columns - (warshipBlocks - 1)) && !warshipBlocksList.contains(currentWarship)) {
+                            if (checkCollision()) {
+                                battleFormations(true, false);
+                            }
                         }
-                    }
-                    break;
-                case (6):
-                    if (coords[0] < rows - (warshipBlocks - 1) && !warshipBlocksList.contains(currentWarship)) {
-                        if (checkCollision()) {
-                            battleFormations(true, false);
+                        break;
+                    case (6):
+                        if (coords[0] < rows - (warshipBlocks - 1) && !warshipBlocksList.contains(currentWarship)) {
+                            if (checkCollision()) {
+                                battleFormations(true, false);
+                            }
                         }
-                    }
-                    break;
+                        break;
+                }
+                myBoard.validate();
             }
-            myBoard.validate();
         }
         if (enteredBlock.getParent().equals(enemyBoard)) {
             Cursor targetCursor = playerValues.getToolkit().createCustomCursor(playerValues.getTarget(), cursorHotSpot, "Cursor");
@@ -354,26 +357,28 @@ public class GameControl implements MouseListener, Runnable {
      */
     @Override
     public void mouseExited(MouseEvent e) {
-        GenericBlock exitedBlock = (GenericBlock) e.getSource();
-        if (!exitedBlock.isOnShipsList()) {
-            getBlockPosition((GenericBlock) e.getSource());
-            switch (orientation) {
-                case (3):
-                    if (coords[1] < (columns - (warshipBlocks - 1))) {
-                        if (checkCollision()) {
-                            battleFormations(false, true);
+        if (!gameStarted) {
+            GenericBlock exitedBlock = (GenericBlock) e.getSource();
+            if (!exitedBlock.isOnShipsList()) {
+                getBlockPosition((GenericBlock) e.getSource());
+                switch (orientation) {
+                    case (3):
+                        if (coords[1] < (columns - (warshipBlocks - 1))) {
+                            if (checkCollision()) {
+                                battleFormations(false, true);
+                            }
                         }
-                    }
-                    break;
-                case (6):
-                    if (coords[0] < rows - (warshipBlocks - 1)) {
-                        if (checkCollision()) {
-                            battleFormations(false, true);
+                        break;
+                    case (6):
+                        if (coords[0] < rows - (warshipBlocks - 1)) {
+                            if (checkCollision()) {
+                                battleFormations(false, true);
+                            }
                         }
-                    }
-                    break;
+                        break;
+                }
+                myBoard.validate();
             }
-            myBoard.validate();
         }
     }
 }

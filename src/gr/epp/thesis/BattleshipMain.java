@@ -200,6 +200,10 @@ public class BattleshipMain implements ActionListener, Runnable {
 
             while (true) {
                 int value = in.readInt();
+                //boolean hh = in.readBoolean();
+                //if (hh) {
+                //System.out.println("OLEEEEEEEEEE");
+                //}
                 System.out.println("Enemy has pressed the block " + value + " on his board");
                 //notifies all views with the incoming value from the server.
                 gameControl.battleStations(value, true);
