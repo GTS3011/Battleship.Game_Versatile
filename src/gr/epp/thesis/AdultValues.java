@@ -24,12 +24,12 @@ public class AdultValues extends GenericValues {
         this.columns = 10;
         this.frameWidth = 450;
         this.frameHeight = 900;
-        this.totalShips = 5;
+        this.totalWarships = 5;
         this.seaColor = Color.CYAN;
         this.myShipsListBackColor = Color.LIGHT_GRAY;
         this.enemyShipsListBackColor = Color.DARK_GRAY;
-        this.myShipListBorder = new LineBorder(Color.GREEN.darker(), 1, false);
-        this.enemyShipListBorder = new LineBorder(Color.RED.darker(), 1, false);
+        this.myShipsListBorder = new LineBorder(Color.GREEN.darker(), 1, false);
+        this.enemyShipsListBorder = new LineBorder(Color.RED.darker(), 1, false);
         this.water = new ImageIcon("graphics/water.gif");
         this.decor = new ImageIcon("graphics/adultDecorLabel.png");
         this.playerBanner = new ImageIcon("graphics/myFleetAdultIcon.png");
@@ -39,7 +39,7 @@ public class AdultValues extends GenericValues {
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
         this.myWarships = new ArrayList<>();
-        for (int i = 0; i < totalShips; i++) {
+        for (int i = 0; i < totalWarships; i++) {
             this.myWarships.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
         }
         this.enemyWarships = new ArrayList<>();

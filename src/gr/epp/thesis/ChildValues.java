@@ -24,12 +24,12 @@ public class ChildValues extends GenericValues {
         this.columns = 10;
         this.frameWidth = 450;
         this.frameHeight = 900;
-        this.totalShips = 9;
+        this.totalWarships = 9;
         this.seaColor = Color.CYAN;
         this.myShipsListBackColor = Color.LIGHT_GRAY;
         this.enemyShipsListBackColor = Color.DARK_GRAY;
-        this.myShipListBorder = new LineBorder(Color.GREEN, 1, false);
-        this.enemyShipListBorder = new LineBorder(Color.RED, 1, false);
+        this.myShipsListBorder = new LineBorder(Color.GREEN, 1, false);
+        this.enemyShipsListBorder = new LineBorder(Color.RED, 1, false);
         this.water = new ImageIcon("graphics/water.gif");
         this.decor = new ImageIcon("graphics/childDecorLabel.png");
         this.playerBanner = new ImageIcon("graphics/childMyListMotherShip.png");

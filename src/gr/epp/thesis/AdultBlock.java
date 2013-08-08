@@ -43,7 +43,7 @@ public class AdultBlock extends GenericBlock {
     @Override
     public void initializeShipsList() {
         if (this.player) {
-            setBorder(values.getMyShipListBorder());
+            setBorder(values.getMyShipsListBorder());
             setBackground(values.getMyShipsListBackColor());
             setOnShipsList(true);
             switch (this.index) {
@@ -69,7 +69,7 @@ public class AdultBlock extends GenericBlock {
                     break;
             }
         } else {
-            setBorder(values.getEnemyShipListBorder());
+            setBorder(values.getEnemyShipsListBorder());
             setBackground(values.getEnemyShipsListBackColor());
             setIcon(values.getEnemyWarships().get(4 - index));
         }

@@ -24,12 +24,12 @@ public abstract class GenericValues {
     protected int frameWidth;
     protected int frameHeight;
     protected int totalGridBlocks;
-    protected int totalShips;
+    protected int totalWarships;
     protected Color seaColor;
     protected Color myShipsListBackColor;
     protected Color enemyShipsListBackColor;
-    protected LineBorder myShipListBorder;
-    protected LineBorder enemyShipListBorder;
+    protected LineBorder myShipsListBorder;
+    protected LineBorder enemyShipsListBorder;
     protected ImageIcon water;
     protected ImageIcon decor;
     protected ImageIcon playerBanner;
@@ -99,12 +99,12 @@ public abstract class GenericValues {
         this.totalGridBlocks = totalGridBlocks;
     }
 
-    public int getTotalShips() {
-        return totalShips;
+    public int getTotalWarships() {
+        return totalWarships;
     }
 
-    public void setTotalShips(int totalShips) {
-        this.totalShips = totalShips;
+    public void setTotalWarships(int totalWarships) {
+        this.totalWarships = totalWarships;
     }
 
     public Color getSeaColor() {
@@ -131,20 +131,20 @@ public abstract class GenericValues {
         this.enemyShipsListBackColor = enemyShipsListBackColor;
     }
 
-    public LineBorder getMyShipListBorder() {
-        return myShipListBorder;
+    public LineBorder getMyShipsListBorder() {
+        return myShipsListBorder;
     }
 
-    public void setMyShipListBorder(LineBorder myShipListBorder) {
-        this.myShipListBorder = myShipListBorder;
+    public void setMyShipsListBorder(LineBorder myShipsListBorder) {
+        this.myShipsListBorder = myShipsListBorder;
     }
 
-    public LineBorder getEnemyShipListBorder() {
-        return enemyShipListBorder;
+    public LineBorder getEnemyShipsListBorder() {
+        return enemyShipsListBorder;
     }
 
-    public void setEnemyShipListBorder(LineBorder enemyShipListBorder) {
-        this.enemyShipListBorder = enemyShipListBorder;
+    public void setEnemyShipsListBorder(LineBorder enemyShipsListBorder) {
+        this.enemyShipsListBorder = enemyShipsListBorder;
     }
 
     public ImageIcon getWater() {

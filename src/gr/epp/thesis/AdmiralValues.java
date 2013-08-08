@@ -24,12 +24,12 @@ public class AdmiralValues extends GenericValues {
         this.columns = 15;
         this.frameWidth = 525;
         this.frameHeight = 1050;
-        this.totalShips = 10;
+        this.totalWarships = 10;
         this.seaColor = Color.CYAN.darker();
         this.myShipsListBackColor = Color.LIGHT_GRAY.darker();
         this.enemyShipsListBackColor = Color.DARK_GRAY.darker();
-        this.myShipListBorder = new LineBorder(Color.GREEN.darker(), 1, false);
-        this.enemyShipListBorder = new LineBorder(Color.RED.darker(), 1, false);
+        this.myShipsListBorder = new LineBorder(Color.GREEN.darker(), 1, false);
+        this.enemyShipsListBorder = new LineBorder(Color.RED.darker(), 1, false);
         this.water = new ImageIcon("graphics/water.gif");
         this.decor = new ImageIcon("graphics/admiralDecorLabel.png");
         this.playerBanner = new ImageIcon("graphics/myFleetAdmiralIcon.png");
@@ -39,7 +39,7 @@ public class AdmiralValues extends GenericValues {
         this.hit = new ImageIcon("graphics/fire.gif");
         this.miss = new ImageIcon("graphics/miss.gif");
         this.myWarships = new ArrayList<>();
-        for (int i = 0; i < totalShips; i++) {
+        for (int i = 0; i < totalWarships; i++) {
             this.myWarships.add(new ImageIcon("graphics/modernWarship" + i + ".gif"));
         }
         this.enemyWarships = new ArrayList<>();
