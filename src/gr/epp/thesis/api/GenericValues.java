@@ -40,6 +40,7 @@ public abstract class GenericValues {
     protected ImageIcon miss;
     protected ArrayList<ImageIcon> myWarships;
     protected ArrayList<ImageIcon> enemyWarships;
+    protected int maxWarshipsBlocks;
     protected int listItems;
     protected int listRows;
     protected int listColumns;
@@ -224,6 +225,14 @@ public abstract class GenericValues {
 
     public void setEnemyWarships(ArrayList<ImageIcon> enemyWarships) {
         this.enemyWarships = enemyWarships;
+    }
+
+    public int getMaxWarshipsBlocks() {
+        return maxWarshipsBlocks;
+    }
+
+    public void setMaxWarshipsBlocks(int maxWarshipsBlocks) {
+        this.maxWarshipsBlocks = maxWarshipsBlocks;
     }
 
     public int getListItems() {

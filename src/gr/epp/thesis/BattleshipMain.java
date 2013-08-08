@@ -47,7 +47,6 @@ public class BattleshipMain implements ActionListener, Runnable {
     private GameControl gameControl;
     private JPanel myShipsList;
     private JPanel enemyShipsList;
-    private int maxShipsOnGrid = 0;
     private DataOutputStream out = null;
     private DataInputStream in = null;
     private static Socket clientSocket = null;
@@ -127,10 +126,9 @@ public class BattleshipMain implements ActionListener, Runnable {
                 GenericBlock myWarship = (GenericBlock) tempShipConstructor.newInstance(i, true);
                 myWarship.addMouseListener(gameControl);
                 myShipsList.add(myWarship);
-                maxShipsOnGrid++;
             }
 
-            gameControl.setLateValues(maxShipsOnGrid, enemyBoard, myBoard);
+            gameControl.setLateValues(enemyBoard, myBoard);
 
             int portNumber = 1501;
             String host = "localhost";
@@ -180,7 +178,7 @@ public class BattleshipMain implements ActionListener, Runnable {
 
     @Override
     public void run() {
-        while (!this.gameControl.isReadyToStart()) {
+        while (!this.gameControl.isGameStarted()) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
@@ -192,7 +190,7 @@ public class BattleshipMain implements ActionListener, Runnable {
 //            myBoard.getComponent(i).removeMouseListener(gameControl);
 //        }
         for (int i = 0; i < myShipsList.getComponentCount(); i++) {
-            myShipsList.getComponent(i).removeMouseListener(gameControl);
+            //myShipsList.getComponent(i).removeMouseListener(gameControl);
         }
         System.out.println("Starting Game...");
 
@@ -204,7 +202,7 @@ public class BattleshipMain implements ActionListener, Runnable {
                 int value = in.readInt();
                 System.out.println("Enemy has pressed the block " + value + " on his board");
                 //notifies all views with the incoming value from the server.
-                gameControl.battle(value);
+                gameControl.battleStations(value, true);
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());

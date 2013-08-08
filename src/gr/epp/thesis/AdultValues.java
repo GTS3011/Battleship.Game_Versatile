@@ -44,6 +44,7 @@ public class AdultValues extends GenericValues {
         }
         this.enemyWarships = new ArrayList<>();
         this.enemyWarships = myWarships;
+        this.maxWarshipsBlocks = 15;
         this.listItems = 6;
         this.listRows = 6;
         this.listColumns = 1;

@@ -37,12 +37,12 @@ public class GameControl implements MouseListener, Runnable {
     private JPanel myBoard = null;
     private boolean horizontal = true;
     private GenericBlock currentWarShip;
-    private ArrayList<GenericBlock> shipsOnGrid = new ArrayList<>();
+    private ArrayList<GenericBlock> warshipBlocksList = new ArrayList<>();
     private ArrayList<GenericBlock> hitteBlocks = new ArrayList<>();
-    private int maxShipsOnGrid = 0;
+    private int maxWarshipsBlocks = 0;
     private Color seaColor = null;
     private ImageIcon water = null;
-    private boolean readyToStart = false;
+    private boolean gameStarted = false;
     private Point cursorHotSpot = new Point(10, 10);
     private DataOutputStream out = null;
     private DataInputStream in = null;
@@ -52,6 +52,7 @@ public class GameControl implements MouseListener, Runnable {
         this.playerValues = playerValues;               //Current player values.
         this.rows = playerValues.getRows();
         this.columns = playerValues.getColumns();
+        this.maxWarshipsBlocks = playerValues.getMaxWarshipsBlocks();
         this.seaColor = playerValues.getSeaColor();
         this.water = playerValues.getWater();
     }
@@ -59,8 +60,7 @@ public class GameControl implements MouseListener, Runnable {
     /**
      * Values needed to continue the game.
      */
-    public void setLateValues(int maxShipsOnGrid, JPanel enemyBoard, JPanel myBoard) {
-        this.maxShipsOnGrid = maxShipsOnGrid;
+    public void setLateValues(JPanel enemyBoard, JPanel myBoard) {
         this.enemyBoard = enemyBoard;
         this.myBoard = myBoard;
         activateEnemyGrid(true);
@@ -105,12 +105,12 @@ public class GameControl implements MouseListener, Runnable {
      * icons for every ship in every orientation. Later deactivates the
      * positioned warship on the list.
      */
-    public void warshipOnGrid(GenericBlock warShipBlock, int currentBlock) {
+    public void warshipBlockOnGrid(GenericBlock warShipBlock, int currentBlock) {
         warShipBlock.setIcon(playerValues.getGridPieces(shipBlocks, currentBlock, orientation));
         warShipBlock.setBackground(seaColor);
         warShipBlock.setWarshipBlockOnGrid(true);
         currentWarShip.setEnabled(false);
-        shipsOnGrid.add(currentWarShip);
+        warshipBlocksList.add(currentWarShip);
     }
 
     /**
@@ -165,7 +165,7 @@ public class GameControl implements MouseListener, Runnable {
                         tempSeaBlock.setIcon(water);
                         tempSeaBlock.setBackground(seaColor);
                     } else {
-                        warshipOnGrid(tempSeaBlock, currentBlock);
+                        warshipBlockOnGrid(tempSeaBlock, currentBlock);
                     }
                     currentBlock++;
                 }
@@ -180,7 +180,7 @@ public class GameControl implements MouseListener, Runnable {
                         tempSeaBlock.setIcon(water);
                         tempSeaBlock.setBackground(seaColor);
                     } else {
-                        warshipOnGrid(tempSeaBlock, currentBlock);
+                        warshipBlockOnGrid(tempSeaBlock, currentBlock);
                     }
                     currentBlock++;
                 }
@@ -188,15 +188,12 @@ public class GameControl implements MouseListener, Runnable {
         }
     }
 
-    public boolean isReadyToStart() {
-        return readyToStart;
-    }
-
     public void initiateGame() {
-        maxShipsOnGrid--;
-        if (maxShipsOnGrid == 0) {
+        maxWarshipsBlocks--;
+        System.out.println("" + warshipBlocksList.size());
+        if (warshipBlocksList.size() == playerValues.getTotalGridBlocks()) {
             //Start the game session here...
-            readyToStart = true;
+            gameStarted = true;
         }
     }
 
@@ -216,14 +213,28 @@ public class GameControl implements MouseListener, Runnable {
     public void setHits(int hit) {
     }
 
-    public void battle(int hit) {
-        GenericBlock tempHit = (GenericBlock) myBoard.getComponent(hit);
-        tempHit.setIcon(null);
-        if (tempHit.isWarshipBlockOnGrid()) {
-            tempHit.setIcon(playerValues.getHit());
+    public void battleStations(int hit, boolean enemyHit) {
+        if (enemyHit) {
+            GenericBlock tempHit = (GenericBlock) myBoard.getComponent(hit);
+            tempHit.setIcon(null);
+            if (tempHit.isWarshipBlockOnGrid()) {
+                tempHit.setIcon(playerValues.getHit());
+            } else {
+                tempHit.setIcon(playerValues.getMiss());
+            }
         } else {
-            tempHit.setIcon(playerValues.getMiss());
+            GenericBlock tempHit = (GenericBlock) enemyBoard.getComponent(hit);
+            tempHit.setIcon(null);
+            if (tempHit.isWarshipBlockOnGrid()) {
+                tempHit.setIcon(playerValues.getHit());
+            } else {
+                tempHit.setIcon(playerValues.getMiss());
+            }
         }
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
     }
 
     /**
@@ -235,10 +246,11 @@ public class GameControl implements MouseListener, Runnable {
     @Override
     public void mouseClicked(MouseEvent e) {
         GenericBlock clickedBlock = (GenericBlock) e.getSource();
-        if (readyToStart) {
+        if (gameStarted) {
             try {
                 getBlockPosition(clickedBlock);
                 out.writeInt(coords[2]);
+                battleStations(coords[2], false);
             } catch (IOException ex) {
                 Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -261,7 +273,7 @@ public class GameControl implements MouseListener, Runnable {
             } else {
                 switch (orientation) {
                     case (3):
-                        if (coords[1] < (columns - (shipBlocks - 1)) && !shipsOnGrid.contains(currentWarShip)) {
+                        if (coords[1] < (columns - (shipBlocks - 1)) && !warshipBlocksList.contains(currentWarShip)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
                                 initiateGame();
@@ -269,7 +281,7 @@ public class GameControl implements MouseListener, Runnable {
                         }
                         break;
                     case (6):
-                        if (coords[0] < rows - (shipBlocks - 1) && !shipsOnGrid.contains(currentWarShip)) {
+                        if (coords[0] < rows - (shipBlocks - 1) && !warshipBlocksList.contains(currentWarShip)) {
                             if (checkCollision()) {
                                 battleFormations(false, false);
                                 initiateGame();
@@ -310,14 +322,14 @@ public class GameControl implements MouseListener, Runnable {
             getBlockPosition((GenericBlock) e.getSource());
             switch (orientation) {
                 case (3):
-                    if (coords[1] < (columns - (shipBlocks - 1)) && !shipsOnGrid.contains(currentWarShip)) {
+                    if (coords[1] < (columns - (shipBlocks - 1)) && !warshipBlocksList.contains(currentWarShip)) {
                         if (checkCollision()) {
                             battleFormations(true, false);
                         }
                     }
                     break;
                 case (6):
-                    if (coords[0] < rows - (shipBlocks - 1) && !shipsOnGrid.contains(currentWarShip)) {
+                    if (coords[0] < rows - (shipBlocks - 1) && !warshipBlocksList.contains(currentWarShip)) {
                         if (checkCollision()) {
                             battleFormations(true, false);
                         }

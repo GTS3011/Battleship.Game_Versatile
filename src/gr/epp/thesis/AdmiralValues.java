@@ -44,6 +44,7 @@ public class AdmiralValues extends GenericValues {
         }
         this.enemyWarships = new ArrayList<>();
         this.enemyWarships = myWarships;
+        this.maxWarshipsBlocks = 28;
         this.listItems = 11;
         this.listRows = 11;
         this.listColumns = 1;
