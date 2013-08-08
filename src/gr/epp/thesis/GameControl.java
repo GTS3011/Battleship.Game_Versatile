@@ -44,7 +44,7 @@ public class GameControl implements MouseListener, Runnable {
     private ImageIcon water = null;
     private Point cursorHotSpot = new Point(10, 10);
     private DataOutputStream outFire = null;
-    private DataOutputStream outResult = null;
+    //private DataOutputStream outResult = null;
     private DataInputStream in = null;
     private Socket clientSocket = null;
     private boolean gameStarted = false;
@@ -216,13 +216,13 @@ public class GameControl implements MouseListener, Runnable {
         }
     }
 
-    public void battleStations(int hit, boolean enemyHit) {
+    public void battleStations(int hit, boolean enemyHit) throws IOException {
         if (enemyHit) {
             GenericBlock tempHit = (GenericBlock) myBoard.getComponent(hit);
             tempHit.setIcon(null);
             if (tempHit.isWarshipBlockOnGrid()) {
                 tempHit.setIcon(playerValues.getHit());
-                //outResult.writeBoolean(true);
+                outFire.writeInt(hit + 200);
             } else {
                 tempHit.setIcon(playerValues.getMiss());
             }

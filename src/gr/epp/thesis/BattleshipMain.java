@@ -49,8 +49,8 @@ public class BattleshipMain implements ActionListener, Runnable {
     private JPanel enemyShipsList;
     private DataInputStream in = null;
     private DataOutputStream out = null;
-    private DataInputStream in2 = null;
-    private DataOutputStream out2 = null;
+    //private DataInputStream in2 = null;
+    //private DataOutputStream out2 = null;
     private static Socket clientSocket = null;
 
     /*
@@ -199,13 +199,13 @@ public class BattleshipMain implements ActionListener, Runnable {
         try {
             in = new DataInputStream(clientSocket.getInputStream());
             out = new DataOutputStream(clientSocket.getOutputStream());
-            in2 = new DataInputStream(clientSocket.getInputStream());
-            out2 = new DataOutputStream(clientSocket.getOutputStream());
+            //in2 = new DataInputStream(clientSocket.getInputStream());
+            //out2 = new DataOutputStream(clientSocket.getOutputStream());
 
             while (true) {
                 int value = in.readInt();
-                boolean hh = in2.readBoolean();
-                if (hh) {
+                int hh = in.readInt();
+                if (hh > 200) {
                     System.out.println("OLEEEEEEEEEE");
                 }
                 System.out.println("Enemy has pressed the block " + value + " on his board");
