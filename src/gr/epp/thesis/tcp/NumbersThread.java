@@ -1,8 +1,11 @@
 package gr.epp.thesis.tcp;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -14,15 +17,17 @@ import java.net.Socket;
  */
 public class NumbersThread extends Thread implements Runnable {
 
-    private DataInputStream in = null;
+//    private DataInputStream in = null;
     //private DataInputStream in2 = null;
-    private DataOutputStream out = null;
+//    private DataOutputStream out = null;
     //private DataOutputStream out2 = null;
     private Socket clientSocket;
     private static NumbersThread[] threads;
     private int maxClientsCount; //Total number of clients connected to the server in the current session (even the disconnected).
-    private int value;
+    private String value;
     private int hh;
+    private PrintWriter out = null;
+    private BufferedReader in = null;
 
     public NumbersThread(Socket clientSocket, NumbersThread[] threads) {
         this.clientSocket = clientSocket;
@@ -37,20 +42,20 @@ public class NumbersThread extends Thread implements Runnable {
     @Override
     public void run() {
         try {
-            in = new DataInputStream(clientSocket.getInputStream());
-            out = new DataOutputStream(clientSocket.getOutputStream());
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
             //in2 = new DataInputStream(clientSocket.getInputStream());
             //out2 = new DataOutputStream(clientSocket.getOutputStream());
             while (true) {
                 synchronized (this) {
-                    value = in.readInt();
-                    hh = in.readInt();
+                    value = in.readLine();
+//                    hh = in.readInt();
                     // Send to all clients except itself.
                     for (int i = 0; i < maxClientsCount; i++) {
                         if (threads[i] != null && threads[i] != this) {
                             System.out.println("Sending " + value + " to PC " + i);
-                            threads[i].out.writeInt(value);
-                            threads[i].out.writeInt(hh);
+                            threads[i].out.println(value);
+//                            threads[i].out.writeInt(hh);
                         }
                     }
                 }

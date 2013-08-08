@@ -8,9 +8,12 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
@@ -47,8 +50,8 @@ public class BattleshipMain implements ActionListener, Runnable {
     private GameControl gameControl;
     private JPanel myShipsList;
     private JPanel enemyShipsList;
-    private DataInputStream in = null;
-    private DataOutputStream out = null;
+    private PrintWriter out = null;
+    private BufferedReader in = null;
     //private DataInputStream in2 = null;
     //private DataOutputStream out2 = null;
     private static Socket clientSocket = null;
@@ -188,33 +191,26 @@ public class BattleshipMain implements ActionListener, Runnable {
             }
         }
         //Temporary
-//        for (int i = 0; i < myBoard.getComponentCount(); i++) {
-//            myBoard.getComponent(i).removeMouseListener(gameControl);
-//        }
+        for (int i = 0; i < myBoard.getComponentCount(); i++) {
+            myBoard.getComponent(i).removeMouseListener(gameControl);
+        }
         for (int i = 0; i < myShipsList.getComponentCount(); i++) {
             //myShipsList.getComponent(i).removeMouseListener(gameControl);
         }
         System.out.println("Starting Game...");
 
-        try {
-            in = new DataInputStream(clientSocket.getInputStream());
-            out = new DataOutputStream(clientSocket.getOutputStream());
-            //in2 = new DataInputStream(clientSocket.getInputStream());
-            //out2 = new DataOutputStream(clientSocket.getOutputStream());
+//        try {
+//            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//            out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-            while (true) {
-                int value = in.readInt();
-                int hh = in.readInt();
-                if (hh > 200) {
-                    System.out.println("OLEEEEEEEEEE");
-                }
-                System.out.println("Enemy has pressed the block " + value + " on his board");
-                //notifies all views with the incoming value from the server.
-                gameControl.battleStations(value, true);
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+//            while (true) {
+//                String value = in.readLine();
+//                System.out.println(value);
+////              gameControl.battleStations(value, true);
+//            }
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 
     public static void main(String[] args) {

@@ -7,9 +7,12 @@ import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -43,11 +46,13 @@ public class GameControl implements MouseListener, Runnable {
     private Color seaColor = null;
     private ImageIcon water = null;
     private Point cursorHotSpot = new Point(10, 10);
-    private DataOutputStream outFire = null;
+//    private DataOutputStream outFire = null;
     //private DataOutputStream outResult = null;
-    private DataInputStream in = null;
+//    private DataInputStream in = null;
     private Socket clientSocket = null;
     private boolean gameStarted = false;
+    private PrintWriter out = null;
+    private BufferedReader in = null;
 
     public GameControl(GenericValues playerValues) {
         this.playerValues = playerValues;               //Current player values.
@@ -199,6 +204,7 @@ public class GameControl implements MouseListener, Runnable {
             //Start the game session here...
             activateBoard(enemyBoard, true);
             gameStarted = true;
+            System.out.println("GAMESTARTED");
         }
     }
 
@@ -209,8 +215,36 @@ public class GameControl implements MouseListener, Runnable {
     @Override
     public void run() {
         try {
-            outFire = new DataOutputStream(clientSocket.getOutputStream());
-            //outResult = new DataOutputStream(clientSocket.getOutputStream());
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            while (true) {
+                String incomingMessage = in.readLine();
+
+                String[] splitMessage = incomingMessage.split(":");
+                int blockHit = Integer.parseInt(splitMessage[1]);
+                GenericBlock playerBoardHit = (GenericBlock) myBoard.getComponent(blockHit);
+                GenericBlock enemyBoardHit = (GenericBlock) enemyBoard.getComponent(blockHit);
+                
+//                playerBoardHit.setIcon(null);
+//                enemyBoardHit.setIcon(null);
+
+                if (splitMessage[0].equals("hit")) {
+                    if (playerBoardHit.isWarshipBlockOnGrid()) {
+                        out.println("success:" + blockHit);
+                       playerBoardHit.setIcon(playerValues.getHit());
+                    } else {
+                        out.println("missed:" + blockHit);
+                       playerBoardHit.setIcon(playerValues.getMiss());
+                    }
+                } else {
+                    if (splitMessage[0].equals("missed")) {
+                        enemyBoardHit.setIcon(playerValues.getMiss());
+                    } else {
+                        enemyBoardHit.setIcon(playerValues.getHit());
+                    }
+                }
+                System.out.println(incomingMessage);
+            }
         } catch (IOException ex) {
             Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -222,7 +256,7 @@ public class GameControl implements MouseListener, Runnable {
             tempHit.setIcon(null);
             if (tempHit.isWarshipBlockOnGrid()) {
                 tempHit.setIcon(playerValues.getHit());
-                outFire.writeInt(hit + 200);
+//                out.writeInt(hit + 200);
             } else {
                 tempHit.setIcon(playerValues.getMiss());
             }
@@ -252,13 +286,10 @@ public class GameControl implements MouseListener, Runnable {
     public void mouseClicked(MouseEvent e) {
         GenericBlock clickedBlock = (GenericBlock) e.getSource();
         if (gameStarted) {
-            try {
-                getBlockPosition(clickedBlock);
-                outFire.writeInt(coords[2]);
-                //battleStations(coords[2], false);
-            } catch (IOException ex) {
-                Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            getBlockPosition(clickedBlock);
+//                out.writeInt(coords[2]);
+            out.println("hit:" + coords[2]);
+            //battleStations(coords[2], false);
         }
         if (clickedBlock.isOnShipsList()) {
             currentWarship = clickedBlock;
