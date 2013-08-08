@@ -15,7 +15,9 @@ import java.net.Socket;
 public class NumbersThread extends Thread implements Runnable {
 
     private DataInputStream in = null;
+    private DataInputStream in2 = null;
     private DataOutputStream out = null;
+    private DataOutputStream out2 = null;
     private Socket clientSocket;
     private static NumbersThread[] threads;
     private int maxClientsCount; //Total number of clients connected to the server in the current session (even the disconnected).
@@ -37,16 +39,18 @@ public class NumbersThread extends Thread implements Runnable {
         try {
             in = new DataInputStream(clientSocket.getInputStream());
             out = new DataOutputStream(clientSocket.getOutputStream());
+            in2 = new DataInputStream(clientSocket.getInputStream());
+            out2 = new DataOutputStream(clientSocket.getOutputStream());
             while (true) {
                 synchronized (this) {
                     value = in.readInt();
-                    //hh = in.readBoolean();
+                    hh = in2.readBoolean();
                     // Send to all clients except itself.
                     for (int i = 0; i < maxClientsCount; i++) {
                         if (threads[i] != null && threads[i] != this) {
                             System.out.println("Sending " + value + " to PC " + i);
                             threads[i].out.writeInt(value);
-                            //threads[i].out.writeBoolean(hh);
+                            threads[i].out2.writeBoolean(hh);
                         }
                     }
                 }

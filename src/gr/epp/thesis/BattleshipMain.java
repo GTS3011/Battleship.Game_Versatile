@@ -47,8 +47,10 @@ public class BattleshipMain implements ActionListener, Runnable {
     private GameControl gameControl;
     private JPanel myShipsList;
     private JPanel enemyShipsList;
-    private DataOutputStream out = null;
     private DataInputStream in = null;
+    private DataOutputStream out = null;
+    private DataInputStream in2 = null;
+    private DataOutputStream out2 = null;
     private static Socket clientSocket = null;
 
     /*
@@ -197,13 +199,15 @@ public class BattleshipMain implements ActionListener, Runnable {
         try {
             in = new DataInputStream(clientSocket.getInputStream());
             out = new DataOutputStream(clientSocket.getOutputStream());
+            in2 = new DataInputStream(clientSocket.getInputStream());
+            out2 = new DataOutputStream(clientSocket.getOutputStream());
 
             while (true) {
                 int value = in.readInt();
-                //boolean hh = in.readBoolean();
-                //if (hh) {
-                //System.out.println("OLEEEEEEEEEE");
-                //}
+                boolean hh = in2.readBoolean();
+                if (hh) {
+                    System.out.println("OLEEEEEEEEEE");
+                }
                 System.out.println("Enemy has pressed the block " + value + " on his board");
                 //notifies all views with the incoming value from the server.
                 gameControl.battleStations(value, true);
