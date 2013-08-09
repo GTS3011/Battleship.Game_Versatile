@@ -116,7 +116,7 @@ public class GameControl implements MouseListener, Runnable {
      * positioned warship on the list.
      */
     public void warshipBlockOnGrid(GenericBlock warShipBlock, int currentBlock) {
-        warShipBlock.setIcon(playerValues.getGridPieces(warshipBlocks, currentBlock, orientation));
+        warShipBlock.setIcon(playerValues.getGridPieces(warshipBlocks, currentBlock, orientation, false));
         warShipBlock.setBackground(seaColor);
         warShipBlock.setWarshipBlockOnGrid(true);
         currentWarship.setEnabled(false);

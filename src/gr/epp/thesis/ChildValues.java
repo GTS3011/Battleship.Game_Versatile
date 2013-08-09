@@ -49,8 +49,12 @@ public class ChildValues extends GenericValues {
     }
 
     @Override
-    public ImageIcon getGridPieces(int shipBlocks, int currentBlock, int orientation) {
-        return (new ImageIcon("graphics/gridPieces/childGridShip.png"));
+    public ImageIcon getGridPieces(int shipBlocks, int currentBlock, int orientation, boolean sinked) {
+        if (sinked) {
+            return (new ImageIcon("graphics/gridPieces/childMySinked.png"));
+        } else {
+            return (new ImageIcon("graphics/gridPieces/childGridShip.png"));
+        }
     }
 
     @Override

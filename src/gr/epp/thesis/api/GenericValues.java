@@ -54,8 +54,12 @@ public abstract class GenericValues {
      * @param orientation
      * @return
      */
-    public ImageIcon getGridPieces(int shipBlocks, int currentBlock, int orientation) {
-        return (new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
+    public ImageIcon getGridPieces(int shipBlocks, int currentBlock, int orientation, boolean sinked) {
+        if (sinked) {
+            return (new ImageIcon("graphics/gridPieces/Sink_" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
+        } else {
+            return (new ImageIcon("graphics/gridPieces/" + shipBlocks + "_" + currentBlock + "_" + orientation + ".gif"));
+        }
     }
 
     //Getters & Setters: 
