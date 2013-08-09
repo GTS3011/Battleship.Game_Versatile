@@ -9,10 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -25,13 +22,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- *
  * @author tsoutsas.yiorgos & vigkos.ioannis
  * @project Thesis_Battleship.Game
  * @author Vidakis.Nikolas & Vellis Giorgos
  * @since Spring Semester 2013
  * @inst. Applied Informatics and Multimedia - TEI of Crete
- *
  */
 public class BattleshipMain implements ActionListener, Runnable {
 
@@ -70,8 +65,8 @@ public class BattleshipMain implements ActionListener, Runnable {
         compoBoxFrame.setResizable(true);
     }
 
-    /*
-     * Main Game
+    /**
+     * Main Game:
      */
     public BattleshipMain(String currentPlayer, GenericValues playerValues) {
         this.playerValues = playerValues;
@@ -198,19 +193,6 @@ public class BattleshipMain implements ActionListener, Runnable {
             //myShipsList.getComponent(i).removeMouseListener(gameControl);
         }
         System.out.println("Starting Game...");
-
-//        try {
-//            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-//            out = new PrintWriter(clientSocket.getOutputStream(), true);
-
-//            while (true) {
-//                String value = in.readLine();
-//                System.out.println(value);
-////              gameControl.battleStations(value, true);
-//            }
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
     }
 
     public static void main(String[] args) {

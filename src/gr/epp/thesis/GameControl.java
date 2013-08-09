@@ -8,8 +8,6 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -45,10 +43,9 @@ public class GameControl implements MouseListener, Runnable {
     private int maxWarshipsBlocks = 0;
     private Color seaColor = null;
     private ImageIcon water = null;
+    private ImageIcon hit = null;
+    private ImageIcon miss = null;
     private Point cursorHotSpot = new Point(10, 10);
-//    private DataOutputStream outFire = null;
-    //private DataOutputStream outResult = null;
-//    private DataInputStream in = null;
     private Socket clientSocket = null;
     private boolean gameStarted = false;
     private PrintWriter out = null;
@@ -61,6 +58,8 @@ public class GameControl implements MouseListener, Runnable {
         this.maxWarshipsBlocks = playerValues.getMaxWarshipsBlocks();
         this.seaColor = playerValues.getSeaColor();
         this.water = playerValues.getWater();
+        this.hit = playerValues.getHit();
+        this.miss = playerValues.getMiss();
         this.warshipBlocksList = new ArrayList<>();
         this.hittenBlocks = new ArrayList<>();
     }
@@ -212,63 +211,41 @@ public class GameControl implements MouseListener, Runnable {
         this.clientSocket = clientSocket;
     }
 
+    /**
+     * On run method, gameControl class receives enemy's hits, and response if
+     * they were succesfull or missed.
+     */
     @Override
     public void run() {
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             while (true) {
-                String incomingMessage = in.readLine();
-
-                String[] splitMessage = incomingMessage.split(":");
-                int blockHit = Integer.parseInt(splitMessage[1]);
-                GenericBlock playerBoardHit = (GenericBlock) myBoard.getComponent(blockHit);
-                GenericBlock enemyBoardHit = (GenericBlock) enemyBoard.getComponent(blockHit);
-                
-//                playerBoardHit.setIcon(null);
-//                enemyBoardHit.setIcon(null);
+                String incomingFire = in.readLine();
+                String[] splitMessage = incomingFire.split(":");
+                int hittenBlock = Integer.parseInt(splitMessage[1]);
+                GenericBlock playerHittenBlock = (GenericBlock) myBoard.getComponent(hittenBlock);
+                GenericBlock enemyHittenBlock = (GenericBlock) enemyBoard.getComponent(hittenBlock);
 
                 if (splitMessage[0].equals("hit")) {
-                    if (playerBoardHit.isWarshipBlockOnGrid()) {
-                        out.println("success:" + blockHit);
-                       playerBoardHit.setIcon(playerValues.getHit());
+                    if (playerHittenBlock.isWarshipBlockOnGrid()) {
+                        out.println("success:" + hittenBlock);
+                        playerHittenBlock.setIcon(hit);
                     } else {
-                        out.println("missed:" + blockHit);
-                       playerBoardHit.setIcon(playerValues.getMiss());
+                        out.println("missed:" + hittenBlock);
+                        playerHittenBlock.setIcon(miss);
                     }
                 } else {
                     if (splitMessage[0].equals("missed")) {
-                        enemyBoardHit.setIcon(playerValues.getMiss());
+                        enemyHittenBlock.setIcon(miss);
                     } else {
-                        enemyBoardHit.setIcon(playerValues.getHit());
+                        enemyHittenBlock.setIcon(hit);
                     }
                 }
-                System.out.println(incomingMessage);
+                System.out.println(incomingFire);
             }
         } catch (IOException ex) {
             Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void battleStations(int hit, boolean enemyHit) throws IOException {
-        if (enemyHit) {
-            GenericBlock tempHit = (GenericBlock) myBoard.getComponent(hit);
-            tempHit.setIcon(null);
-            if (tempHit.isWarshipBlockOnGrid()) {
-                tempHit.setIcon(playerValues.getHit());
-//                out.writeInt(hit + 200);
-            } else {
-                tempHit.setIcon(playerValues.getMiss());
-            }
-        } else {
-            GenericBlock tempHit = (GenericBlock) enemyBoard.getComponent(hit);
-            tempHit.setIcon(null);
-            if (tempHit.isWarshipBlockOnGrid()) {
-                tempHit.setIcon(playerValues.getHit());
-                //outResult.writeBoolean(true);
-            } else {
-                tempHit.setIcon(playerValues.getMiss());
-            }
         }
     }
 

@@ -5,8 +5,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
- * @author George Tsoutsas, 2542
+ * @author tsoutsas.yiorgos & vigkos.ioannis
+ * @project Thesis_Battleship.Game
+ * @author Vidakis.Nikolas & Vellis Giorgos
+ * @since Spring Semester 2013
+ * @inst. Applied Informatics and Multimedia - TEI of Crete
  */
 public class Server {
 
