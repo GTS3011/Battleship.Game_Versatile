@@ -50,6 +50,9 @@ public class GameControl implements MouseListener, Runnable {
     private boolean gameStarted = false;
     private PrintWriter out = null;
     private BufferedReader in = null;
+    private boolean locked = false;
+    private static int successfulHits=0;
+    private static int totalHits=0;
 
     public GameControl(GenericValues playerValues) {
         this.playerValues = playerValues;               //Current player values.
@@ -221,28 +224,32 @@ public class GameControl implements MouseListener, Runnable {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             while (true) {
-                String incomingFire = in.readLine();
-                String[] splitMessage = incomingFire.split(":");
-                int hittenBlock = Integer.parseInt(splitMessage[1]);
-                GenericBlock playerHittenBlock = (GenericBlock) myBoard.getComponent(hittenBlock);
-                GenericBlock enemyHittenBlock = (GenericBlock) enemyBoard.getComponent(hittenBlock);
+                String incomingMessage = in.readLine();
+                String[] splitMessage = incomingMessage.split(":");
+                int hitBlock = Integer.parseInt(splitMessage[1]);
+                GenericBlock playerHitBlock = (GenericBlock) myBoard.getComponent(hitBlock);
+                GenericBlock enemyHitBlock = (GenericBlock) enemyBoard.getComponent(hitBlock);
 
                 if (splitMessage[0].equals("hit")) {
-                    if (playerHittenBlock.isWarshipBlockOnGrid()) {
-                        out.println("success:" + hittenBlock);
-                        playerHittenBlock.setIcon(hit);
+                    if (playerHitBlock.isWarshipBlockOnGrid()) {
+                        out.println("success:" + hitBlock);
+                        playerHitBlock.setIcon(hit);
                     } else {
-                        out.println("missed:" + hittenBlock);
-                        playerHittenBlock.setIcon(miss);
+                        out.println("missed:" + hitBlock);
+                        playerHitBlock.setIcon(miss);
                     }
+                    locked = false;
                 } else {
                     if (splitMessage[0].equals("missed")) {
-                        enemyHittenBlock.setIcon(miss);
+                        enemyHitBlock.setIcon(miss);
                     } else {
-                        enemyHittenBlock.setIcon(hit);
+                        enemyHitBlock.setIcon(hit);
+                        successfulHits++;
                     }
+                    System.out.println("Accuracy: " + successfulHits + "/" + totalHits);
                 }
-                System.out.println(incomingFire);
+                
+                System.out.println(incomingMessage);
             }
         } catch (IOException ex) {
             Logger.getLogger(GameControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -262,11 +269,11 @@ public class GameControl implements MouseListener, Runnable {
     @Override
     public void mouseClicked(MouseEvent e) {
         GenericBlock clickedBlock = (GenericBlock) e.getSource();
-        if (gameStarted) {
+        if (gameStarted && !locked) {
             getBlockPosition(clickedBlock);
-//                out.writeInt(coords[2]);
             out.println("hit:" + coords[2]);
-            //battleStations(coords[2], false);
+            totalHits++;
+            locked = true;
         }
         if (clickedBlock.isOnShipsList()) {
             currentWarship = clickedBlock;
