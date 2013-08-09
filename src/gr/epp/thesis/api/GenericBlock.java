@@ -18,7 +18,6 @@ public abstract class GenericBlock extends JButton implements View {
     protected int totalBlocks;
     protected boolean warshipBlockOnGrid = false;
     protected boolean onShipsList = false;
-    protected int[] hitsToDestruct;
 
     /**
      * Constructor needed for the seaBlocks Components.
@@ -77,13 +76,5 @@ public abstract class GenericBlock extends JButton implements View {
 
     public void setOnShipsList(boolean onShipsList) {
         this.onShipsList = onShipsList;
-    }
-
-    public int[] getHitsToDestruct() {
-        return hitsToDestruct;
-    }
-
-    public void setHitsToDestruct(int[] hitsToDestruct) {
-        this.hitsToDestruct = hitsToDestruct;
     }
 }
