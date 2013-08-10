@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * @project Thesis_Battleship.Game
  * @author Vidakis.Nikolas & Vellis Giorgos
  * @since Spring Semester 2013
- * @inst. Applied Informatics and Multimedia - TEI of Crete
+ * @@institute Applied Informatics and Multimedia - TEI of Crete
  */
 public class BattleshipMain implements ActionListener, Runnable {
 
