@@ -41,6 +41,7 @@ public class GameControl implements MouseListener, Runnable {
     private ArrayList<GenericBlock> warshipBlocksList;
     private ArrayList<GenericBlock> hittenBlocks;
     private int maxWarshipsBlocks = 0;
+    private int warshipBlocksHold[];
     private Color seaColor = null;
     private ImageIcon water = null;
     private ImageIcon hit = null;
@@ -51,8 +52,9 @@ public class GameControl implements MouseListener, Runnable {
     private PrintWriter out = null;
     private BufferedReader in = null;
     private boolean locked = false;
-    private static int successfulHits=0;
-    private static int totalHits=0;
+    private static int successfulHits = 0;
+    private static int totalHits = 0;
+    private int l = 0;
 
     public GameControl(GenericValues playerValues) {
         this.playerValues = playerValues;               //Current player values.
@@ -118,12 +120,18 @@ public class GameControl implements MouseListener, Runnable {
      * icons for every ship in every orientation. Later deactivates the
      * positioned warship on the list.
      */
-    public void warshipBlockOnGrid(GenericBlock warShipBlock, int currentBlock) {
-        warShipBlock.setIcon(playerValues.getGridPieces(warshipBlocks, currentBlock, orientation, false));
-        warShipBlock.setBackground(seaColor);
-        warShipBlock.setWarshipBlockOnGrid(true);
+    public void warshipBlockOnGrid(GenericBlock warshipBlock, int currentBlock) {
+        warshipBlock.setIcon(playerValues.getGridPieces(warshipBlocks, currentBlock, orientation, false));
+        warshipBlock.setBackground(seaColor);
+        warshipBlock.setWarshipBlockOnGrid(true);
         currentWarship.setEnabled(false);
         warshipBlocksList.add(currentWarship);
+        for (int i = 0; i < myBoard.getComponentCount(); i++) {
+            if (myBoard.getComponent(i) == warshipBlock) {
+                this.warshipBlocksHold[l] = i;
+                l++;
+            }
+        }
     }
 
     /**
@@ -216,7 +224,7 @@ public class GameControl implements MouseListener, Runnable {
 
     /**
      * On run method, gameControl class receives enemy's hits, and response if
-     * they were succesfull or missed.
+     * they were successful or missed.
      */
     @Override
     public void run() {
@@ -248,7 +256,7 @@ public class GameControl implements MouseListener, Runnable {
                     }
                     System.out.println("Accuracy: " + successfulHits + "/" + totalHits);
                 }
-                
+
                 System.out.println(incomingMessage);
             }
         } catch (IOException ex) {
@@ -278,6 +286,7 @@ public class GameControl implements MouseListener, Runnable {
         if (clickedBlock.isOnShipsList()) {
             currentWarship = clickedBlock;
             warshipBlocks = clickedBlock.getTotalBlocks();
+            this.warshipBlocksHold = new int[warshipBlocks];
         } else {
             if (e.getButton() == MouseEvent.BUTTON3) {
                 mouseExited(e);
